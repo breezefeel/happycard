@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>나만의 칭찬 카드 생성기 (최종)</title>
     <style>
+        /* CSS 부분은 이전과 동일 */
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap'); 
 
@@ -86,7 +87,6 @@
             margin-left: auto;
             margin-right: auto;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            /* 모바일에 맞게 크기 조정 */
             max-width: 100%; 
             height: auto;    
         }
@@ -136,8 +136,7 @@
     </div>
 
     <script>
-        // --- 1. 이미지 및 데이터 정의 ---
-        // ⭐⭐ 실제 로고/QR 코드 URL로 변경하세요! ⭐⭐
+        // --- 1. 이미지 및 데이터 정의 (이전과 동일) ---
         const QR_CODE_SRC = "https://i.imgur.com/GzB9k8W.png"; 
         const LOGO_SRC = "https://i.imgur.com/XqTj9Xf.png"; 
 
@@ -185,9 +184,35 @@
             { type: '🌈 독창이상형', emoji: '🚀💫🎯', quote1: "당신의 비전이", quote2: "미래를 만들어요", tags: "#비전왕 #혁신가", powers: ['혁신성', '실행력', '리더십'], shine: ['새로운 비전을 제시할 때', '혁신을 실행할 때', '미래를 그릴 때'], growth: '작은 것부터 차근차근!' }
         ];
 
-        // --- 2. 카드 그리기 함수 ---
+        // --- 2. 텍스트 줄바꿈 헬퍼 함수 추가 (새로 추가) ---
+        function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+            const words = text.split('');
+            let line = '';
+            let lineCount = 0;
+
+            for(let n = 0; n < words.length; n++) {
+                let testLine = line + words[n];
+                let metrics = ctx.measureText(testLine);
+                let testWidth = metrics.width;
+                
+                // 줄바꿈이 필요한 경우
+                if (testWidth > maxWidth && n > 0) {
+                    ctx.fillText(line, x, y + lineCount * lineHeight);
+                    line = words[n];
+                    lineCount++;
+                } else {
+                    line = testLine;
+                }
+            }
+            // 마지막 줄 출력
+            ctx.fillText(line, x, y + lineCount * lineHeight);
+            return y + (lineCount + 1) * lineHeight; // 다음 시작할 Y좌표 반환
+        }
+
+        // --- 3. 카드 그리기 함수 ---
 
         function drawFrontCard(canvas, cardInfo, cardStyle, userName) {
+            // (이전과 동일하게 유지)
             const ctx = canvas.getContext('2d');
             const W = canvas.width;
             const H = canvas.height;
@@ -233,6 +258,9 @@
             const ctx = canvas.getContext('2d');
             const W = canvas.width;
             const H = canvas.height;
+            const MAX_TEXT_WIDTH = W - 120; // 캔버스 너비 500 - 좌우 패딩 120 (60*2)
+            const START_X = 60;
+            let y = 80;
 
             ctx.clearRect(0, 0, W, H);
             const gradient = ctx.createLinearGradient(0, 0, 0, H);
@@ -246,54 +274,57 @@
             ctx.strokeRect(5, 5, W - 10, H - 10);
 
             ctx.textAlign = 'left'; 
-            let y = 80;
-
-            // 내용 그리기
+            
+            // 3. 나의 슈퍼파워
             ctx.fillStyle = cardStyle.back_text;
             ctx.font = 'bold 35px Nanum Gothic Coding, monospace';
-            ctx.fillText("💪 나의 슈퍼파워", 50, y);
+            ctx.fillText("💪 나의 슈퍼파워", START_X - 10, y);
             y += 40;
             
             ctx.fillStyle = '#333';
             ctx.font = '30px Nanum Gothic Coding, monospace';
             cardInfo.powers.forEach(power => {
-                ctx.fillText(`⭐ ${power}`, 60, y);
+                ctx.fillText(`⭐ ${power}`, START_X, y);
                 y += 40;
             });
 
-            y += 30;
+            y += 30; // 간격
 
+            // 4. 나는 이럴 때 빛나요
             ctx.fillStyle = cardStyle.back_accent; 
             ctx.font = 'bold 35px Nanum Gothic Coding, monospace';
-            ctx.fillText("💝 나는 이럴 때 빛나요:", 50, y);
+            ctx.fillText("💝 나는 이럴 때 빛나요:", START_X - 10, y);
             y += 40;
 
             ctx.fillStyle = '#333';
             ctx.font = '28px Nanum Gothic Coding, monospace';
             cardInfo.shine.forEach(item => {
-                ctx.fillText(`• ${item}`, 60, y);
+                // 이 부분은 짧은 문장이므로 줄바꿈 헬퍼 없이 유지
+                ctx.fillText(`• ${item}`, START_X, y);
                 y += 35;
             });
 
-            y += 30;
+            y += 30; // 간격
 
+            // 5. 성장 포인트 (🚨 텍스트 넘침 문제 수정)
             ctx.fillStyle = cardStyle.back_text; 
             ctx.font = 'bold 35px Nanum Gothic Coding, monospace';
-            ctx.fillText("💡 성장 포인트:", 50, y);
+            ctx.fillText("💡 성장 포인트:", START_X - 10, y);
             y += 40;
 
             ctx.fillStyle = '#333';
             ctx.font = '30px Nanum Gothic Coding, monospace';
-            ctx.fillText(cardInfo.growth, 60, y);
             
-            // --- 하단 정보 영역 (로고, 문의 문구, QR 코드) ---
+            // 🚨 wrapText 함수를 사용하여 텍스트 넘침 방지
+            y = wrapText(ctx, cardInfo.growth, START_X, y, MAX_TEXT_WIDTH, 35); 
+            
+            // --- 6. 하단 정보 영역 (로고, 문의 문구, QR 코드) ---
             const FOOTER_Y = 550; 
             const LOGO_W = 150;
             const LOGO_H = 40;
             const QR_SIZE = 90;
             const INQUIRY_Y = FOOTER_Y + 120;
 
-            // 6-1. 힐링트리 로고
             ctx.textAlign = 'center';
             if (logoImage.complete) {
                 ctx.drawImage(logoImage, W / 2 - LOGO_W / 2, FOOTER_Y, LOGO_W, LOGO_H);
@@ -303,7 +334,6 @@
                 ctx.fillText("힐링트리 로고", W / 2, FOOTER_Y + LOGO_H);
             }
 
-            // 6-2. QR 코드 (오른쪽)
             const QR_X = W - 50 - QR_SIZE;
             const QR_Y = FOOTER_Y + 10;
             if (qrImage.complete) {
@@ -316,21 +346,17 @@
                 ctx.fillText("QR", QR_X + QR_SIZE / 2, QR_Y + QR_SIZE / 2 + 5);
             }
 
-            // 6-3. 문의 문구 (왼쪽)
             ctx.textAlign = 'left';
             ctx.fillStyle = cardStyle.back_text; 
             ctx.font = 'bold 25px Nanum Gothic Coding, monospace';
-            ctx.fillText("선천적 성향/재능 상담 문의", 50, INQUIRY_Y);
+            ctx.fillText("선천적 성향/재능 상담 문의", START_X - 10, INQUIRY_Y);
             
-            // 6-4. QR 코드 옆에 문의 내용 (예시)
             ctx.fillStyle = '#666'; 
             ctx.font = '22px Nanum Gothic Coding, monospace';
-            ctx.fillText("스캔하시면 자세한 안내를...", 50, INQUIRY_Y + 30);
+            ctx.fillText("스캔하시면 자세한 안내를...", START_X - 10, INQUIRY_Y + 30);
         }
 
-
-        // --- 3. 실행 및 다운로드 함수 ---
-        // 이 함수는 HTML 버튼에서 직접 호출됩니다.
+        // --- 4. 실행 및 다운로드 함수 (다운로드 로직 재확인) ---
         function generateBothCards() {
             const userName = document.getElementById('userName').value.trim();
             const typeIndex = document.getElementById('personalityType').value;
@@ -351,7 +377,6 @@
             drawFrontCard(frontCanvas, cardInfo, cardStyle, userName);
             drawBackCard(backCanvas, cardInfo, cardStyle);
 
-            // 캔버스 데이터 속성에 다운로드 파일명 저장
             const baseFileName = `${userName}_${cardInfo.type.replace(/\s/g, '_')}`;
             frontCanvas.dataset.fileName = `칭찬카드_앞면_${baseFileName}.png`;
             backCanvas.dataset.fileName = `칭찬카드_뒷면_${baseFileName}.png`; 
@@ -359,7 +384,6 @@
             alert(`"${userName}"님의 ${cardInfo.type} 칭찬 카드가 생성되었습니다! 이미지를 클릭하여 다운로드하세요.`);
         }
 
-        // 다운로드 헬퍼 함수
         function downloadCanvasImage(canvas, fileName) {
             const imageURL = canvas.toDataURL('image/png');
             const link = document.createElement('a');
@@ -370,14 +394,14 @@
             document.body.removeChild(link);
         }
 
-        // --- 4. 이벤트 리스너 등록 (HTML 요소가 모두 로드된 후 실행) ---
-        // 이 부분이 실행 오류를 막기 위해 중요합니다!
-        window.addEventListener('DOMContentLoaded', () => {
+        // --- 5. 이벤트 리스너 등록 (가장 안전한 로직) ---
+        window.onload = function() {
             const frontCanvas = document.getElementById('frontCanvas');
             const backCanvas = document.getElementById('backCanvas');
             
             const handleCanvasClick = function() {
-                const fileName = this.dataset.fileName;
+                const fileName = this.dataset.fileName; 
+                
                 if (fileName) {
                     downloadCanvasImage(this, fileName);
                 } else {
@@ -388,7 +412,7 @@
             // 캔버스 클릭 이벤트 리스너 등록
             frontCanvas.addEventListener('click', handleCanvasClick);
             backCanvas.addEventListener('click', handleCanvasClick);
-        });
+        };
     </script>
 </body>
 </html>
