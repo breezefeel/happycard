@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나만의 칭찬 카드 생성기 (맞춤 배경 + 로고/QR)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap'); 
+
+        body {
+            font-family: 'Nanum Pen Script', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #4a90e2;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 1.5em;
+            font-family: 'Nanum Gothic Coding', monospace;
+        }
+
+        .input-group input[type="text"],
+        .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1.2em;
+            font-family: 'Nanum Gothic Coding', monospace;
+        }
+
+        button {
+            background-color: #f5a623;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.5em;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px #e0941d;
+            font-family: 'Nanum Gothic Coding', monospace;
+        }
+
+        button:hover {
+            background-color: #e0941d;
+        }
+
+        button:active {
+            box-shadow: 0 2px #c9851a;
+            transform: translateY(2px);
+        }
+
+        #frontCanvas, #backCanvas {
+            border-radius: 15px;
+            margin-top: 15px;
+            display: none; 
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hint {
+            margin-top: 15px;
+            color: #888;
+            font-size: 1em;
+            font-family: 'Nanum Gothic Coding', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ 나만의 칭찬 카드 만들기 (맞춤 배경 + 로고/QR) ✨</h1>
+        <p class="hint">성향에 따라 배경 색상과 분위기가 바뀌며, 뒷면에 문의 정보가 추가됩니다.</p>
+
+        <div class="input-group">
+            <label for="userName">이름을 입력하세요:</label>
+            <input type="text" id="userName" placeholder="예: 홍길동" maxlength="15">
+        </div>
+
+        <div class="input-group">
+            <label for="personalityType">나의 성향을 선택하세요:</label>
+            <select id="personalityType">
+                <option value="0">1. 💫 감성형</option>
+                <option value="1">2. 🤝 조정협조형</option>
+                <option value="2">3. 🎯 지도자형</option>
+                <option value="3">4. 🔍 현실주의형</option>
+                <option value="4">5. 💡 창조사고형</option>
+                <option value="5">6. ✨ 완벽주의형</option>
+                <option value="6">7. 🎨 예술이상형</option>
+                <option value="7">8. 🎭 독창형</option>
+                <option value="8">9. 📏 규율원칙형</option>
+                <option value="9">10. 💝 헌신박애형</option>
+                <option value="10">11. 🌈 독창이상형</option>
+            </select>
+        </div>
+
+        <button onclick="generateBothCards()">앞/뒷면 카드 생성 & 다운로드</button>
+
+        <div class="preview-area">
+            <canvas id="frontCanvas" width="500" height="700"></canvas>
+            <canvas id="backCanvas" width="500" height="700"></canvas>
+        </div>
+        
+    </div>
+
+    <script>
+        // --- 카드 데이터 및 스타일 정의 ---
+        // QR 코드 이미지 객체 (실제 이미지 경로로 변경해야 합니다!)
+        // '힐링트리 로고' 이미지도 동일한 방식으로 로드할 수 있습니다.
+        const QR_CODE_SRC = "https://i.imgur.com/GzB9k8W.png"; // 임시 QR 코드 이미지 (실제 이미지 URL로 변경해주세요)
+        const LOGO_SRC = "https://i.imgur.com/XqTj9Xf.png"; // 임시 로고 이미지 (실제 이미지 URL로 변경해주세요)
+
+        const qrImage = new Image();
+        qrImage.src = QR_CODE_SRC;
+        // qrImage.onload = () => console.log("QR 이미지 로드 완료");
+
+        const logoImage = new Image();
+        logoImage.src = LOGO_SRC;
+        // logoImage.onload = () => console.log("로고 이미지 로드 완료");
+
+
+        const CARD_STYLES = [
+            // 1. 💫 감성형 (따뜻함, 공감)
+            { front_bg: ['#f8bbd0', '#ffecb3'], front_text: '#d81b60', border: '#f06292',
+              back_bg: ['#fffde7', '#fce4ec'], back_text: '#880e4f', back_accent: '#ff80ab' }, 
+            // 2. 🤝 조정협조형 (조화, 평화)
+            { front_bg: ['#e0f7fa', '#c5e1a5'], front_text: '#00838f', border: '#4db6ac',
+              back_bg: ['#e8f5e9', '#e3f2fd'], back_text: '#2e7d32', back_accent: '#a5d6a7' },
+            // 3. 🎯 지도자형 (추진력, 힘)
+            { front_bg: ['#ffcdd2', '#f44336'], front_text: '#b71c1c', border: '#e57373',
+              back_bg: ['#ffe0b2', '#ffccbc'], back_text: '#d84315', back_accent: '#ff9800' },
+            // 4. 🔍 현실주의형 (분석, 명확)
+            { front_bg: ['#cfd8dc', '#b0bec5'], front_text: '#263238', border: '#546e7a',
+              back_bg: ['#eceff1', '#cfd8dc'], back_text: '#37474f', back_accent: '#78909c' },
+            // 5. 💡 창조사고형 (아이디어, 빛)
+            { front_bg: ['#fff9c4', '#ffeb3b'], front_text: '#f9a825', border: '#ffc107',
+              back_bg: ['#fff8e1', '#fff3e0'], back_text: '#ef6c00', back_accent: '#ffca28' },
+            // 6. ✨ 완벽주의형 (정확, 순수)
+            { front_bg: ['#e3f2fd', '#bbdefb'], front_text: '#1976d2', border: '#64b5f6',
+              back_bg: ['#f5f5f5', '#e3f2fd'], back_text: '#0d47a1', back_accent: '#90caf9' },
+            // 7. 🎨 예술이상형 (깊이, 감각)
+            { front_bg: ['#ede7f6', '#d1c4e9'], front_text: '#4527a0', border: '#7e57c2',
+              back_bg: ['#f3e5f5', '#e1bee7'], back_text: '#6a1b9a', back_accent: '#ba68c8' },
+            // 8. 🎭 독창형 (개성, 신비)
+            { front_bg: ['#e1f5fe', '#81d4fa'], front_text: '#01579b', border: '#29b6f6',
+              back_bg: ['#f0f8ff', '#e0f7fa'], back_text: '#006064', back_accent: '#4fc3f7' },
+            // 9. 📏 규율원칙형 (질서, 안정)
+            { front_bg: ['#e8f5e9', '#c8e6c9'], front_text: '#388e3c', border: '#81c784',
+              back_bg: ['#f1f8e9', '#e8f5e9'], back_text: '#1b5e20', back_accent: '#a5d6a7' },
+            // 10. 💝 헌신박애형 (사랑, 봉사)
+            { front_bg: ['#fce4ec', '#f8bbd0'], front_text: '#c2185b', border: '#e91e63',
+              back_bg: ['#fff8e1', '#fce4ec'], back_text: '#ad1457', back_accent: '#f48fb1' },
+            // 11. 🌈 독창이상형 (비전, 미래)
+            { front_bg: ['#fbe9e7', '#ffccbc'], front_text: '#e64a19', border: '#ff8a65',
+              back_bg: ['#efebe9', '#fbe9e7'], back_text: '#bf360c', back_accent: '#ffab91' }
+        ];
+
+        const CARD_DATA = [
+            { type: '💫 감성형', emoji: '🌟✨💕', quote1: "당신의 따뜻함이", quote2: "세상을 밝혀요", tags: "#공감왕 #분위기메이커", powers: ['공감력', '친화력', '순발력'], shine: ['친구가 힘들 때 위로해줄 때', '분위기를 밝게 만들 때', '사람들과 금방 친해질 때'], growth: '가끔은 객관적으로도 생각해봐요' },
+            { type: '🤝 조정협조형', emoji: '🌈🕊️💫', quote1: "당신의 배려가", quote2: "팀을 하나로 만들어요", tags: "#중재자 #배려왕", powers: ['중재력', '포용력', '균형감'], shine: ['친구들 싸울 때 중재할 때', '모두의 의견을 들어줄 때', '양쪽 입장을 이해할 때'], growth: '때론 빠른 결정도 괜찮아요' },
+            { type: '🎯 지도자형', emoji: '🚀👑💪', quote1: "당신의 리더십이", quote2: "길을 만들어요", tags: "#리더 #추진왕", powers: ['추진력', '결단력', '책임감'], shine: ['목표를 향해 나아갈 때', '빠르게 결정해야 할 때', '팀을 이끌어갈 때'], growth: '다른 의견도 들어보는 여유를!' },
+            { type: '🔍 현실주의형', emoji: '🎯🧠💡', quote1: "당신의 통찰력이", quote2: "문제를 풀어요", tags: "#전략가 #분석왕", powers: ['분석력', '전략적 사고', '객관성'], shine: ['복잡한 상황을 정리할 때', '효율적인 방법을 찾을 때', '장단점을 비교할 때'], growth: '완벽하지 않아도 실행해봐요' },
+            { type: '💡 창조사고형', emoji: '✨🎨🌟', quote1: "당신의 아이디어가", quote2: "세상을 바꿔요", tags: "#아이디어뱅크 #창의왕", powers: ['창의력', '도전정신', '적극성'], shine: ['새로운 아이디어를 낼 때', '남다른 방법을 시도할 때', '호기심을 발휘할 때'], growth: '끝까지 해내는 끈기도 길러봐요' },
+            { type: '✨ 완벽주의형', emoji: '👑💎⚡', quote1: "당신의 꼼꼼함이", quote2: "완성도를 높여요", tags: "#완벽왕 #디테일왕", powers: ['정확성', '책임감', '인내심'], shine: ['꼼꼼하게 준비할 때', '완성도를 높일 때', '실수를 방지할 때'], growth: '완벽보다 완료가 중요할 때도!' },
+            { type: '🎨 예술이상형', emoji: '🎭🌸🎵', quote1: "당신의 감성이", quote2: "아름다움을 만들어요", tags: "#예술가 #감성왕", powers: ['예술성', '표현력', '몰입력'], shine: ['아름다운 것을 표현할 때', '무대 위에 있을 때', '작품에 몰입할 때'], growth: '현실적 계획도 조금씩!' },
+            { type: '🎭 독창형', emoji: '🌟🦄✨', quote1: "당신의 독특함이", quote2: "새로운 길을 열어요", tags: "#독특왕 #역발상천재", powers: ['창의성', '독립성', '통찰력'], shine: ['남다른 관점을 제시할 때', '독특한 해결책을 찾을 때', '나만의 길을 갈 때'], growth: '가끔은 기본도 소중해요' },
+            { type: '📏 규율원칙형', emoji: '⚖️📋✅', quote1: "당신의 원칙이", quote2: "질서를 만들어요", tags: "#원칙왕 #모범생", powers: ['성실함', '신뢰성', '정직'], shine: ['규칙을 지킬 때', '약속을 지킬 때', '올바른 길을 갈 때'], growth: '융통성도 배워봐요' },
+            { type: '💝 헌신박애형', emoji: '🤗💕🌻', quote1: "당신의 사랑이", quote2: "세상을 따뜻하게 해요", tags: "#봉사왕 #천사", powers: ['봉사정신', '희생', '이타심'], shine: ['남을 도울 때', '희생할 수 있을 때', '사랑을 나눌 때'], growth: '나 자신도 사랑해줘요' },
+            { type: '🌈 독창이상형', emoji: '🚀💫🎯', quote1: "당신의 비전이", quote2: "미래를 만들어요", tags: "#비전왕 #혁신가", powers: ['혁신성', '실행력', '리더십'], shine: ['새로운 비전을 제시할 때', '혁신을 실행할 때', '미래를 그릴 때'], growth: '작은 것부터 차근차근!' }
+        ];
+
+        // --- 카드 그리기 함수 (배경 변경 로직 추가) ---
+
+        function drawFrontCard(canvas, cardInfo, cardStyle, userName) {
+            const ctx = canvas.getContext('2d');
+            const W = canvas.width;
+            const H = canvas.height;
+            
+            // 1. 카드 배경 
+            ctx.clearRect(0, 0, W, H);
+            const gradient = ctx.createLinearGradient(0, 0, 0, H);
+            gradient.addColorStop(0, cardStyle.front_bg[0]); 
+            gradient.addColorStop(1, cardStyle.front_bg[1]); 
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, W, H);
+            
+            // 2. 테두리
+            ctx.strokeStyle = cardStyle.border;
+            ctx.lineWidth = 10;
+            ctx.strokeRect(5, 5, W - 10, H - 10);
+
+            // 3. 성향 이름 (Type)
+            ctx.fillStyle = cardStyle.border; 
+            ctx.font = 'bold 50px Nanum Pen Script, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(cardInfo.type, W / 2, 80);
+
+            // 4. 성향 이모지
+            ctx.font = '80px sans-serif'; 
+            ctx.fillText(cardInfo.emoji, W / 2, 200);
+
+            // 5. 이름 영역
+            ctx.fillStyle = '#333';
+            ctx.font = '30px Nanum Pen Script, sans-serif';
+            ctx.fillText("이름:", W / 2 - 120, 300);
+            
+            // 사용자 이름 강조
+            ctx.fillStyle = cardStyle.front_text; 
+            ctx.font = 'bold 45px Nanum Pen Script, sans-serif';
+            ctx.fillText(userName, W / 2 + 30, 300);
+            
+            // 6. 칭찬 문구 (Quote)
+            ctx.fillStyle = cardStyle.front_text;
+            ctx.font = 'bold 40px Nanum Pen Script, sans-serif';
+            ctx.fillText(cardInfo.quote1, W / 2, 450);
+            ctx.fillText(cardInfo.quote2, W / 2, 510);
+            
+            // 7. 해시태그
+            ctx.fillStyle = '#666';
+            ctx.font = '35px Nanum Pen Script, sans-serif';
+            ctx.fillText(cardInfo.tags, W / 2, 650);
+        }
+
+        function drawBackCard(canvas, cardInfo, cardStyle) {
+            const ctx = canvas.getContext('2d');
+            const W = canvas.width;
+            const H = canvas.height;
+
+            // 1. 카드 배경 
+            ctx.clearRect(0, 0, W, H);
+            const gradient = ctx.createLinearGradient(0, 0, 0, H);
+            gradient.addColorStop(0, cardStyle.back_bg[0]); 
+            gradient.addColorStop(1, cardStyle.back_bg[1]); 
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, W, H);
+            
+            // 2. 테두리
+            ctx.strokeStyle = cardStyle.back_accent; 
+            ctx.lineWidth = 10;
+            ctx.strokeRect(5, 5, W - 10, H - 10);
+
+            ctx.textAlign = 'left'; 
+            let y = 80;
+
+            // 3. 나의 슈퍼파워
+            ctx.fillStyle = cardStyle.back_text;
+            ctx.font = 'bold 35px Nanum Gothic Coding, monospace';
+            ctx.fillText("💪 나의 슈퍼파워", 50, y);
+            y += 40;
+            
+            ctx.fillStyle = '#333';
+            ctx.font = '30px Nanum Gothic Coding, monospace';
+            cardInfo.powers.forEach(power => {
+                ctx.fillText(`⭐ ${power}`, 60, y);
+                y += 40;
+            });
+
+            y += 30; // 간격
+
+            // 4. 나는 이럴 때 빛나요
+            ctx.fillStyle = cardStyle.back_accent; 
+            ctx.font = 'bold 35px Nanum Gothic Coding, monospace';
+            ctx.fillText("💝 나는 이럴 때 빛나요:", 50, y);
+            y += 40;
+
+            ctx.fillStyle = '#333';
+            ctx.font = '28px Nanum Gothic Coding, monospace';
+            cardInfo.shine.forEach(item => {
+                ctx.fillText(`• ${item}`, 60, y);
+                y += 35;
+            });
+
+            y += 30; // 간격
+
+            // 5. 성장 포인트
+            ctx.fillStyle = cardStyle.back_text; 
+            ctx.font = 'bold 35px Nanum Gothic Coding, monospace';
+            ctx.fillText("💡 성장 포인트:", 50, y);
+            y += 40;
+
+            ctx.fillStyle = '#333';
+            ctx.font = '30px Nanum Gothic Coding, monospace';
+            ctx.fillText(cardInfo.growth, 60, y);
+            
+            // --- 6. 하단 정보 영역 (로고, 문의 문구, QR 코드) ---
+            const FOOTER_Y = 550; // 하단 정보 시작 Y 좌표
+            const LOGO_W = 150;
+            const LOGO_H = 40;
+            const QR_SIZE = 90;
+            const INQUIRY_Y = FOOTER_Y + 120;
+
+            // 6-1. 힐링트리 로고
+            ctx.textAlign = 'center';
+            if (logoImage.complete) {
+                // 로고 이미지가 로드되었으면 그리기
+                ctx.drawImage(logoImage, W / 2 - LOGO_W / 2, FOOTER_Y, LOGO_W, LOGO_H);
+            } else {
+                // 로고 이미지가 로드되지 않았으면 텍스트로 대체하거나 경고
+                ctx.fillStyle = '#444';
+                ctx.font = 'bold 30px Nanum Gothic Coding, monospace';
+                ctx.fillText("힐링트리 로고", W / 2, FOOTER_Y + LOGO_H);
+            }
+
+            // 6-2. QR 코드 (오른쪽)
+            const QR_X = W - 50 - QR_SIZE;
+            const QR_Y = FOOTER_Y + 10;
+            if (qrImage.complete) {
+                // QR 이미지가 로드되었으면 그리기
+                ctx.drawImage(qrImage, QR_X, QR_Y, QR_SIZE, QR_SIZE);
+            } else {
+                // 로드되지 않았으면 대체 사각형 그리기
+                ctx.fillStyle = '#ddd';
+                ctx.fillRect(QR_X, QR_Y, QR_SIZE, QR_SIZE);
+                ctx.fillStyle = '#444';
+                ctx.font = '15px Nanum Gothic Coding, monospace';
+                ctx.fillText("QR", QR_X + QR_SIZE / 2, QR_Y + QR_SIZE / 2 + 5);
+            }
+
+            // 6-3. 문의 문구 (왼쪽)
+            ctx.textAlign = 'left';
+            ctx.fillStyle = cardStyle.back_text; 
+            ctx.font = 'bold 25px Nanum Gothic Coding, monospace';
+            ctx.fillText("선천적 성향/재능 상담 문의", 50, INQUIRY_Y);
+            
+            // 6-4. QR 코드 옆에 문의 내용 (예시)
+            ctx.fillStyle = '#666'; 
+            ctx.font = '22px Nanum Gothic Coding, monospace';
+            ctx.fillText("스캔하시면 자세한 안내를...", 50, INQUIRY_Y + 30);
+        }
+
+
+        // --- 메인 실행 함수 및 다운로드 헬퍼 함수 (이전과 동일) ---
+        function generateBothCards() {
+            const userName = document.getElementById('userName').value.trim();
+            const typeIndex = document.getElementById('personalityType').value;
+            const cardInfo = CARD_DATA[typeIndex];
+            const cardStyle = CARD_STYLES[typeIndex]; 
+
+            if (!userName) {
+                alert("이름을 입력해주세요!");
+                return;
+            }
+
+            const frontCanvas = document.getElementById('frontCanvas');
+            const backCanvas = document.getElementById('backCanvas');
+            
+            frontCanvas.style.display = 'block'; 
+            backCanvas.style.display = 'block'; 
+
+            // 로고/QR 이미지가 로드될 때까지 기다리거나 바로 실행
+            // 여기서는 이미지를 즉시 로드하는 것을 가정하고 진행합니다. (비동기 처리는 복잡해지므로 단순화)
+            drawFrontCard(frontCanvas, cardInfo, cardStyle, userName);
+            drawBackCard(backCanvas, cardInfo, cardStyle);
+
+            downloadCanvasImage(frontCanvas, `칭찬카드_앞면_${userName}_${cardInfo.type.replace(/\s/g, '_')}.png`);
+            downloadCanvasImage(backCanvas, `칭찬카드_뒷면_${userName}_${cardInfo.type.replace(/\s/g, '_')}.png`);
+            
+            alert(`"${userName}"님의 ${cardInfo.type} 칭찬 카드가 (앞면/뒷면) 2장 모두 생성되어 다운로드됩니다!`);
+        }
+
+        function downloadCanvasImage(canvas, fileName) {
+            const imageURL = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.href = imageURL;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
