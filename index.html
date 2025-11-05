@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>칭찬 카드 만들기</title>
+    <title>칭찬 카드 만들기 (로고/QR 코드 삭제 버전)</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap'); 
@@ -25,7 +25,7 @@
 <body>
     <div class="container">
         <h1>✨ 나만의 ✨<br>칭찬 카드 만들기 </h1>
-        <p class="hint">내 자신이 나에게 전하는 진심 어린 칭찬이 가장 따뜻합니다. 오늘의 나를 진심으로 칭찬해주세요.</p>
+        <p class="hint">내 자신이 나에게 전하는 진심 어린 칭찬이 가장 따뜻합니다. 오늘의 나를 진심으로 칭찬해주세요. (카드를 클릭하면 다운로드됩니다.)</p>
 
         <div class="input-group">
             <label for="userName">이름을 입력하세요:</label>
@@ -49,7 +49,7 @@
             </select>
         </div>
 
-        <button onclick="generateBothCards()">칭찬 하기기</button>
+        <button onclick="generateBothCards()">칭찬 하기</button>
 
         <div class="preview-area">
             <canvas id="frontCanvas" width="500" height="700" style="display: none;"></canvas>
@@ -59,17 +59,15 @@
     </div>
 
     <script>
-        // --- 1. 이미지 및 데이터 정의 (구문 오류 수정 완료) ---
+        // --- 1. 이미지 및 데이터 정의 (이미지 변수는 남겨두지만 사용하지 않음) ---
+        // 캔버스 오염 오류를 피하기 위해 이미지 사용을 제거합니다.
         const QR_CODE_SRC = "https://i.imgur.com/GzB9k8W.png"; 
         const LOGO_SRC = "https://i.imgur.com/XqTj9Xf.png"; 
 
-        const qrImage = new Image();
-        qrImage.crossOrigin = "anonymous"; // CORS 설정 추가
-        qrImage.src = QR_CODE_SRC;
-        const logoImage = new Image();
-        logoImage.crossOrigin = "anonymous"; // CORS 설정 추가
-        logoImage.src = LOGO_SRC;
+        const qrImage = new Image(); // 변수 선언은 유지
+        const logoImage = new Image(); // 변수 선언은 유지
 
+        // CARD_STYLES 및 CARD_DATA는 이전과 동일합니다.
         const CARD_STYLES = [
             { front_bg: ['#f8bbd0', '#ffecb3'], front_text: '#d81b60', border: '#f06292', back_bg: ['#fffde7', '#fce4ec'], back_text: '#880e4f', back_accent: '#ff80ab' }, 
             { front_bg: ['#e0f7fa', '#c5e1a5'], front_text: '#00838f', border: '#4db6ac', back_bg: ['#e8f5e9', '#e3f2fd'], back_text: '#2e7d32', back_accent: '#a5d6a7' },
@@ -162,7 +160,7 @@
             ctx.fillText(cardInfo.tags, W / 2, 650);
         }
 
-        // --- drawBackCard: 이미지 로딩 안정화 적용 ---
+        // --- drawBackCard: 로고/QR 코드를 그리는 하단 섹션 완전히 제거 ---
         function drawBackCard(canvas, cardInfo, cardStyle) {
             const ctx = canvas.getContext('2d');
             const W = canvas.width;
@@ -220,88 +218,24 @@
             ctx.fillStyle = '#333';
             ctx.font = '30px Nanum Gothic Coding, monospace';
             
+            // 성장 포인트의 Y 위치를 캔버스 하단과 간격을 두도록 조정
+            // 이전에는 FOOTER_Y = 550이 있었으므로, 캔버스 높이 700에 맞춰 적당히 조정
             y = wrapText(ctx, cardInfo.growth, START_X, y, MAX_TEXT_WIDTH, 35); 
             
-            // --- 6. 하단 정보 영역 (로고, 문의 문구, QR 코드) ---
-            const FOOTER_Y = 550; 
-            const LOGO_W = 150;
-            const LOGO_H = 40;
-            const QR_SIZE = 90;
-            const INQUIRY_Y = FOOTER_Y + 120;
-
-            ctx.textAlign = 'center';
+            // --- 6. 하단 정보 영역 (로고, 문의 문구, QR 코드) 삭제됨 ---
             
-            // 🚨 이미지 로딩 완료가 보장되므로, 그리기만 시도
-            if (logoImage.complete && logoImage.naturalWidth > 0) { // 혹시 로드 실패했는지 크기 한번 더 확인
-                ctx.drawImage(logoImage, W / 2 - LOGO_W / 2, FOOTER_Y, LOGO_W, LOGO_H);
-            } else {
-                ctx.fillStyle = '#444';
-                ctx.font = 'bold 30px Nanum Gothic Coding, monospace';
-                ctx.fillText("힐링트리 로고 (미로드)", W / 2, FOOTER_Y + LOGO_H);
-            }
-
-            const QR_X = W - 50 - QR_SIZE;
-            const QR_Y = FOOTER_Y + 10;
-            if (qrImage.complete && qrImage.naturalWidth > 0) { // 혹시 로드 실패했는지 크기 한번 더 확인
-                ctx.drawImage(qrImage, QR_X, QR_Y, QR_SIZE, QR_SIZE);
-            } else {
-                ctx.fillStyle = '#ddd';
-                ctx.fillRect(QR_X, QR_Y, QR_SIZE, QR_SIZE);
-                ctx.fillStyle = '#444';
-                ctx.font = '15px Nanum Gothic Coding, monospace';
-                ctx.fillText("QR (미로드)", QR_X + QR_SIZE / 2, QR_Y + QR_SIZE / 2 + 5);
-            }
-
-            ctx.textAlign = 'left';
-            ctx.fillStyle = cardStyle.back_text; 
-            ctx.font = 'bold 25px Nanum Gothic Coding, monospace';
-            ctx.fillText("선천적 성향/재능 상담 문의", START_X - 10, INQUIRY_Y);
-            
-            ctx.fillStyle = '#666'; 
-            ctx.font = '22px Nanum Gothic Coding, monospace';
-            ctx.fillText("스캔하시면 자세한 안내를...", START_X - 10, INQUIRY_Y + 30);
+            // 최종 Y 위치가 너무 낮으면 캔버스 중앙에 오도록 나머지 요소를 약간 위로 이동시키는 로직을 추가할 수 있지만,
+            // 현재 코드에서는 그냥 마무리됩니다. (텍스트가 캔버스 하단을 벗어나지 않도록만 관리)
         }
 
-        // --- 4. 이미지 사전 로드 함수 (이전보다 더 명확하게 개선) ---
+        // --- 4. 이미지 사전 로드 함수 (외부 이미지가 없으므로 단순화) ---
+        // 이제 로드할 이미지가 없으므로, 즉시 콜백을 호출합니다.
         function preloadImages(callback) {
-            let loaded = 0;
-            const toLoad = [logoImage, qrImage];
-            const toLoadCount = toLoad.length;
-            
-            const checkLoad = () => {
-                loaded++;
-                if (loaded === toLoadCount) callback();
-            };
-
-            // 이미 로드된 이미지를 확인합니다.
-            toLoad.forEach(img => {
-                if (img.complete) {
-                    loaded++;
-                }
-            });
-
-            if (loaded === toLoadCount) {
-                callback();
-                return;
-            }
-
-            // 로드해야 할 이미지만 이벤트 리스너를 등록합니다.
-            toLoad.forEach(img => {
-                if (!img.complete) {
-                    const handler = () => {
-                        // 중복 호출 방지를 위해 이벤트 리스너 제거
-                        img.onload = null;
-                        img.onerror = null;
-                        checkLoad();
-                    };
-                    img.onload = handler;
-                    img.onerror = handler; 
-                }
-            });
+            callback();
         }
 
 
-        // --- 5. 카드 생성 함수 (이전과 동일) ---
+        // --- 5. 카드 생성 함수 (이미지 로드 제거 및 다운로드 안내 유지) ---
         function generateBothCards() {
             const userName = document.getElementById('userName').value.trim();
             const typeIndex = document.getElementById('personalityType').value;
@@ -319,24 +253,21 @@
             frontCanvas.style.display = 'block'; 
             backCanvas.style.display = 'block'; 
 
-            // 이미지 로딩 완료 후 그리기 실행
-            preloadImages(function() {
-                drawFrontCard(frontCanvas, cardInfo, cardStyle, userName);
-                drawBackCard(backCanvas, cardInfo, cardStyle);
+            // 외부 이미지 로딩 단계를 건너뛰고 바로 그리기 실행
+            drawFrontCard(frontCanvas, cardInfo, cardStyle, userName);
+            drawBackCard(backCanvas, cardInfo, cardStyle);
 
-                const baseFileName = `${userName}_${cardInfo.type.replace(/\s/g, '_')}`;
-                frontCanvas.dataset.fileName = `칭찬카드_앞면_${baseFileName}.png`;
-                backCanvas.dataset.fileName = `칭찬카드_뒷면_${baseFileName}.png`; 
-                
-                alert(`"${userName}"님의 ${cardInfo.type} 칭찬 카드가 생성되었습니다! 이미지를 클릭하여 다운로드하세요.`);
-            });
+            const baseFileName = `${userName}_${cardInfo.type.replace(/\s/g, '_')}`;
+            frontCanvas.dataset.fileName = `칭찬카드_앞면_${baseFileName}.png`;
+            backCanvas.dataset.fileName = `칭찬카드_뒷면_${baseFileName}.png`; 
+            
+            alert(`"${userName}"님의 ${cardInfo.type} 칭찬 카드가 생성되었습니다! 이미지를 클릭하여 다운로드하세요.`);
         }
 
-        // --- 6. 다운로드 함수 및 이벤트 리스너 ---
+        // --- 6. 다운로드 함수 및 이벤트 리스너 (CORS 오류가 사라졌으므로 안정화) ---
         function downloadCanvasImage(canvas, fileName) {
             try {
-                // 🚨 여기서 보안 오류(Tainted Canvas)가 발생할 수 있습니다.
-                // 캔버스에 외부 이미지(로고, QR)를 사용하면 toDataURL 시 보안상의 이유로 오류가 발생할 수 있습니다.
+                // 외부 이미지가 제거되었으므로 toDataURL 오류 가능성이 매우 낮아집니다.
                 const imageURL = canvas.toDataURL('image/png'); 
                 const link = document.createElement('a');
                 link.href = imageURL;
@@ -346,7 +277,7 @@
                 document.body.removeChild(link);
             } catch (error) {
                 console.error("다운로드 오류:", error);
-                alert("다운로드 중 오류가 발생했습니다. (보안 오류 가능성) 캔버스 이미지를 길게 눌러 직접 저장해 보세요.");
+                alert("다운로드 중 오류가 발생했습니다. 직접 이미지를 길게 눌러(모바일) 저장해 보세요.");
             }
         }
 
@@ -361,7 +292,7 @@
                 if (fileName && this.toDataURL('image/png').length > 5000) { 
                     downloadCanvasImage(this, fileName);
                 } else {
-                    alert("카드가 아직 그려지지 않았습니다. '카드 생성' 버튼을 다시 눌러주세요.");
+                    alert("카드가 아직 그려지지 않았습니다. '칭찬 하기' 버튼을 다시 눌러주세요.");
                 }
             };
 
@@ -371,4 +302,3 @@
     </script>
 </body>
 </html>
-
