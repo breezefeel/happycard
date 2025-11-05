@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>칭찬 카드 만들기</title>
+    <title>나만의 칭찬 카드 생성기 (최종)</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap'); 
@@ -101,8 +101,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>✨ 나만의 ✨<br>칭찬 카드 만들기</h1>
-        <p class="hint">내 자신이 나에게 전하는 진심 어린 칭찬이 가장 따뜻합니다. 오늘의 나를 진심으로 칭찬해주세요.</p>
+        <h1>✨ 나만의 칭찬 카드 만들기 (맞춤 배경 + 로고/QR) ✨</h1>
+        <p class="hint">카드를 생성한 후, 이미지를 **클릭**하여 다운로드할 수 있습니다.</p>
 
         <div class="input-group">
             <label for="userName">이름을 입력하세요:</label>
@@ -110,7 +110,7 @@
         </div>
 
         <div class="input-group">
-            <label for="personalityType">내 성향을 선택하세요:</label>
+            <label for="personalityType">나의 성향을 선택하세요:</label>
             <select id="personalityType">
                 <option value="0">1. 💫 감성형</option>
                 <option value="1">2. 🤝 조정협조형</option>
@@ -126,7 +126,7 @@
             </select>
         </div>
 
-        <button onclick="generateBothCards()">칭찬 하기</button>
+        <button onclick="generateBothCards()">앞/뒷면 카드 생성</button>
 
         <div class="preview-area">
             <canvas id="frontCanvas" width="500" height="700" style="display: none;"></canvas>
@@ -138,8 +138,8 @@
     <script>
         // --- 1. 이미지 및 데이터 정의 ---
         // ⭐⭐ 실제 로고/QR 코드 URL로 변경하세요! ⭐⭐
-        const QR_CODE_SRC = "https://breezefeel.github.io/happycard/QR코드.jpg"; 
-        const LOGO_SRC = "https://breezefeel.github.io/happycard/힐링트리 로고 (2).png"; 
+        const QR_CODE_SRC = "https://i.imgur.com/GzB9k8W.png"; 
+        const LOGO_SRC = "https://i.imgur.com/XqTj9Xf.png"; 
 
         const qrImage = new Image();
         qrImage.src = QR_CODE_SRC;
@@ -185,14 +185,13 @@
             { type: '🌈 독창이상형', emoji: '🚀💫🎯', quote1: "당신의 비전이", quote2: "미래를 만들어요", tags: "#비전왕 #혁신가", powers: ['혁신성', '실행력', '리더십'], shine: ['새로운 비전을 제시할 때', '혁신을 실행할 때', '미래를 그릴 때'], growth: '작은 것부터 차근차근!' }
         ];
 
-        // --- 2. 카드 그리기 함수 (이전과 동일) ---
+        // --- 2. 카드 그리기 함수 ---
 
         function drawFrontCard(canvas, cardInfo, cardStyle, userName) {
             const ctx = canvas.getContext('2d');
             const W = canvas.width;
             const H = canvas.height;
             
-            // 1. 카드 배경 
             ctx.clearRect(0, 0, W, H);
             const gradient = ctx.createLinearGradient(0, 0, 0, H);
             gradient.addColorStop(0, cardStyle.front_bg[0]); 
@@ -200,38 +199,31 @@
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, W, H);
             
-            // 2. 테두리
             ctx.strokeStyle = cardStyle.border;
             ctx.lineWidth = 10;
             ctx.strokeRect(5, 5, W - 10, H - 10);
 
-            // 3. 성향 이름 (Type)
             ctx.fillStyle = cardStyle.border; 
             ctx.font = 'bold 50px Nanum Pen Script, sans-serif';
             ctx.textAlign = 'center';
             ctx.fillText(cardInfo.type, W / 2, 80);
 
-            // 4. 성향 이모지
             ctx.font = '80px sans-serif'; 
             ctx.fillText(cardInfo.emoji, W / 2, 200);
 
-            // 5. 이름 영역
             ctx.fillStyle = '#333';
             ctx.font = '30px Nanum Pen Script, sans-serif';
             ctx.fillText("이름:", W / 2 - 120, 300);
             
-            // 사용자 이름 강조
             ctx.fillStyle = cardStyle.front_text; 
             ctx.font = 'bold 45px Nanum Pen Script, sans-serif';
             ctx.fillText(userName, W / 2 + 30, 300);
             
-            // 6. 칭찬 문구 (Quote)
             ctx.fillStyle = cardStyle.front_text;
             ctx.font = 'bold 40px Nanum Pen Script, sans-serif';
             ctx.fillText(cardInfo.quote1, W / 2, 450);
             ctx.fillText(cardInfo.quote2, W / 2, 510);
             
-            // 7. 해시태그
             ctx.fillStyle = '#666';
             ctx.font = '35px Nanum Pen Script, sans-serif';
             ctx.fillText(cardInfo.tags, W / 2, 650);
@@ -242,7 +234,6 @@
             const W = canvas.width;
             const H = canvas.height;
 
-            // 1. 카드 배경 
             ctx.clearRect(0, 0, W, H);
             const gradient = ctx.createLinearGradient(0, 0, 0, H);
             gradient.addColorStop(0, cardStyle.back_bg[0]); 
@@ -250,7 +241,6 @@
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, W, H);
             
-            // 2. 테두리
             ctx.strokeStyle = cardStyle.back_accent; 
             ctx.lineWidth = 10;
             ctx.strokeRect(5, 5, W - 10, H - 10);
@@ -258,7 +248,7 @@
             ctx.textAlign = 'left'; 
             let y = 80;
 
-            // 3. 나의 슈퍼파워
+            // 내용 그리기
             ctx.fillStyle = cardStyle.back_text;
             ctx.font = 'bold 35px Nanum Gothic Coding, monospace';
             ctx.fillText("💪 나의 슈퍼파워", 50, y);
@@ -271,9 +261,8 @@
                 y += 40;
             });
 
-            y += 30; // 간격
+            y += 30;
 
-            // 4. 나는 이럴 때 빛나요
             ctx.fillStyle = cardStyle.back_accent; 
             ctx.font = 'bold 35px Nanum Gothic Coding, monospace';
             ctx.fillText("💝 나는 이럴 때 빛나요:", 50, y);
@@ -286,9 +275,8 @@
                 y += 35;
             });
 
-            y += 30; // 간격
+            y += 30;
 
-            // 5. 성장 포인트
             ctx.fillStyle = cardStyle.back_text; 
             ctx.font = 'bold 35px Nanum Gothic Coding, monospace';
             ctx.fillText("💡 성장 포인트:", 50, y);
@@ -298,7 +286,7 @@
             ctx.font = '30px Nanum Gothic Coding, monospace';
             ctx.fillText(cardInfo.growth, 60, y);
             
-            // --- 6. 하단 정보 영역 (로고, 문의 문구, QR 코드) ---
+            // --- 하단 정보 영역 (로고, 문의 문구, QR 코드) ---
             const FOOTER_Y = 550; 
             const LOGO_W = 150;
             const LOGO_H = 40;
@@ -342,6 +330,7 @@
 
 
         // --- 3. 실행 및 다운로드 함수 ---
+        // 이 함수는 HTML 버튼에서 직접 호출됩니다.
         function generateBothCards() {
             const userName = document.getElementById('userName').value.trim();
             const typeIndex = document.getElementById('personalityType').value;
@@ -362,10 +351,10 @@
             drawFrontCard(frontCanvas, cardInfo, cardStyle, userName);
             drawBackCard(backCanvas, cardInfo, cardStyle);
 
-            // 캔버스 데이터 속성에 다운로드 파일명 저장 (오류 수정: backCanvas에도 파일명 저장)
+            // 캔버스 데이터 속성에 다운로드 파일명 저장
             const baseFileName = `${userName}_${cardInfo.type.replace(/\s/g, '_')}`;
             frontCanvas.dataset.fileName = `칭찬카드_앞면_${baseFileName}.png`;
-            **backCanvas.dataset.fileName = `칭찬카드_뒷면_${baseFileName}.png`;** // 👈 뒷면 파일명 저장 추가/수정
+            backCanvas.dataset.fileName = `칭찬카드_뒷면_${baseFileName}.png`; 
 
             alert(`"${userName}"님의 ${cardInfo.type} 칭찬 카드가 생성되었습니다! 이미지를 클릭하여 다운로드하세요.`);
         }
@@ -381,8 +370,9 @@
             document.body.removeChild(link);
         }
 
-        // --- 4. 이벤트 리스너 (캔버스 클릭 다운로드) ---
-        document.addEventListener('DOMContentLoaded', () => {
+        // --- 4. 이벤트 리스너 등록 (HTML 요소가 모두 로드된 후 실행) ---
+        // 이 부분이 실행 오류를 막기 위해 중요합니다!
+        window.addEventListener('DOMContentLoaded', () => {
             const frontCanvas = document.getElementById('frontCanvas');
             const backCanvas = document.getElementById('backCanvas');
             
@@ -395,10 +385,10 @@
                 }
             };
 
+            // 캔버스 클릭 이벤트 리스너 등록
             frontCanvas.addEventListener('click', handleCanvasClick);
             backCanvas.addEventListener('click', handleCanvasClick);
         });
     </script>
 </body>
 </html>
-
