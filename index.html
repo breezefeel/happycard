@@ -3,79 +3,1020 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>칭찬 카드 만들기 (폰트 통일)</title>
+    <title>GFAT 성향 분석 및 칭찬 카드 만들기</title>
     <style>
-        /* 폰트: Nanum Pen Script는 제목 및 주요 강조, Nanum Gothic Coding은 본문 및 상세 정보에 사용 */
-        @import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Nanum+Gothic+Coding&display=swap'); 
+        /* 폰트 및 기본 스타일 (두 파일에서 필요한 모든 폰트 통합) */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Nanum+Pen+Script&family=Nanum+Gothic+Coding&display=swap');
 
-        body { font-family: 'Nanum Pen Script', sans-serif; background-color: #f0f4f8; color: #333; text-align: center; padding: 20px; }
-        .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); }
-        h1 { color: #4a90e2; margin-bottom: 20px; font-size: 2.5em; }
+        /* GFAT 성향 분석 페이지 (page1)의 타입별 기본 색상 정의 */
+        :root {
+            --color-type-1: #e67e22; /* 감성형 💫 */
+            --color-type-2: #2ecc71; /* 조정협조형 🤝 */
+            --color-type-3: #e74c3c; /* 지도자형 🎯 */
+            --color-type-4: #95a5a6; /* 현실주의형 🔍 */
+            --color-type-5: #f1c40f; /* 창조사고형 💡 */
+            --color-type-6: #bdc3c7; /* 완벽주의형 ✨ */
+            --color-type-7: #9b59b6; /* 예술이상형 🎨 */
+            --color-type-8: #34495e; /* 독창형 🎭 */
+            --color-type-9: #7f8c8d; /* 규율원칙형 📏 */
+            --color-type-10: #e84393; /* 헌신박애형 💝 */
+            --color-type-11: #1abc9c; /* 독창이상형 🌈 */
+        }
+
+        /* 1. 기본 전체 스타일 */
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f4f4f9; /* index.html 기본 배경색 */
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 2. 탭 네비게이션 스타일 */
+        .tab-nav {
+            background-color: #2c3e50;
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-button {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: transparent;
+            color: #ecf0f1;
+            border: none;
+            padding: 12px 25px;
+            margin: 0 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 6px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .tab-button:hover {
+            background-color: #34495e;
+        }
+
+        .tab-button.active {
+            background-color: #ecf0f1;
+            color: #2c3e50;
+        }
+
+        /* 3. 콘텐츠 페이지 스타일 */
+        .content-page {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+            min-height: 80vh; /* 최소 높이 보장 */
+        }
+
+        /* ---------------------------------------------------- */
+        /* [Page 1: GFAT 11가지 성향] (index.html CSS) */
+        /* ---------------------------------------------------- */
+
+        /* 메인 타이틀 */
+        .page1-title {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 40px;
+        }
+
+        /* 성향 카드 */
+        .type-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+            border-top: 6px solid;
+            overflow: hidden;
+        }
+
+        /* 카드 헤더 (제목) */
+        .card-header {
+            padding: 20px 25px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .type-card h2 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        /* 카드 본문 */
+        .card-body {
+            padding: 25px;
+        }
+
+        /* 한마디 요약 */
+        .summary {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background-color: #f9f9f9;
+            border-left: 5px solid;
+            padding: 15px 20px;
+            margin: 0 0 25px 0;
+            border-radius: 5px;
+        }
+        
+        .summary strong {
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        /* 세부 내용 그리드 */
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .detail-item {
+            background-color: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .detail-item h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.15rem;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        /* 리스트 스타일 */
+        .detail-item ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .detail-item li {
+            position: relative;
+            padding-left: 22px;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        /* 커스텀 불릿 (•) */
+        .detail-item li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--color-type-1); /* 기본값 */
+        }
+
+        /* --- 타입별 색상 적용 --- */
+        #type-1 { border-top-color: var(--color-type-1); }
+        #type-1 h2, #type-1 .summary { color: var(--color-type-1); border-left-color: var(--color-type-1); }
+        #type-1 .detail-item li::before { color: var(--color-type-1); }
+
+        #type-2 { border-top-color: var(--color-type-2); }
+        #type-2 h2, #type-2 .summary { color: var(--color-type-2); border-left-color: var(--color-type-2); }
+        #type-2 .detail-item li::before { color: var(--color-type-2); }
+
+        #type-3 { border-top-color: var(--color-type-3); }
+        #type-3 h2, #type-3 .summary { color: var(--color-type-3); border-left-color: var(--color-type-3); }
+        #type-3 .detail-item li::before { color: var(--color-type-3); }
+
+        #type-4 { border-top-color: var(--color-type-4); }
+        #type-4 h2, #type-4 .summary { color: var(--color-type-4); border-left-color: var(--color-type-4); }
+        #type-4 .detail-item li::before { color: var(--color-type-4); }
+
+        #type-5 { border-top-color: var(--color-type-5); }
+        #type-5 h2, #type-5 .summary { color: var(--color-type-5); border-left-color: var(--color-type-5); }
+        #type-5 .detail-item li::before { color: var(--color-type-5); }
+
+        #type-6 { border-top-color: var(--color-type-6); }
+        #type-6 h2, #type-6 .summary { color: var(--color-type-6); border-left-color: var(--color-type-6); }
+        #type-6 .detail-item li::before { color: var(--color-type-6); }
+
+        #type-7 { border-top-color: var(--color-type-7); }
+        #type-7 h2, #type-7 .summary { color: var(--color-type-7); border-left-color: var(--color-type-7); }
+        #type-7 .detail-item li::before { color: var(--color-type-7); }
+
+        #type-8 { border-top-color: var(--color-type-8); }
+        #type-8 h2, #type-8 .summary { color: var(--color-type-8); border-left-color: var(--color-type-8); }
+        #type-8 .detail-item li::before { color: var(--color-type-8); }
+
+        #type-9 { border-top-color: var(--color-type-9); }
+        #type-9 h2, #type-9 .summary { color: var(--color-type-9); border-left-color: var(--color-type-9); }
+        #type-9 .detail-item li::before { color: var(--color-type-9); }
+
+        #type-10 { border-top-color: var(--color-type-10); }
+        #type-10 h2, #type-10 .summary { color: var(--color-type-10); border-left-color: var(--color-type-10); }
+        #type-10 .detail-item li::before { color: var(--color-type-10); }
+
+        #type-11 { border-top-color: var(--color-type-11); }
+        #type-11 h2, #type-11 .summary { color: var(--color-type-11); border-left-color: var(--color-type-11); }
+        #type-11 .detail-item li::before { color: var(--color-type-11); }
+
+
+        /* ---------------------------------------------------- */
+        /* [Page 2: 칭찬 카드 만들기] (두번째 페이지.html CSS) */
+        /* ---------------------------------------------------- */
+        
+        #page2 {
+            text-align: center;
+        }
+
+        #page2 .card-maker-container { 
+            /* 원본 파일의 .container 스타일 */
+            max-width: 600px; 
+            margin: 0 auto; 
+            background: #fff; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); 
+            font-family: 'Nanum Pen Script', sans-serif;
+        }
+
+        #page2 h1 { 
+            font-family: 'Nanum Pen Script', sans-serif; /* 원본 폰트 적용 */
+            color: #4a90e2; 
+            margin-bottom: 20px; 
+            font-size: 2.5em; 
+        }
         
         /* 폰트 지정 통일 */
-        .input-group label { font-family: 'Nanum Gothic Coding', monospace; }
-        .input-group input[type="text"], .input-group select { font-family: 'Nanum Gothic Coding', monospace; }
-        button { font-family: 'Nanum Gothic Coding', monospace; }
+        #page2 .input-group label { font-family: 'Nanum Gothic Coding', monospace; }
+        #page2 .input-group input[type="text"], 
+        #page2 .input-group select { font-family: 'Nanum Gothic Coding', monospace; }
+        #page2 button { font-family: 'Nanum Gothic Coding', monospace; }
 
         /* 모든 캔버스 스타일 통일 */
-        #frontCanvas, #backCanvas, #allComplimentsCanvas1, #allComplimentsCanvas2, #allComplimentsCanvas3, #allComplimentsCanvas4 { 
-            border-radius: 15px; margin-top: 15px; 
-            display: none; margin-left: auto; margin-right: auto; 
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); max-width: 100%; height: auto; 
+        #page2 canvas { 
+            border-radius: 15px; 
+            margin-top: 15px; 
+            display: none; 
+            margin-left: auto; 
+            margin-right: auto; 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
+            max-width: 100%; 
+            height: auto; 
         }
         
         /* 기존 스타일 유지 */
-        .input-group { margin-bottom: 20px; text-align: left; }
-        .input-group label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 1.5em; }
-        .input-group input[type="text"], .input-group select { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 1.2em; }
-        button { background-color: #f5a623; color: white; padding: 15px 30px; border: none; border-radius: 8px; cursor: pointer; font-size: 1.5em; font-weight: bold; transition: background-color 0.3s; box-shadow: 0 4px #e0941d; }
-        button:hover { background-color: #e0941d; }
-        button:active { box-shadow: 0 2px #c9851a; transform: translateY(2px); }
-        .hint { margin-top: 15px; color: #888; font-size: 1em; font-family: 'Nanum Gothic Coding', monospace; }
+        #page2 .input-group { margin-bottom: 20px; text-align: left; }
+        #page2 .input-group label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 1.5em; }
+        #page2 .input-group input[type="text"], 
+        #page2 .input-group select { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 1.2em; }
+        #page2 button { background-color: #f5a623; color: white; padding: 15px 30px; border: none; border-radius: 8px; cursor: pointer; font-size: 1.5em; font-weight: bold; transition: background-color 0.3s; box-shadow: 0 4px #e0941d; }
+        #page2 button:hover { background-color: #e0941d; }
+        #page2 button:active { box-shadow: 0 2px #c9851a; transform: translateY(2px); }
+        #page2 .hint { margin-top: 15px; color: #888; font-size: 1em; font-family: 'Nanum Gothic Coding', monospace; }
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>✨ 나만의 ✨<br>칭찬 카드 만들기 </h1>
-        <p class="hint"> 성향에 꼭 맞는 칭찬은, 더 마음 깊이 와닿고 더 진심처럼 느껴집니다</p>
 
-        <div class="input-group">
-            <label for="userName">이름을 입력하세요:</label>
-            <input type="text" id="userName" placeholder="예: 홍길동" maxlength="15">
-        </div>
+    <nav class="tab-nav">
+        <button class="tab-button active" onclick="switchPage('page1')">📚 GFAT 성향 분석</button>
+        <button class="tab-button" onclick="switchPage('page2')">✨ 칭찬 카드 만들기</button>
+    </nav>
 
-        <div class="input-group">
-            <label for="personalityType">성향을 선택하세요:</label>
-            <select id="personalityType">
-                <option value="0">1. 💫 감성형</option>
-                <option value="1">2. 🤝 조정협조형</option>
-                <option value="2">3. 🎯 지도자형</option>
-                <option value="3">4. 🔍 현실주의형</option>
-                <option value="4">5. 💡 창조사고형</option>
-                <option value="5">6. ✨ 완벽주의형</option>
-                <option value="6">7. 🎨 예술이상형</option>
-                <option value="7">8. 🎭 독창형</option>
-                <option value="8">9. 📏 규율원칙형</option>
-                <option value="9">10. 💝 헌신박애형</option>
-                <option value="10">11. 🌈 독창이상형</option>            
-            </select>
-        </div>
+    <div id="page1" class="content-page">
+        <h1 class="page1-title">📚 11가지 성향 완전판</h1>
 
-        <button onclick="generateBothCards()">칭찬 하기</button>
-        
-        <div class="preview-area">
-            <canvas id="frontCanvas" width="500" height="700" style="display: none;"></canvas>
-            <canvas id="backCanvas" width="500" height="700" style="display: none;"></canvas>
+        <section class="type-card" id="type-1">
+            <div class="card-header"><h2>1️⃣ 💫 감성형 (15%)</h2></div>
+            <div class="card-body">
+                <p class="summary">✨ <strong>한마디:</strong> 분위기 메이커, 공감왕</p>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <h3>😊 강점</h3>
+                        <ul>
+                            <li>순발력 - 상황 대처 빠름</li>
+                            <li>친화력 - 금방 친해짐</li>
+                            <li>열정 - 에너지 넘침</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>😅 약점</h3>
+                        <ul>
+                            <li>감정기복 - 기분에 따라 달라짐</li>
+                            <li>복잡하면 포기 - 단순 선호</li>
+                            <li>집중력 짧음 - 쉽게 산만</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🏫 학교생활</h3>
+                        <ul>
+                            <li>반 분위기 주도</li>
+                            <li>친구들 사이 인기 많음</li>
+                            <li>조별과제 때 분위기 담당</li>
+                            <li>발표 잘함 (텐션 UP!)</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💕 연애 스타일</h3>
+                        <ul>
+                            <li>감성적, 로맨틱 추구</li>
+                            <li>기념일/이벤트 중요시</li>
+                            <li>감정 표현 솔직함</li>
+                            <li>스킨십 좋아함</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💡 공부법</h3>
+                        <ul>
+                            <li>카페, 스터디카페 가기</li>
+                            <li>친구들과 함께 공부</li>
+                            <li>음악 들으며 공부</li>
+                            <li>짧게 여러 번 나눠서</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🎯 추천 진로</h3>
+                        <ul>
+                            <li>연예인, 방송인, MC</li>
+                            <li>서비스직 (고객응대)</li>
+                            <li>이벤트 기획자</li>
+                            <li>상담사, 코치</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="type-card" id="type-2">
+            <div class="card-header"><h2>2️⃣ 🤝 조정협조형 (20%)</h2></div>
+            <div class="card-body">
+                <p class="summary">✨ <strong>한마디:</strong> 중재자, 멀티태스킹</p>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <h3>😊 강점</h3>
+                        <ul>
+                            <li>객관적 - 양쪽 입장 이해</li>
+                            <li>협상력 - 중재 능력 탁월</li>
+                            <li>이해심 - 포용력 높음</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>😅 약점</h3>
+                        <ul>
+                            <li>결정 느림 - 고민 많음</li>
+                            <li>우유부단 - 선택 어려움</li>
+                            <li>눈치 많이 봄 - 피곤함</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🏫 학교생활</h3>
+                        <ul>
+                            <li>조별과제 조율 담당</li>
+                            <li>친구 싸움 중재자</li>
+                            <li>모두와 두루두루 친함</li>
+                            <li>갈등 상황 해결사</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💕 연애 스타일</h3>
+                        <ul>
+                            <li>배려형, 상대 기분 살핌</li>
+                            <li>듣는 연애 (경청 잘함)</li>
+                            <li>갈등 싫어함 (평화주의)</li>
+                            <li>상대방 우선</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💡 공부법</h3>
+                        <ul>
+                            <li>조용한 환경 선호</li>
+                            <li>계획 세우되 유연하게</li>
+                            <li>요약/정리 잘함</li>
+                            <li>그룹 스터디 조율자</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🎯 추천 진로</h3>
+                        <ul>
+                            <li>HR, 인사 담당자</li>
+                            <li>중재자, 조정관</li>
+                            <li>상담사, 심리치료사</li>
+                            <li>외교관, 협상 전문가</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="type-card" id="type-3">
+            <div class="card-header"><h2>3️⃣ 🎯 지도자형 (25%)</h2></div>
+            <div class="card-body">
+                <p class="summary">✨ <strong>한마디:</strong> 타고난 리더, 카리스마</p>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <h3>😊 강점</h3>
+                        <ul>
+                            <li>추진력 - 일 빠르게 진행</li>
+                            <li>목표지향 - 목표 달성 집중</li>
+                            <li>강단 - 확실한 결정력</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>😅 약점</h3>
+                        <ul>
+                            <li>고집 - 내 방식 고집</li>
+                            <li>융통성 부족 - 원칙주의</li>
+                            <li>타인 의견 무시 가능</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🏫 학교생활</h3>
+                        <ul>
+                            <li>학생회, 반장, 조장</li>
+                            <li>조별과제 리더 역할</li>
+                            <li>의견 주도, 결정 빠름</li>
+                            <li>책임감 강함</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💕 연애 스타일</h3>
+                        <ul>
+                            <li>주도적, 확실한 스타일</li>
+                            <li>리드하는 연애</li>
+                            <li>결정 빠름 (고백도 빠름)</li>
+                            <li>책임감 있는 연애</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💡 공부법</h3>
+                        <ul>
+                            <li>목표 설정 → 실행</li>
+                            <li>계획표 철저히 지킴</li>
+                            <li>혼자 집중해서 공부</li>
+                            <li>경쟁심 활용</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🎯 추천 진로</h3>
+                        <ul>
+                            <li>CEO, 경영자</li>
+                            <li>정치인, 공무원</li>
+                            <li>프로젝트 매니저</li>
+                            <li>군인, 경찰</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="type-card" id="type-4">
+            <div class="card-header"><h2>4️⃣ 🔍 현실주의형 (20%)</h2></div>
+            <div class="card-body">
+                <p class="summary">✨ <strong>한마디:</strong> 관찰자, 전략가</p>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <h3>😊 강점</h3>
+                        <ul>
+                            <li>분석력 - 상황 파악 정확</li>
+                            <li>현실적 판단 - 실용적</li>
+                            <li>멀티태스킹 - 여러 일 동시</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>😅 약점</h3>
+                        <ul>
+                            <li>계산적 - 손익 따짐</li>
+                            <li>끝맺음 약함 - 완성도 낮음</li>
+                            <li>감정 표현 서툼</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🏫 학교생활</h3>
+                        <ul>
+                            <li>상황 파악 빠름</li>
+                            <li>효율적인 방법 찾기</li>
+                            <li>성적 관리 전략적</li>
+                            <li>관찰자 포지션</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💕 연애 스타일</h3>
+                        <ul>
+                            <li>현실적, 계획적</li>
+                            <li>장단점 분석형</li>
+                            <li>신중한 선택</li>
+                            <li>실속 중시</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💡 공부법</h3>
+                        <ul>
+                            <li>전략적 학습 (효율 중시)</li>
+                            <li>기출문제 분석</li>
+                            <li>시간 배분 철저</li>
+                            <li>우선순위 관리</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🎯 추천 진로</h3>
+                        <ul>
+                            <li>전략기획자, 컨설턴트</li>
+                            <li>데이터 분석가</li>
+                            <li>회계사, 세무사</li>
+                            <li>투자 전문가</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="type-card" id="type-5">
+            <div class="card-header"><h2>5️⃣ 💡 창조사고형 (10%)</h2></div>
+            <div class="card-body">
+                <p class="summary">✨ <strong>한마디:</strong> 호기심 대장, 아이디어 뱅크</p>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <h3>😊 강점</h3>
+                        <ul>
+                            <li>창의력 - 참신한 아이디어</li>
+                            <li>적극성 - 먼저 시도함</li>
+                            <li>친화력 - 사교적</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>😅 약점</h3>
+                        <ul>
+                            <li>지속성 약함 - 금방 질림</li>
+                            <li>쉽게 질림 - 한 가지 오래 못함</li>
+                            <li>마무리 약함 - 시작만 많음</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🏫 학교생활</h3>
+                        <ul>
+                            <li>다양한 동아리 활동</li>
+                            <li>새로운 시도 많음</li>
+                            <li>아이디어 제공자</li>
+                            <li>호기심 많음</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💕 연애 스타일</h3>
+                        <ul>
+                            <li>로맨틱, 이벤트형</li>
+                            <li>새로운 시도 좋아함</li>
+                            <li>깜짝 이벤트 준비</li>
+                            <li>설렘 중시</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💡 공부법</h3>
+                        <ul>
+                            <li>다양한 방법 시도</li>
+                            <li>재미있게 공부 (게임화)</li>
+                            <li>짧은 시간 집중</li>
+                            <li>그룹 스터디로 자극</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🎯 추천 진로</h3>
+                        <ul>
+                            <li>크리에이터, 유튜버</li>
+                            <li>광고 기획자, 마케터</li>
+                            <li>제품 디자이너</li>
+                            <li>스타트업 창업자</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="type-card" id="type-6">
+            <div class="card-header"><h2>6️⃣ ✨ 완벽주의형 (5-8%)</h2></div>
+            <div class="card-body">
+                <p class="summary">✨ <strong>한마디:</strong> 완벽 추구, 철두철미</p>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <h3>😊 강점</h3>
+                        <ul>
+                            <li>책임감 - 맡은 일 완수</li>
+                            <li>정확성 - 실수 거의 없음</li>
+                            <li>인내심 - 끝까지 해냄</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>😅 약점</h3>
+                        <ul>
+                            <li>비판적 - 남/나에게 엄격</li>
+                            <li>스트레스 많음 - 완벽 추구</li>
+                            <li>융통성 부족 - 원칙주의</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🏫 학교생활</h3>
+                        <ul>
+                            <li>최상위권 성적</li>
+                            <li>철저한 준비</li>
+                            <li>과제 완성도 높음</li>
+                            <li>모범생 이미지</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💕 연애 스타일</h3>
+                        <ul>
+                            <li>진지하고 신중함</li>
+                            <li>이상형 기준 명확</li>
+                            <li>계획적인 만남</li>
+                            <li>헌신적인 사랑</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💡 공부법</h3>
+                        <ul>
+                            <li>완벽한 이해 추구</li>
+                            <li>세부사항까지 학습</li>
+                            <li>반복 학습</li>
+                            <li>오답노트 철저</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🎯 추천 진로</h3>
+                        <ul>
+                            <li>의사, 약사, 변호사</li>
+                            <li>연구원, 교수</li>
+                            <li>회계사, 감사</li>
+                            <li>품질관리 전문가</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="type-card" id="type-7">
+            <div class="card-header"><h2>7️⃣ 🎨 예술이상형 (3%)</h2></div>
+            <div class="card-body">
+                <p class="summary">✨ <strong>한마디:</strong> 감성 예술가, 무대 체질</p>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <h3>😊 강점</h3>
+                        <ul>
+                            <li>예술성 - 아름다움 추구</li>
+                            <li>표현력 - 감정 표현 탁월</li>
+                            <li>몰입력 - 작품에 푹 빠짐</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>😅 약점</h3>
+                        <ul>
+                            <li>현실 감각 부족</li>
+                            <li>실용성 떨어짐</li>
+                            <li>경제 관념 약함</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🏫 학교생활</h3>
+                        <ul>
+                            <li>예체능 활동 활발</li>
+                            <li>학교 공연 주인공</li>
+                            <li>미술/음악 성적 우수</li>
+                            <li>감성적 글쓰기 잘함</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💕 연애 스타일</h3>
+                        <ul>
+                            <li>드라마틱, 감성적</li>
+                            <li>예술적 데이트 선호</li>
+                            <li>감정 표현 풍부</li>
+                            <li>이상적인 사랑 추구</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💡 공부법</h3>
+                        <ul>
+                            <li>감성 자극 학습</li>
+                            <li>예술과 연결 짓기</li>
+                            <li>창의적 표현 활용</li>
+                            <li>분위기 중시</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🎯 추천 진로</h3>
+                        <ul>
+                            <li>예술가 (화가, 조각가)</li>
+                            <li>음악가, 배우, 무용가</li>
+                            <li>패션 디자이너</li>
+                            <li>영화감독, 작가</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="type-card" id="type-8">
+            <div class="card-header"><h2>8️⃣ 🎭 독창형 (5%)</h2></div>
+            <div class="card-body">
+                <p class="summary">✨ <strong>한마디:</strong> 역발상 천재, 4차원</p>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <h3>😊 강점</h3>
+                        <ul>
+                            <li>창의성 - 독특한 시각</li>
+                            <li>독립성 - 혼자 잘함</li>
+                            <li>통찰력 - 본질 파악</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>😅 약점</h3>
+                        <ul>
+                            <li>이해받기 어려움</li>
+                            <li>외로움 느낌</li>
+                            <li>소통 어려움</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🏫 학교생활</h3>
+                        <ul>
+                            <li>독특한 의견 제시</li>
+                            <li>혼자 있는 시간 좋아함</li>
+                            <li>틀 깨는 발상</li>
+                            <li>개성 강함</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💕 연애 스타일</h3>
+                        <ul>
+                            <li>독특한 매력</li>
+                            <li>특별한 연애 추구</li>
+                            <li>이해심 많은 상대 필요</li>
+                            <li>깊은 교감 중시</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💡 공부법</h3>
+                        <ul>
+                            <li>나만의 방식 개발</li>
+                            <li>독창적 접근</li>
+                            <li>혼자 깊이 사고</li>
+                            <li>틀 벗어난 학습</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🎯 추천 진로</h3>
+                        <ul>
+                            <li>철학자, 사상가</li>
+                            <li>독립 연구자</li>
+                            <li>작가, 시인</li>
+                            <li>혁신가, 발명가</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="type-card" id="type-9">
+            <div class="card-header"><h2>9️⃣ 📏 규율원칙형 (5%)</h2></div>
+            <div class="card-body">
+                <p class="summary">✨ <strong>한마디:</strong> 모범생, 원칙주의자</p>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <h3>😊 강점</h3>
+                        <ul>
+                            <li>성실함 - 매일 꾸준히</li>
+                            <li>신뢰성 - 약속 꼭 지킴</li>
+                            <li>정직 - 거짓말 못함</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>😅 약점</h3>
+                        <ul>
+                            <li>융통성 부족 - 규칙만 고집</li>
+                            <li>재미없음 - 딱딱함</li>
+                            <li>변화 적응 어려움</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🏫 학교생활</h3>
+                        <ul>
+                            <li>교칙 철저히 지킴</li>
+                            <li>선생님 신뢰 받음</li>
+                            <li>규칙 지키는 분위기 형성</li>
+                            <li>학급 임원 적합</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💕 연애 스타일</h3>
+                        <ul>
+                            <li>전통적, 보수적</li>
+                            <li>약속 중시</li>
+                            <li>정직한 관계</li>
+                            <li>책임감 있는 연애</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💡 공부법</h3>
+                        <ul>
+                            <li>규칙적 학습</li>
+                            <li>시간표 철저히 지킴</li>
+                            <li>정석대로 공부</li>
+                            <li>반복 학습</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🎯 추천 진로</h3>
+                        <ul>
+                            <li>공무원, 법조인</li>
+                            <li>군인, 경찰</li>
+                            <li>교사, 교수</li>
+                            <li>감사, 감독관</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="type-card" id="type-10">
+            <div class="card-header"><h2>🔟 💝 헌신박애형 (3%)</h2></div>
+            <div class="card-body">
+                <p class="summary">✨ <strong>한마디:</strong> 천사, 봉사의 화신</p>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <h3>😊 강점</h3>
+                        <ul>
+                            <li>봉사정신 - 남을 돕는 기쁨</li>
+                            <li>희생 - 기꺼이 양보</li>
+                            <li>이타심 - 남 먼저 생각</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>😅 약점</h3>
+                        <ul>
+                            <li>자기 희생 과함</li>
+                            <li>이용당하기 쉬움</li>
+                            <li>거절 못함</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🏫 학교생활</h3>
+                        <ul>
+                            <li>봉사활동 열심히</li>
+                            <li>친구 도와주기 좋아함</li>
+                            <li>착한 학생</li>
+                            <li>급식 배식 자원봉사</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💕 연애 스타일</h3>
+                        <ul>
+                            <li>헌신적, 희생적</li>
+                            <li>상대방 위해 뭐든지</li>
+                            <li>무조건적 사랑</li>
+                            <li>베풂의 기쁨</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💡 공부법</h3>
+                        <ul>
+                            <li>친구 가르쳐주며 복습</li>
+                            <li>스터디 그룹 도우미</li>
+                            <li>나눔으로 성장</li>
+                            <li>협력 학습</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🎯 추천 진로</h3>
+                        <ul>
+                            <li>사회복지사, 상담사</li>
+                            <li>간호사, 의료인</li>
+                            <li>봉사 단체 활동가</li>
+                            <li>교사, 유치원 교사</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="type-card" id="type-11">
+            <div class="card-header"><h2>1️⃣1️⃣ 🌈 독창이상형 (2%)</h2></div>
+            <div class="card-body">
+                <p class="summary">✨ <strong>한마디:</strong> 혁신가, 비전 리더</p>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <h3>😊 강점</h3>
+                        <ul>
+                            <li>혁신성 - 새로운 것 창조</li>
+                            <li>실행력 - 생각을 현실로</li>
+                            <li>리더십 - 변화 이끎</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>😅 약점</h3>
+                        <ul>
+                            <li>이상 높음 - 현실 괴리</li>
+                            <li>급함 - 성급한 판단</li>
+                            <li>독단적 - 혼자 결정</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🏫 학교생활</h3>
+                        <ul>
+                            <li>학생회 혁신 주도</li>
+                            <li>새로운 시스템 제안</li>
+                            <li>큰 그림 그리기</li>
+                            <li>변화 만들기</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💕 연애 스타일</h3>
+                        <ul>
+                            <li>이상적 관계 추구</li>
+                            <li>함께 성장하는 연애</li>
+                            <li>비전 공유</li>
+                            <li>특별한 관계 지향</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>💡 공부법</h3>
+                        <ul>
+                            <li>큰 목표 설정</li>
+                            <li>혁신적 학습법 개발</li>
+                            <li>실행 중심</li>
+                            <li>결과 지향</li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <h3>🎯 추천 진로</h3>
+                        <ul>
+                            <li>스타트업 CEO</li>
+                            <li>사회혁신가</li>
+                            <li>미래학자</li>
+                            <li>교육 개혁가</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="page2" class="content-page" style="display: none;">
+        <div class="card-maker-container">
+            <h1>✨ 나만의 ✨<br>칭찬 카드 만들기 </h1>
+            <p class="hint"> 성향에 꼭 맞는 칭찬은, 더 마음 깊이 와닿고 더 진심처럼 느껴집니다</p>
+
+            <div class="input-group">
+                <label for="userName">이름을 입력하세요:</label>
+                <input type="text" id="userName" placeholder="예: 홍길동" maxlength="15">
+            </div>
+
+            <div class="input-group">
+                <label for="personalityType">성향을 선택하세요:</label>
+                <select id="personalityType">
+                    <option value="0">1. 💫 감성형</option>
+                    <option value="1">2. 🤝 조정협조형</option>
+                    <option value="2">3. 🎯 지도자형</option>
+                    <option value="3">4. 🔍 현실주의형</option>
+                    <option value="4">5. 💡 창조사고형</option>
+                    <option value="5">6. ✨ 완벽주의형</option>
+                    <option value="6">7. 🎨 예술이상형</option>
+                    <option value="7">8. 🎭 독창형</option>
+                    <option value="8">9. 📏 규율원칙형</option>
+                    <option value="9">10. 💝 헌신박애형</option>
+                    <option value="10">11. 🌈 독창이상형</option>            
+                </select>
+            </div>
+
+            <button onclick="generateBothCards()">칭찬 하기</button>
             
-            <canvas id="allComplimentsCanvas1" width="500" height="1100" style="display: none;"></canvas>
-            <canvas id="allComplimentsCanvas2" width="500" height="1100" style="display: none;"></canvas>
-            <canvas id="allComplimentsCanvas3" width="500" height="1100" style="display: none;"></canvas>
-            <canvas id="allComplimentsCanvas4" width="500" height="1100" style="display: none;"></canvas>
+            <div class="preview-area">
+                <canvas id="frontCanvas" width="500" height="700"></canvas>
+                <canvas id="backCanvas" width="500" height="700"></canvas>
+                
+                <canvas id="allComplimentsCanvas1" width="500" height="1100"></canvas>
+                <canvas id="allComplimentsCanvas2" width="500" height="1100"></canvas>
+                <canvas id="allComplimentsCanvas3" width="500" height="1100"></canvas>
+                <canvas id="allComplimentsCanvas4" width="500" height="1100"></canvas>
+            </div>
         </div>
     </div>
 
     <script>
-        // --- 1. 이미지 및 데이터 정의 (모든 문법 오류 수정 완료) ---
+        // --- 탭 전환 기능 ---
+        function switchPage(pageId) {
+            const pages = document.querySelectorAll('.content-page');
+            pages.forEach(page => {
+                page.style.display = 'none';
+            });
+            document.getElementById(pageId).style.display = 'block';
+
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+                if (button.getAttribute('onclick').includes(pageId)) {
+                    button.classList.add('active');
+                }
+            });
+            window.scrollTo(0, 0); // 페이지 전환 시 상단으로 이동
+        }
+
+        // --- 1. 이미지 및 데이터 정의 (두번째 페이지.html JS) ---
         const CARD_STYLES = [
             { front_bg: ['#f8bbd0', '#ffecb3'], front_text: '#d81b60', border: '#f06292', back_bg: ['#fffde7', '#fce4ec'], back_text: '#880e4f', back_accent: '#ff80ab', comp_bg: '#ffcdd2', comp_text: '#d81b60' }, 
             { front_bg: ['#e0f7fa', '#c5e1a5'], front_text: '#00838f', border: '#4db6ac', back_bg: ['#e8f5e9', '#e3f2fd'], back_text: '#2e7d32', back_accent: '#a5d6a7', comp_bg: '#e0f7fa', comp_text: '#00838f' }, 
@@ -88,10 +1029,8 @@
             { front_bg: ['#e8f5e9', '#c8e6c9'], front_text: '#388e3c', border: '#81c784', back_bg: ['#f1f8e9', '#e8f5e9'], back_text: '#1b5e20', back_accent: '#a5d6a7', comp_bg: '#e8f5e9', comp_text: '#388e3c' }, 
             { front_bg: ['#fce4ec', '#f8bbd0'], front_text: '#c2185b', border: '#e91e63', back_bg: ['#fff8e1', '#fce4ec'], back_text: '#ad1457', back_accent: '#f48fb1', comp_bg: '#fce4ec', comp_text: '#c2185b' }, 
             { front_bg: ['#fbe9e7', '#ffccbc'], front_text: '#e64a19', border: '#ff8a65', back_bg: ['#efebe9', '#fbe9e7'], back_text: '#bf360c', back_accent: '#ffab91', comp_bg: '#fbe9e7', comp_text: '#e64a19' }, 
-            { front_bg: ['#c8e6c9', '#a5d6a7'], front_text: '#388e3c', border: '#66bb6a', back_bg: ['#f1f8e9', '#e8f5e9'], back_text: '#43a047', back_accent: '#8bc34a', comp_bg: '#c8e6c9', comp_text: '#43a047' }
         ];
 
-        // 🚨 모든 compliments 데이터를 phrase1, phrase2로 통일 (undefined 해결)
         const CARD_DATA = [
             { type: '💫 감성형', emoji: '🌟✨💕', quote1: "당신의 따뜻함이", quote2: "세상을 밝혀요", tags: "#공감왕 #분위기메이커", powers: ['공감력', '친화력', '순발력'], shine: ['친구가 힘들 때 위로해줄 때', '분위기를 밝게 만들 때', '사람들과 금방 친해질 때'], growth: '가끔은 객관적으로도 생각해봐요',
               compliments: [{ tag: '💕 공감왕', phrase1: '너랑 얘기하면', phrase2: '위로돼' }, { tag: '💫 분위기메이커', phrase1: '네가 있으면', phrase2: '다들 웃어' }, { tag: '✨ 감성왕', phrase1: '너 말 들어주니까', phrase2: '진짜 좋아' }] },
@@ -119,7 +1058,7 @@
               compliments: [{ tag: '🌈 비전왕', phrase1: '너는 생각의', phrase2: '스케일이 달라' }, { tag: '🚀 혁신왕', phrase1: '네 아이디어가', phrase2: '미래를 바꿔' }, { tag: '💫 실행왕', phrase1: '생각만 아니라', phrase2: '행동도 해!' }] },            
         ]; 
 
-        // --- 2. 텍스트 줄바꿈 헬퍼 함수 (이전과 동일) ---
+        // --- 2. 텍스트 줄바꿈 헬퍼 함수 ---
         function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
             const words = text.split('');
             let line = '';
@@ -140,7 +1079,7 @@
             return y + (lineCount + 1) * lineHeight; 
         }
 
-        // --- 3. 개인 카드 앞/뒷면 그리기 함수 (폰트 스타일 통일) ---
+        // --- 3. 개인 카드 앞/뒷면 그리기 함수 ---
         function drawFrontCard(canvas, cardInfo, cardStyle, userName) {
             const ctx = canvas.getContext('2d');
             const W = canvas.width;
@@ -244,7 +1183,7 @@
             y = wrapText(ctx, cardInfo.growth, START_X, y, MAX_TEXT_WIDTH, 35); 
         }
 
-        // --- 4. 모든 칭찬 멘트 카드 그리기 함수 (폰트 통일 및 2줄 멘트 적용) ---
+        // --- 4. 모든 칭찬 멘트 카드 그리기 함수 ---
         function drawAllComplimentsCard(canvas, allData, startIndex, endIndex, title) {
             const ctx = canvas.getContext('2d');
             const W = canvas.width;
@@ -303,9 +1242,9 @@
                     ctx.textAlign = 'center';
                     ctx.fillText(`[${comp.tag}]`, xOffset + CARD_WIDTH / 2, blockY + 35);
 
-                    // 🚨 멘트 폰트 통일: Nanum Gothic Coding, 2줄로 분리
+                    // 멘트 폰트 통일: Nanum Gothic Coding, 2줄로 분리
                     ctx.fillStyle = '#333';
-                    ctx.font = 'bold 24px "Nanum Gothic Coding", monospace'; // 폰트 통일 및 크기 조정
+                    ctx.font = 'bold 24px "Nanum Gothic Coding", monospace'; 
                     
                     ctx.fillText(comp.phrase1, xOffset + CARD_WIDTH / 2, blockY + 70);
                     if (comp.phrase2) {
@@ -318,7 +1257,7 @@
             }
         }
 
-        // --- 5. 카드 생성 함수 (폰트 로딩 보장 로직 추가) ---
+        // --- 5. 카드 생성 함수 ---
         function generateBothCards() {
             const userName = document.getElementById('userName').value.trim();
             const typeIndex = document.getElementById('personalityType').value;
@@ -345,17 +1284,17 @@
             allComplimentsCanvas3.style.display = 'block'; 
             allComplimentsCanvas4.style.display = 'block'; 
 
-            // 🚨 폰트가 로드될 때까지 기다린 후 그리기 실행
+            // 폰트 로딩 대기 후 그리기 실행
             document.fonts.ready.then(function () {
                 // 1. 개인 카드 그리기
                 drawFrontCard(frontCanvas, cardInfo, cardStyle, userName);
                 drawBackCard(backCanvas, cardInfo, cardStyle);
                 
                 // 2. 멘트 모음 카드 그리기 (4장 분할)
-                drawAllComplimentsCard(allComplimentsCanvas1, CARD_DATA, 0, 3, "✨ 성향별 칭찬 멘트"); 
-                drawAllComplimentsCard(allComplimentsCanvas2, CARD_DATA, 3, 6, "✨ 성향별 칭찬 멘트"); 
-                drawAllComplimentsCard(allComplimentsCanvas3, CARD_DATA, 6, 9, "✨ 성향별 칭찬 멘트"); 
-                drawAllComplimentsCard(allComplimentsCanvas4, CARD_DATA, 9, 12, "✨ 성향별 칭찬 멘트"); 
+                drawAllComplimentsCard(allComplimentsCanvas1, CARD_DATA, 0, 3, "✨ 성향별 맞춤 칭찬"); 
+                drawAllComplimentsCard(allComplimentsCanvas2, CARD_DATA, 3, 6, "✨ 성향별 맞춤 칭찬"); 
+                drawAllComplimentsCard(allComplimentsCanvas3, CARD_DATA, 6, 9, "✨ 성향별 맞춤 칭찬"); 
+                drawAllComplimentsCard(allComplimentsCanvas4, CARD_DATA, 9, 11, "✨ 성향별 맞춤 칭찬"); // 11개 성향이므로 9부터 11까지 (인덱스 9, 10)
 
                 const baseFileName = `${userName}_${cardInfo.type.replace(/\s/g, '_')}`;
                 frontCanvas.dataset.fileName = `칭찬카드_앞면_${baseFileName}.png`;
@@ -386,6 +1325,9 @@
         }
 
         window.onload = function() {
+            // 초기 페이지 로드 시 탭 표시
+            switchPage('page1');
+
             const frontCanvas = document.getElementById('frontCanvas');
             const backCanvas = document.getElementById('backCanvas');
             const allComplimentsCanvas1 = document.getElementById('allComplimentsCanvas1');
@@ -393,13 +1335,16 @@
             const allComplimentsCanvas3 = document.getElementById('allComplimentsCanvas3');
             const allComplimentsCanvas4 = document.getElementById('allComplimentsCanvas4');
 
+            // 캔버스의 초기 display: none; 스타일 제거 및 클릭 이벤트 리스너 추가 (단일 파일이 되면서 스타일이 충돌하여 display:none; 을 유지하도록 수정)
+            
             const handleCanvasClick = function() {
                 const fileName = this.dataset.fileName; 
                 
+                // toDataURL() 결과가 어느 정도 길어야 이미지가 그려진 것으로 간주
                 if (fileName && this.toDataURL('image/png').length > 5000) { 
                     downloadCanvasImage(this, fileName);
                 } else {
-                    alert("카드가 아직 그려지지 않았습니다. '칭찬 하기' 버튼을 다시 눌러주세요.");
+                    alert("카드가 아직 그려지지 않았거나 크기가 너무 작습니다. '칭찬 하기' 버튼을 다시 눌러주세요.");
                 }
             };
 
@@ -413,5 +1358,3 @@
     </script>
 </body>
 </html>
-
-
