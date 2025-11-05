@@ -3,29 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>칭찬 카드 만들기 (로고/QR 코드 삭제 버전)</title>
+    <title>칭찬 카드 만들기 (폰트 통일)</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap'); 
+        /* 폰트: Nanum Pen Script는 제목 및 주요 강조, Nanum Gothic Coding은 본문 및 상세 정보에 사용 */
+        @import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Nanum+Gothic+Coding&display=swap'); 
 
-        /* CSS는 이전 코드와 동일합니다. */
         body { font-family: 'Nanum Pen Script', sans-serif; background-color: #f0f4f8; color: #333; text-align: center; padding: 20px; }
         .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); }
         h1 { color: #4a90e2; margin-bottom: 20px; font-size: 2.5em; }
+        
+        /* 폰트 지정 통일 */
+        .input-group label { font-family: 'Nanum Gothic Coding', monospace; }
+        .input-group input[type="text"], .input-group select { font-family: 'Nanum Gothic Coding', monospace; }
+        button { font-family: 'Nanum Gothic Coding', monospace; }
+
+        /* 모든 캔버스 스타일 통일 */
+        #frontCanvas, #backCanvas, #allComplimentsCanvas1, #allComplimentsCanvas2, #allComplimentsCanvas3, #allComplimentsCanvas4 { 
+            border-radius: 15px; margin-top: 15px; 
+            display: none; margin-left: auto; margin-right: auto; 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); max-width: 100%; height: auto; 
+        }
+        
+        /* 기존 스타일 유지 */
         .input-group { margin-bottom: 20px; text-align: left; }
-        .input-group label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 1.5em; font-family: 'Nanum Gothic Coding', monospace; }
-        .input-group input[type="text"], .input-group select { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 1.2em; font-family: 'Nanum Gothic Coding', monospace; }
-        button { background-color: #f5a623; color: white; padding: 15px 30px; border: none; border-radius: 8px; cursor: pointer; font-size: 1.5em; font-weight: bold; transition: background-color 0.3s; box-shadow: 0 4px #e0941d; font-family: 'Nanum Gothic Coding', monospace; }
+        .input-group label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 1.5em; }
+        .input-group input[type="text"], .input-group select { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 1.2em; }
+        button { background-color: #f5a623; color: white; padding: 15px 30px; border: none; border-radius: 8px; cursor: pointer; font-size: 1.5em; font-weight: bold; transition: background-color 0.3s; box-shadow: 0 4px #e0941d; }
         button:hover { background-color: #e0941d; }
         button:active { box-shadow: 0 2px #c9851a; transform: translateY(2px); }
-        #frontCanvas, #backCanvas { border-radius: 15px; margin-top: 15px; display: none; margin-left: auto; margin-right: auto; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); max-width: 100%; height: auto; }
         .hint { margin-top: 15px; color: #888; font-size: 1em; font-family: 'Nanum Gothic Coding', monospace; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>✨ 나만의 ✨<br>칭찬 카드 만들기 </h1>
-        <p class="hint">내가 나를 진심으로 칭찬하는 순간, 마음은 더 따뜻해진다는 걸 꼭 기억해요.</p>
+        <p class="hint">내 자신이 나에게 전하는 진심 어린 칭찬이 가장 따뜻합니다.</p>
 
         <div class="input-group">
             <label for="userName">이름을 입력하세요:</label>
@@ -46,55 +58,69 @@
                 <option value="8">9. 📏 규율원칙형</option>
                 <option value="9">10. 💝 헌신박애형</option>
                 <option value="10">11. 🌈 독창이상형</option>
+                <option value="11">12. 💚 실용추구형</option> 
             </select>
         </div>
 
         <button onclick="generateBothCards()">칭찬 하기</button>
-
+        
         <div class="preview-area">
             <canvas id="frontCanvas" width="500" height="700" style="display: none;"></canvas>
             <canvas id="backCanvas" width="500" height="700" style="display: none;"></canvas>
+            
+            <canvas id="allComplimentsCanvas1" width="500" height="1100" style="display: none;"></canvas>
+            <canvas id="allComplimentsCanvas2" width="500" height="1100" style="display: none;"></canvas>
+            <canvas id="allComplimentsCanvas3" width="500" height="1100" style="display: none;"></canvas>
+            <canvas id="allComplimentsCanvas4" width="500" height="1100" style="display: none;"></canvas>
         </div>
-        
     </div>
 
     <script>
-        // --- 1. 이미지 및 데이터 정의 (이미지 변수는 남겨두지만 사용하지 않음) ---
-        // 캔버스 오염 오류를 피하기 위해 이미지 사용을 제거합니다.
-        const QR_CODE_SRC = "https://i.imgur.com/GzB9k8W.png"; 
-        const LOGO_SRC = "https://i.imgur.com/XqTj9Xf.png"; 
-
-        const qrImage = new Image(); // 변수 선언은 유지
-        const logoImage = new Image(); // 변수 선언은 유지
-
-        // CARD_STYLES 및 CARD_DATA는 이전과 동일합니다.
+        // --- 1. 이미지 및 데이터 정의 (모든 문법 오류 수정 완료) ---
         const CARD_STYLES = [
-            { front_bg: ['#f8bbd0', '#ffecb3'], front_text: '#d81b60', border: '#f06292', back_bg: ['#fffde7', '#fce4ec'], back_text: '#880e4f', back_accent: '#ff80ab' }, 
-            { front_bg: ['#e0f7fa', '#c5e1a5'], front_text: '#00838f', border: '#4db6ac', back_bg: ['#e8f5e9', '#e3f2fd'], back_text: '#2e7d32', back_accent: '#a5d6a7' },
-            { front_bg: ['#ffcdd2', '#f44336'], front_text: '#b71c1c', border: '#e57373', back_bg: ['#ffe0b2', '#ffccbc'], back_text: '#d84315', back_accent: '#ff9800' },
-            { front_bg: ['#cfd8dc', '#b0bec5'], front_text: '#263238', border: '#546e7a', back_bg: ['#eceff1', '#cfd8dc'], back_text: '#37474f', back_accent: '#78909c' },
-            { front_bg: ['#fff9c4', '#ffeb3b'], front_text: '#f9a825', border: '#ffc107', back_bg: ['#fff8e1', '#fff3e0'], back_text: '#ef6c00', back_accent: '#ffca28' },
-            { front_bg: ['#e3f2fd', '#bbdefb'], front_text: '#1976d2', border: '#64b5f6', back_bg: ['#f5f5f5', '#e3f2fd'], back_text: '#0d47a1', back_accent: '#90caf9' },
-            { front_bg: ['#ede7f6', '#d1c4e9'], front_text: '#4527a0', border: '#7e57c2', back_bg: ['#f3e5f5', '#e1bee7'], back_text: '#6a1b9a', back_accent: '#ba68c8' },
-            { front_bg: ['#e1f5fe', '#81d4fa'], front_text: '#01579b', border: '#29b6f6', back_bg: ['#f0f8ff', '#e0f7fa'], back_text: '#006064', back_accent: '#4fc3f7' },
-            { front_bg: ['#e8f5e9', '#c8e6c9'], front_text: '#388e3c', border: '#81c784', back_bg: ['#f1f8e9', '#e8f5e9'], back_text: '#1b5e20', back_accent: '#a5d6a7' },
-            { front_bg: ['#fce4ec', '#f8bbd0'], front_text: '#c2185b', border: '#e91e63', back_bg: ['#fff8e1', '#fce4ec'], back_text: '#ad1457', back_accent: '#f48fb1' },
-            { front_bg: ['#fbe9e7', '#ffccbc'], front_text: '#e64a19', border: '#ff8a65', back_bg: ['#efebe9', '#fbe9e7'], back_text: '#bf360c', back_accent: '#ffab91' }
+            { front_bg: ['#f8bbd0', '#ffecb3'], front_text: '#d81b60', border: '#f06292', back_bg: ['#fffde7', '#fce4ec'], back_text: '#880e4f', back_accent: '#ff80ab', comp_bg: '#ffcdd2', comp_text: '#d81b60' }, 
+            { front_bg: ['#e0f7fa', '#c5e1a5'], front_text: '#00838f', border: '#4db6ac', back_bg: ['#e8f5e9', '#e3f2fd'], back_text: '#2e7d32', back_accent: '#a5d6a7', comp_bg: '#e0f7fa', comp_text: '#00838f' }, 
+            { front_bg: ['#ffcdd2', '#f44336'], front_text: '#b71c1c', border: '#e57373', back_bg: ['#ffe0b2', '#ffccbc'], back_text: '#d84315', back_accent: '#ff9800', comp_bg: '#ffcdd2', comp_text: '#b71c1c' }, 
+            { front_bg: ['#cfd8dc', '#b0bec5'], front_text: '#263238', border: '#546e7a', back_bg: ['#eceff1', '#cfd8dc'], back_text: '#37474f', back_accent: '#78909c', comp_bg: '#cfd8dc', comp_text: '#263238' }, 
+            { front_bg: ['#fff9c4', '#ffeb3b'], front_text: '#f9a825', border: '#ffc107', back_bg: ['#fff8e1', '#fff3e0'], back_text: '#ef6c00', back_accent: '#ffca28', comp_bg: '#fff9c4', comp_text: '#f9a825' }, 
+            { front_bg: ['#e3f2fd', '#bbdefb'], front_text: '#1976d2', border: '#64b5f6', back_bg: ['#f5f5f5', '#e3f2fd'], back_text: '#0d47a1', back_accent: '#90caf9', comp_bg: '#e3f2fd', comp_text: '#1976d2' }, 
+            { front_bg: ['#ede7f6', '#d1c4e9'], front_text: '#4527a0', border: '#7e57c2', back_bg: ['#f3e5f5', '#e1bee7'], back_text: '#6a1b9a', back_accent: '#ba68c8', comp_bg: '#ede7f6', comp_text: '#4527a0' }, 
+            { front_bg: ['#e1f5fe', '#81d4fa'], front_text: '#01579b', border: '#29b6f6', back_bg: ['#f0f8ff', '#e0f7fa'], back_text: '#006064', back_accent: '#4fc3f7', comp_bg: '#e1f5fe', comp_text: '#01579b' }, 
+            { front_bg: ['#e8f5e9', '#c8e6c9'], front_text: '#388e3c', border: '#81c784', back_bg: ['#f1f8e9', '#e8f5e9'], back_text: '#1b5e20', back_accent: '#a5d6a7', comp_bg: '#e8f5e9', comp_text: '#388e3c' }, 
+            { front_bg: ['#fce4ec', '#f8bbd0'], front_text: '#c2185b', border: '#e91e63', back_bg: ['#fff8e1', '#fce4ec'], back_text: '#ad1457', back_accent: '#f48fb1', comp_bg: '#fce4ec', comp_text: '#c2185b' }, 
+            { front_bg: ['#fbe9e7', '#ffccbc'], front_text: '#e64a19', border: '#ff8a65', back_bg: ['#efebe9', '#fbe9e7'], back_text: '#bf360c', back_accent: '#ffab91', comp_bg: '#fbe9e7', comp_text: '#e64a19' }, 
+            { front_bg: ['#c8e6c9', '#a5d6a7'], front_text: '#388e3c', border: '#66bb6a', back_bg: ['#f1f8e9', '#e8f5e9'], back_text: '#43a047', back_accent: '#8bc34a', comp_bg: '#c8e6c9', comp_text: '#43a047' }
         ];
 
+        // 🚨 모든 compliments 데이터를 phrase1, phrase2로 통일 (undefined 해결)
         const CARD_DATA = [
-            { type: '💫 감성형', emoji: '🌟✨💕', quote1: "당신의 따뜻함이", quote2: "세상을 밝혀요", tags: "#공감왕 #분위기메이커", powers: ['공감력', '친화력', '순발력'], shine: ['친구가 힘들 때 위로해줄 때', '분위기를 밝게 만들 때', '사람들과 금방 친해질 때'], growth: '가끔은 객관적으로도 생각해봐요' },
-            { type: '🤝 조정협조형', emoji: '🌈🕊️💫', quote1: "당신의 배려가", quote2: "팀을 하나로 만들어요", tags: "#중재자 #배려왕", powers: ['중재력', '포용력', '균형감'], shine: ['친구들 싸울 때 중재할 때', '모두의 의견을 들어줄 때', '양쪽 입장을 이해할 때'], growth: '때론 빠른 결정도 괜찮아요' },
-            { type: '🎯 지도자형', emoji: '🚀👑💪', quote1: "당신의 리더십이", quote2: "길을 만들어요", tags: "#리더 #추진왕", powers: ['추진력', '결단력', '책임감'], shine: ['목표를 향해 나아갈 때', '빠르게 결정해야 할 때', '팀을 이끌어갈 때'], growth: '다른 의견도 들어보는 여유를!' },
-            { type: '🔍 현실주의형', emoji: '🎯🧠💡', quote1: "당신의 통찰력이", quote2: "문제를 풀어요", tags: "#전략가 #분석왕", powers: ['분석력', '전략적 사고', '객관성'], shine: ['복잡한 상황을 정리할 때', '효율적인 방법을 찾을 때', '장단점을 비교할 때'], growth: '완벽하지 않아도 실행해봐요' },
-            { type: '💡 창조사고형', emoji: '✨🎨🌟', quote1: "당신의 아이디어가", quote2: "세상을 바꿔요", tags: "#아이디어뱅크 #창의왕", powers: ['창의력', '도전정신', '적극성'], shine: ['새로운 아이디어를 낼 때', '남다른 방법을 시도할 때', '호기심을 발휘할 때'], growth: '끝까지 해내는 끈기도 길러봐요' },
-            { type: '✨ 완벽주의형', emoji: '👑💎⚡', quote1: "당신의 꼼꼼함이", quote2: "완성도를 높여요", tags: "#완벽왕 #디테일왕", powers: ['정확성', '책임감', '인내심'], shine: ['꼼꼼하게 준비할 때', '완성도를 높일 때', '실수를 방지할 때'], growth: '완벽보다 완료가 중요할 때도!' },
-            { type: '🎨 예술이상형', emoji: '🎭🌸🎵', quote1: "당신의 감성이", quote2: "아름다움을 만들어요", tags: "#예술가 #감성왕", powers: ['예술성', '표현력', '몰입력'], shine: ['아름다운 것을 표현할 때', '무대 위에 있을 때', '작품에 몰입할 때'], growth: '현실적 계획도 조금씩!' },
-            { type: '🎭 독창형', emoji: '🌟🦄✨', quote1: "당신의 독특함이", quote2: "새로운 길을 열어요", tags: "#독특왕 #역발상천재", powers: ['창의성', '독립성', '통찰력'], shine: ['남다른 관점을 제시할 때', '독특한 해결책을 찾을 때', '나만의 길을 갈 때'], growth: '가끔은 기본도 소중해요' },
-            { type: '📏 규율원칙형', emoji: '⚖️📋✅', quote1: "당신의 원칙이", quote2: "질서를 만들어요", tags: "#원칙왕 #모범생", powers: ['성실함', '신뢰성', '정직'], shine: ['규칙을 지킬 때', '약속을 지킬 때', '올바른 길을 갈 때'], growth: '융통성도 배워봐요' },
-            { type: '💝 헌신박애형', emoji: '🤗💕🌻', quote1: "당신의 사랑이", quote2: "세상을 따뜻하게 해요", tags: "#봉사왕 #천사", powers: ['봉사정신', '희생', '이타심'], shine: ['남을 도울 때', '희생할 수 있을 때', '사랑을 나눌 때'], growth: '나 자신도 사랑해줘요' },
-            { type: '🌈 독창이상형', emoji: '🚀💫🎯', quote1: "당신의 비전이", quote2: "미래를 만들어요", tags: "#비전왕 #혁신가", powers: ['혁신성', '실행력', '리더십'], shine: ['새로운 비전을 제시할 때', '혁신을 실행할 때', '미래를 그릴 때'], growth: '작은 것부터 차근차근!' }
-        ];
+            { type: '💫 감성형', emoji: '🌟✨💕', quote1: "당신의 따뜻함이", quote2: "세상을 밝혀요", tags: "#공감왕 #분위기메이커", powers: ['공감력', '친화력', '순발력'], shine: ['친구가 힘들 때 위로해줄 때', '분위기를 밝게 만들 때', '사람들과 금방 친해질 때'], growth: '가끔은 객관적으로도 생각해봐요',
+              compliments: [{ tag: '💕 공감왕', phrase1: '너랑 얘기하면', phrase2: '위로돼' }, { tag: '💫 분위기메이커', phrase1: '네가 있으면', phrase2: '다들 웃어' }, { tag: '✨ 감성왕', phrase1: '너 말 들어주니까', phrase2: '진짜 좋아' }] },
+            { type: '🤝 조정협조형', emoji: '🌈🕊️💫', quote1: "당신의 배려가", quote2: "팀을 하나로 만들어요", tags: "#중재자 #배려왕", powers: ['중재력', '포용력', '균형감'], shine: ['친구들 싸울 때 중재할 때', '모두의 의견을 들어줄 때', '양쪽 입장을 이해할 때'], growth: '때론 빠른 결정도 괜찮아요',
+              compliments: [{ tag: '🤝 중재왕', phrase1: '너 덕분에', phrase2: '화해했어' }, { tag: '🌈 배려왕', phrase1: '네가 다 챙겨줘서', phrase2: '고마워' }, { tag: '💞 조율왕', phrase1: '모두의 의견', phrase2: '들어줘서 좋아' }] },
+            { type: '🎯 지도자형', emoji: '🚀👑💪', quote1: "당신의 리더십이", quote2: "길을 만들어요", tags: "#리더 #추진왕", powers: ['추진력', '결단력', '책임감'], shine: ['목표를 향해 나아갈 때', '빠르게 결정해야 할 때', '팀을 이끌어갈 때'], growth: '다른 의견도 들어보는 여유를!',
+              compliments: [{ tag: '🎯 결정왕', phrase1: '네가 정해줘서', phrase2: '편해!' }, { tag: '👑 리더왕', phrase1: '너 따라가면', phrase2: '일이 술술 돼' }, { tag: '🚀 추진왕', phrase1: '네 추진력 덕분에', phrase2: '해냈어' }] },
+            { type: '🔍 현실주의형', emoji: '🎯🧠💡', quote1: "당신의 통찰력이", quote2: "문제를 풀어요", tags: "#전략가 #분석왕", powers: ['분석력', '전략적 사고', '객관성'], shine: ['복잡한 상황을 정리할 때', '효율적인 방법을 찾을 때', '장단점을 비교할 때'], growth: '완벽하지 않아도 실행해봐요',
+              compliments: [{ tag: '🔍 분석왕', phrase1: '네가 정리해주니까', phrase2: '이해 쉬워' }, { tag: '🎯 전략왕', phrase1: '너 계획 짜는 거', phrase2: '진짜 탄탄해' }, { tag: '🧠 효율왕', phrase1: '네 방법이', phrase2: '제일 빠르더라' }] },
+            { type: '💡 창조사고형', emoji: '✨🎨🌟', quote1: "당신의 아이디어가", quote2: "세상을 바꿔요", tags: "#아이디어뱅크 #창의왕", powers: ['창의력', '도전정신', '적극성'], shine: ['새로운 아이디어를 낼 때', '남다른 방법을 시도할 때', '호기심을 발휘할 때'], growth: '끝까지 해내는 끈기도 길러봐요',
+              compliments: [{ tag: '💡 아이디어왕', phrase1: '너 생각이', phrase2: '제일 참신해' }, { tag: '✨ 창의왕', phrase1: '네 발상은', phrase2: '진짜 독특해' }, { tag: '🌟 도전왕', phrase1: '네가 먼저 시도해줘서', phrase2: '좋아' }] },
+            { type: '✨ 완벽주의형', emoji: '👑💎⚡', quote1: "당신의 꼼꼼함이", quote2: "완성도를 높여요", tags: "#완벽왕 #디테일왕", powers: ['정확성', '책임감', '인내심'], shine: ['꼼꼼하게 준비할 때', '완성도를 높일 때', '실수를 방지할 때'], growth: '완벽보다 완료가 중요할 때도!',
+              compliments: [{ tag: '✨ 완벽왕', phrase1: '너는 항상 꼼꼼해서', phrase2: '믿음직해' }, { tag: '💎 디테일왕', phrase1: '네가 확인해주면', phrase2: '안심이야' }, { tag: '👑 정확왕', phrase1: '너 덕분에', phrase2: '실수가 없어' }] },
+            { type: '🎨 예술이상형', emoji: '🎭🌸🎵', quote1: "당신의 감성이", quote2: "아름다움을 만들어요", tags: "#예술가 #감성왕", powers: ['예술성', '표현력', '몰입력'], shine: ['아름다운 것을 표현할 때', '무대 위에 있을 때', '작품에 몰입할 때'], growth: '현실적 계획도 조금씩!',
+              compliments: [{ tag: '🎨 예술왕', phrase1: '너 표현하는 거', phrase2: '진짜 멋있어' }, { tag: '🎭 감성왕', phrase1: '네 작품은', phrase2: '감동적이야' }, { tag: '🌸 표현왕', phrase1: '너만의 스타일이', phrase2: '아름다워' }] },
+            { type: '🎭 독창형', emoji: '🌟🦄✨', quote1: "당신의 독특함이", quote2: "새로운 길을 열어요", tags: "#독특왕 #역발상천재", powers: ['창의성', '독립성', '통찰력'], shine: ['남다른 관점을 제시할 때', '독특한 해결책을 찾을 때', '나만의 길을 갈 때'], growth: '가끔은 기본도 소중해요',
+              compliments: [{ tag: '🎭 개성왕', phrase1: '너만의 스타일이', phrase2: '멋져' }, { tag: '🦄 독특왕', phrase1: '네 관점은', phrase2: '정말 새로워' }, { tag: '⭐ 역발상왕', phrase1: '그 생각은', phrase2: '생각도 못했어!' }] },
+            { type: '📏 규율원칙형', emoji: '⚖️📋✅', quote1: "당신의 원칙이", quote2: "질서를 만들어요", tags: "#원칙왕 #모범생", 
+              powers: ['성실함', '신뢰성', '정직'], 
+              shine: ['규칙을 지킬 때', '약속을 지킬 때', '올바른 길을 갈 때'], growth: '융통성도 배워봐요',
+              compliments: [{ tag: '📏 원칙왕', phrase1: '네가 있어서 규칙이', phrase2: '잘 지켜져' }, { tag: '✅ 성실왕', phrase1: '너는 약속을 꼭', phrase2: '지켜줘서 좋아' }, { tag: '⚖️ 정직왕', phrase1: '네가', phrase2: '제일 믿을 만해' }] },
+            { type: '💝 헌신박애형', emoji: '🤗💕🌻', quote1: "당신의 사랑이", quote2: "세상을 따뜻하게 해요", tags: "#봉사왕 #천사", powers: ['봉사정신', '희생', '이타심'], shine: ['남을 도울 때', '희생할 수 있을 때', '사랑을 나눌 때'], growth: '나 자신도 사랑해줘요',
+              compliments: [{ tag: '💝 봉사왕', phrase1: '너 덕분에', phrase2: '많은 도움 받았어' }, { tag: '🤗 천사왕', phrase1: '네 마음이', phrase2: '정말 따뜻해' }, { tag: '🌻 희생왕', phrase1: '넌 항상 남을', phrase2: '먼저 생각해줘' }] },
+            { type: '🌈 독창이상형', emoji: '🚀💫🎯', quote1: "당신의 비전이", quote2: "미래를 만들어요", tags: "#비전왕 #혁신가", powers: ['혁신성', '실행력', '리더십'], shine: ['새로운 비전을 제시할 때', '혁신을 실행할 때', '미래를 그릴 때'], growth: '작은 것부터 차근차근!',
+              compliments: [{ tag: '🌈 비전왕', phrase1: '너는 생각의', phrase2: '스케일이 달라' }, { tag: '🚀 혁신왕', phrase1: '네 아이디어가', phrase2: '미래를 바꿔' }, { tag: '💫 실행왕', phrase1: '생각만 아니라', phrase2: '행동도 해!' }] },
+            { type: '💚 실용추구형', emoji: '✅📊💡', quote1: "당신의 효율성이", quote2: "최고의 결과를 만들어요", tags: "#효율왕 #실행력갑", powers: ['실용성', '문제해결력', '효율성'], shine: ['복잡한 일을 단순화할 때', '가장 효율적인 방법을 찾을 때', '계획을 빠르게 실행할 때'], growth: '가끔은 과정 자체도 즐겨봐요',
+              compliments: [{ tag: '✅ 실용왕', phrase1: '네 방법이', phrase2: '제일 현실적이야' }, { tag: '📊 효율왕', phrase1: '너 덕분에', phrase2: '시간 아꼈어' }, { tag: '💡 문제해결왕', phrase1: '너는 꼬인 것도', phrase2: '잘 풀어' }] } 
+        ]; 
 
         // --- 2. 텍스트 줄바꿈 헬퍼 함수 (이전과 동일) ---
         function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
@@ -117,7 +143,7 @@
             return y + (lineCount + 1) * lineHeight; 
         }
 
-        // --- 3. 카드 그리기 함수 (drawFrontCard는 이전과 동일) ---
+        // --- 3. 개인 카드 앞/뒷면 그리기 함수 (폰트 스타일 통일) ---
         function drawFrontCard(canvas, cardInfo, cardStyle, userName) {
             const ctx = canvas.getContext('2d');
             const W = canvas.width;
@@ -133,9 +159,9 @@
             ctx.strokeStyle = cardStyle.border;
             ctx.lineWidth = 10;
             ctx.strokeRect(5, 5, W - 10, H - 10);
-
+ 
             ctx.fillStyle = cardStyle.border; 
-            ctx.font = 'bold 50px Nanum Pen Script, sans-serif';
+            ctx.font = 'bold 50px "Nanum Pen Script", sans-serif';
             ctx.textAlign = 'center';
             ctx.fillText(cardInfo.type, W / 2, 80);
 
@@ -143,24 +169,23 @@
             ctx.fillText(cardInfo.emoji, W / 2, 200);
 
             ctx.fillStyle = '#333';
-            ctx.font = '30px Nanum Pen Script, sans-serif';
+            ctx.font = '30px "Nanum Pen Script", sans-serif';
             ctx.fillText("이름:", W / 2 - 120, 300);
             
             ctx.fillStyle = cardStyle.front_text; 
-            ctx.font = 'bold 45px Nanum Pen Script, sans-serif';
+            ctx.font = 'bold 45px "Nanum Pen Script", sans-serif';
             ctx.fillText(userName, W / 2 + 30, 300);
             
             ctx.fillStyle = cardStyle.front_text;
-            ctx.font = 'bold 40px Nanum Pen Script, sans-serif';
+            ctx.font = 'bold 40px "Nanum Pen Script", sans-serif';
             ctx.fillText(cardInfo.quote1, W / 2, 450);
             ctx.fillText(cardInfo.quote2, W / 2, 510);
             
             ctx.fillStyle = '#666';
-            ctx.font = '35px Nanum Pen Script, sans-serif';
+            ctx.font = '35px "Nanum Pen Script", sans-serif';
             ctx.fillText(cardInfo.tags, W / 2, 650);
         }
 
-        // --- drawBackCard: 로고/QR 코드를 그리는 하단 섹션 완전히 제거 ---
         function drawBackCard(canvas, cardInfo, cardStyle) {
             const ctx = canvas.getContext('2d');
             const W = canvas.width;
@@ -182,13 +207,14 @@
 
             ctx.textAlign = 'left'; 
             
+            // 폰트 스타일: Nanum Gothic Coding
             ctx.fillStyle = cardStyle.back_text;
-            ctx.font = 'bold 35px Nanum Gothic Coding, monospace';
+            ctx.font = 'bold 35px "Nanum Gothic Coding", monospace';
             ctx.fillText("💪 나의 슈퍼파워", START_X - 10, y);
             y += 40;
             
             ctx.fillStyle = '#333';
-            ctx.font = '30px Nanum Gothic Coding, monospace';
+            ctx.font = '30px "Nanum Gothic Coding", monospace';
             cardInfo.powers.forEach(power => {
                 ctx.fillText(`⭐ ${power}`, START_X, y);
                 y += 40;
@@ -197,12 +223,12 @@
             y += 30; 
 
             ctx.fillStyle = cardStyle.back_accent; 
-            ctx.font = 'bold 35px Nanum Gothic Coding, monospace';
+            ctx.font = 'bold 35px "Nanum Gothic Coding", monospace';
             ctx.fillText("💝 나는 이럴 때 빛나요:", START_X - 10, y);
             y += 40;
 
             ctx.fillStyle = '#333';
-            ctx.font = '28px Nanum Gothic Coding, monospace';
+            ctx.font = '28px "Nanum Gothic Coding", monospace';
             cardInfo.shine.forEach(item => {
                 ctx.fillText(`• ${item}`, START_X, y);
                 y += 35;
@@ -211,31 +237,91 @@
             y += 30; 
 
             ctx.fillStyle = cardStyle.back_text; 
-            ctx.font = 'bold 35px Nanum Gothic Coding, monospace';
+            ctx.font = 'bold 35px "Nanum Gothic Coding", monospace';
             ctx.fillText("💡 성장 포인트:", START_X - 10, y);
             y += 40;
 
             ctx.fillStyle = '#333';
-            ctx.font = '30px Nanum Gothic Coding, monospace';
+            ctx.font = '30px "Nanum Gothic Coding", monospace';
             
-            // 성장 포인트의 Y 위치를 캔버스 하단과 간격을 두도록 조정
-            // 이전에는 FOOTER_Y = 550이 있었으므로, 캔버스 높이 700에 맞춰 적당히 조정
             y = wrapText(ctx, cardInfo.growth, START_X, y, MAX_TEXT_WIDTH, 35); 
-            
-            // --- 6. 하단 정보 영역 (로고, 문의 문구, QR 코드) 삭제됨 ---
-            
-            // 최종 Y 위치가 너무 낮으면 캔버스 중앙에 오도록 나머지 요소를 약간 위로 이동시키는 로직을 추가할 수 있지만,
-            // 현재 코드에서는 그냥 마무리됩니다. (텍스트가 캔버스 하단을 벗어나지 않도록만 관리)
         }
 
-        // --- 4. 이미지 사전 로드 함수 (외부 이미지가 없으므로 단순화) ---
-        // 이제 로드할 이미지가 없으므로, 즉시 콜백을 호출합니다.
-        function preloadImages(callback) {
-            callback();
+        // --- 4. 모든 칭찬 멘트 카드 그리기 함수 (폰트 통일 및 2줄 멘트 적용) ---
+        function drawAllComplimentsCard(canvas, allData, startIndex, endIndex, title) {
+            const ctx = canvas.getContext('2d');
+            const W = canvas.width;
+            const H = canvas.height;
+            const CARD_WIDTH = W / 2 - 15; // 2열 배치
+            const CARD_HEIGHT = 120; 
+            const PADDING = 10;
+            const COL_GAP = 10;
+            let currentY = 50;
+            
+            // 배경/테두리
+            ctx.fillStyle = '#f7f7f7'; 
+            ctx.fillRect(0, 0, W, H);
+            ctx.strokeStyle = '#4a90e2'; 
+            ctx.lineWidth = 10;
+            ctx.strokeRect(5, 5, W - 10, H - 10);
+
+            // 타이틀
+            ctx.fillStyle = '#4a90e2';
+            ctx.font = 'bold 45px "Nanum Gothic Coding", monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText(title, W / 2, 60);
+
+            currentY = 110; 
+
+            for (let dataIndex = startIndex; dataIndex < endIndex && dataIndex < allData.length; dataIndex++) {
+                const cardInfo = allData[dataIndex];
+                const style = CARD_STYLES[dataIndex];
+                const baseColor = style.comp_text; 
+                
+                // 성향 헤더
+                ctx.fillStyle = baseColor;
+                ctx.font = 'bold 30px "Nanum Gothic Coding", monospace';
+                ctx.textAlign = 'left';
+                ctx.fillText(cardInfo.type, PADDING * 2, currentY);
+                currentY += 10; 
+
+                // 칭찬 멘트 3개 (2열 배치)
+                cardInfo.compliments.forEach((comp, compIndex) => {
+                    const col = compIndex % 2;
+                    const row = Math.floor(compIndex / 2);
+
+                    const blockY = currentY + row * (CARD_HEIGHT + PADDING); 
+                    const xOffset = PADDING + col * (CARD_WIDTH + COL_GAP);
+                    
+                    // 멘트 박스
+                    ctx.fillStyle = style.comp_bg; 
+                    ctx.fillRect(xOffset, blockY, CARD_WIDTH, CARD_HEIGHT);
+                    ctx.strokeStyle = baseColor;
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(xOffset, blockY, CARD_WIDTH, CARD_HEIGHT);
+
+                    // 태그 (Nanum Gothic Coding)
+                    ctx.fillStyle = baseColor;
+                    ctx.font = 'bold 22px "Nanum Gothic Coding", monospace'; 
+                    ctx.textAlign = 'center';
+                    ctx.fillText(`[${comp.tag}]`, xOffset + CARD_WIDTH / 2, blockY + 35);
+
+                    // 🚨 멘트 폰트 통일: Nanum Gothic Coding, 2줄로 분리
+                    ctx.fillStyle = '#333';
+                    ctx.font = 'bold 24px "Nanum Gothic Coding", monospace'; // 폰트 통일 및 크기 조정
+                    
+                    ctx.fillText(comp.phrase1, xOffset + CARD_WIDTH / 2, blockY + 70);
+                    if (comp.phrase2) {
+                        ctx.fillText(comp.phrase2, xOffset + CARD_WIDTH / 2, blockY + 100);
+                    }
+                });
+                
+                // 다음 성향 시작 Y 위치 계산 (3개 성향이므로 2줄 + 여백)
+                currentY += (CARD_HEIGHT + PADDING) * 2 + 30; 
+            }
         }
 
-
-        // --- 5. 카드 생성 함수 (이미지 로드 제거 및 다운로드 안내 유지) ---
+        // --- 5. 카드 생성 함수 (폰트 로딩 보장 로직 추가) ---
         function generateBothCards() {
             const userName = document.getElementById('userName').value.trim();
             const typeIndex = document.getElementById('personalityType').value;
@@ -249,25 +335,46 @@
 
             const frontCanvas = document.getElementById('frontCanvas');
             const backCanvas = document.getElementById('backCanvas');
+            const allComplimentsCanvas1 = document.getElementById('allComplimentsCanvas1');
+            const allComplimentsCanvas2 = document.getElementById('allComplimentsCanvas2');
+            const allComplimentsCanvas3 = document.getElementById('allComplimentsCanvas3');
+            const allComplimentsCanvas4 = document.getElementById('allComplimentsCanvas4');
             
+            // 모든 캔버스 표시
             frontCanvas.style.display = 'block'; 
             backCanvas.style.display = 'block'; 
+            allComplimentsCanvas1.style.display = 'block'; 
+            allComplimentsCanvas2.style.display = 'block'; 
+            allComplimentsCanvas3.style.display = 'block'; 
+            allComplimentsCanvas4.style.display = 'block'; 
 
-            // 외부 이미지 로딩 단계를 건너뛰고 바로 그리기 실행
-            drawFrontCard(frontCanvas, cardInfo, cardStyle, userName);
-            drawBackCard(backCanvas, cardInfo, cardStyle);
+            // 🚨 폰트가 로드될 때까지 기다린 후 그리기 실행
+            document.fonts.ready.then(function () {
+                // 1. 개인 카드 그리기
+                drawFrontCard(frontCanvas, cardInfo, cardStyle, userName);
+                drawBackCard(backCanvas, cardInfo, cardStyle);
+                
+                // 2. 멘트 모음 카드 그리기 (4장 분할)
+                drawAllComplimentsCard(allComplimentsCanvas1, CARD_DATA, 0, 3, "✨ 성향별 칭찬 멘트"); 
+                drawAllComplimentsCard(allComplimentsCanvas2, CARD_DATA, 3, 6, "✨ 성향별 칭찬 멘트"); 
+                drawAllComplimentsCard(allComplimentsCanvas3, CARD_DATA, 6, 9, "✨ 성향별 칭찬 멘트"); 
+                drawAllComplimentsCard(allComplimentsCanvas4, CARD_DATA, 9, 12, "✨ 성향별 칭찬 멘트"); 
 
-            const baseFileName = `${userName}_${cardInfo.type.replace(/\s/g, '_')}`;
-            frontCanvas.dataset.fileName = `칭찬카드_앞면_${baseFileName}.png`;
-            backCanvas.dataset.fileName = `칭찬카드_뒷면_${baseFileName}.png`; 
-            
-            alert(`"${userName}"님의 ${cardInfo.type} 칭찬 카드가 생성되었습니다! 이미지를 클릭하여 다운로드하세요.`);
+                const baseFileName = `${userName}_${cardInfo.type.replace(/\s/g, '_')}`;
+                frontCanvas.dataset.fileName = `칭찬카드_앞면_${baseFileName}.png`;
+                backCanvas.dataset.fileName = `칭찬카드_뒷면_${baseFileName}.png`; 
+                allComplimentsCanvas1.dataset.fileName = `칭찬멘트_모음_1부.png`; 
+                allComplimentsCanvas2.dataset.fileName = `칭찬멘트_모음_2부.png`; 
+                allComplimentsCanvas3.dataset.fileName = `칭찬멘트_모음_3부.png`; 
+                allComplimentsCanvas4.dataset.fileName = `칭찬멘트_모음_4부.png`; 
+                
+                alert(`"${userName}"님의 칭찬 카드(2장)와 칭찬 멘트 모음 카드(4장)가 생성되었습니다. 이미지를 클릭하여 다운로드하세요.`);
+            });
         }
-
-        // --- 6. 다운로드 함수 및 이벤트 리스너 (CORS 오류가 사라졌으므로 안정화) ---
+        
+        // --- 6. 다운로드 함수 및 이벤트 리스너 ---
         function downloadCanvasImage(canvas, fileName) {
             try {
-                // 외부 이미지가 제거되었으므로 toDataURL 오류 가능성이 매우 낮아집니다.
                 const imageURL = canvas.toDataURL('image/png'); 
                 const link = document.createElement('a');
                 link.href = imageURL;
@@ -284,11 +391,14 @@
         window.onload = function() {
             const frontCanvas = document.getElementById('frontCanvas');
             const backCanvas = document.getElementById('backCanvas');
-            
+            const allComplimentsCanvas1 = document.getElementById('allComplimentsCanvas1');
+            const allComplimentsCanvas2 = document.getElementById('allComplimentsCanvas2');
+            const allComplimentsCanvas3 = document.getElementById('allComplimentsCanvas3');
+            const allComplimentsCanvas4 = document.getElementById('allComplimentsCanvas4');
+
             const handleCanvasClick = function() {
                 const fileName = this.dataset.fileName; 
                 
-                // 파일명이 설정되었고, 최소한의 데이터가 있는 경우에만 다운로드 시도
                 if (fileName && this.toDataURL('image/png').length > 5000) { 
                     downloadCanvasImage(this, fileName);
                 } else {
@@ -298,11 +408,11 @@
 
             frontCanvas.addEventListener('click', handleCanvasClick);
             backCanvas.addEventListener('click', handleCanvasClick);
+            allComplimentsCanvas1.addEventListener('click', handleCanvasClick);
+            allComplimentsCanvas2.addEventListener('click', handleCanvasClick);
+            allComplimentsCanvas3.addEventListener('click', handleCanvasClick);
+            allComplimentsCanvas4.addEventListener('click', handleCanvasClick);
         };
     </script>
 </body>
 </html>
-
-
-
-
