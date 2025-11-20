@@ -942,6 +942,8 @@
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script>
         AOS.init({
             duration: 1000,
@@ -1382,18 +1384,69 @@
         // --- 6. 다운로드 함수 및 이벤트 리스너 (DOM Content Loaded로 변경) ---
         function downloadCanvasImage(canvas, fileName) {
             try {
-                const imageURL = canvas.toDataURL('image/png'); 
+                const imageURL = canvas.toDataURL('image/png');
                 const link = document.createElement('a');
-                
+
                 link.href = imageURL;
                 link.download = fileName;
-                
+
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
             } catch (error) {
                 console.error("다운로드 오류:", error);
                 alert("다운로드 중 오류가 발생했습니다. 잠시 후 다시 시도하거나, 이미지를 길게 눌러(모바일) 저장해 보세요.");
+            }
+        }
+
+        // --- 모든 카드를 ZIP 파일로 다운로드하는 함수 ---
+        async function downloadAllCardsAsZip(canvasesAndButtons) {
+            try {
+                // JSZip이 로드되었는지 확인
+                if (typeof JSZip === 'undefined') {
+                    alert("다운로드 라이브러리 로딩 중입니다. 잠시 후 다시 시도해주세요.");
+                    return;
+                }
+
+                const zip = new JSZip();
+
+                // 모든 캔버스를 ZIP에 추가
+                for (let i = 0; i < canvasesAndButtons.length; i++) {
+                    const { canvasId } = canvasesAndButtons[i];
+                    const canvas = document.getElementById(canvasId);
+                    const fileName = canvas.dataset.fileName;
+
+                    if (canvas && fileName) {
+                        // 캔버스를 base64로 변환
+                        const imageData = canvas.toDataURL('image/png');
+                        // data:image/png;base64, 부분 제거
+                        const base64Data = imageData.split(',')[1];
+                        // ZIP에 추가
+                        zip.file(fileName, base64Data, {base64: true});
+                    }
+                }
+
+                // ZIP 파일 생성 및 다운로드
+                const content = await zip.generateAsync({type: 'blob'});
+
+                // FileSaver.js 사용
+                if (typeof saveAs !== 'undefined') {
+                    saveAs(content, '칭찬카드_전체.zip');
+                } else {
+                    // FileSaver.js가 없으면 수동으로 다운로드
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(content);
+                    link.download = '칭찬카드_전체.zip';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(link.href);
+                }
+
+                alert("총 6장의 카드가 ZIP 파일로 다운로드되었습니다!");
+            } catch (error) {
+                console.error("ZIP 다운로드 오류:", error);
+                alert("다운로드 중 오류가 발생했습니다. 개별 다운로드 버튼을 사용해주세요.");
             }
         }
 
@@ -1441,7 +1494,7 @@
                 // 초기에는 숨김 처리
                 downloadAllBtn.style.display = 'none';
 
-                downloadAllBtn.addEventListener('click', function() {
+                downloadAllBtn.addEventListener('click', async function() {
                     // 모든 캔버스가 생성되었는지 확인
                     const allCanvasesReady = canvasesAndButtons.every(({ canvasId }) => {
                         const canvas = document.getElementById(canvasId);
@@ -1453,28 +1506,8 @@
                         return;
                     }
 
-                    // 모든 카드 순차적으로 다운로드 (브라우저 차단 방지를 위해 딜레이 추가)
-                    let downloadIndex = 0;
-                    const downloadNext = () => {
-                        if (downloadIndex < canvasesAndButtons.length) {
-                            const { canvasId } = canvasesAndButtons[downloadIndex];
-                            const canvas = document.getElementById(canvasId);
-                            const fileName = canvas.dataset.fileName;
-
-                            if (fileName) {
-                                downloadCanvasImage(canvas, fileName);
-                                downloadIndex++;
-
-                                // 다음 다운로드를 300ms 후에 실행 (브라우저 차단 방지)
-                                setTimeout(downloadNext, 300);
-                            }
-                        } else {
-                            // 모든 다운로드 완료
-                            alert("총 6장의 카드 다운로드가 완료되었습니다!");
-                        }
-                    };
-
-                    downloadNext();
+                    // ZIP 파일로 모든 카드 다운로드
+                    await downloadAllCardsAsZip(canvasesAndButtons);
                 });
             }
         });
