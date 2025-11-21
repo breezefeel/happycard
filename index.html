@@ -1627,18 +1627,23 @@
             select.innerHTML = CARD_DATA.map((data, idx) => `<option value="${idx}">${data.type}</option>`).join('');
         }
         
-        // 초기화 및 URL 파라미터 체크
+        // 초기화 및 URL 파라미터 체크 (수정된 최종 버전)
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
+            const targetFocus = urlParams.get('focus');
             
-            // **[핵심]** URL에 ?focus=praise_name 파라미터가 있는지 확인합니다.
-            // 도메인(breezefeel.github.io/happycard)은 상관 없습니다.
-            if (urlParams.get('focus') === 'praise_name') {
-                // 외부 링크에서 특정 요청이 온 경우: 칭찬 카드 폼으로 이동
+            // 1. URL 파라미터 체크
+            if (targetFocus === 'praise_name') {
+                // [조건부 실행] 외부 링크에서 칭찬 카드 요청이 온 경우
                 goToPraiseCardForm();
+                
+                // 칭찬 카드 페이지로 바로 가므로, 퀴즈 관련 초기화는 불필요
+                
             } else {
-                // 일반적인 페이지 로드: 홈으로 이동
+                // [기본 실행] 일반적인 페이지 로드 (퀴즈 홈으로 이동)
                 switchPage('page1');
+                
+                // 퀴즈 질문 초기화 및 Q1 표시
                 const questions = document.querySelectorAll('.question-box');
                 questions.forEach(q => q.style.display = 'none');
                 const q1 = document.getElementById('q1');
@@ -1651,6 +1656,7 @@
     </script>
 </body>
 </html>
+
 
 
 
