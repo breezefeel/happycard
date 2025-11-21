@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GFAT 성향 분석 및 칭찬 카드 만들기</title>
+    <title>GFAT 성향 분류 및 칭찬 카드 만들기</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Nanum+Pen+Script&family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Nanum+Pen+Script&family=Nanum+Gothic+Coding:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
         /* 폰트 정의 */
@@ -17,24 +15,22 @@
         .handwritten { font-family: 'Nanum Pen Script', cursive; }
         .monospace-style { font-family: 'Nanum Gothic Coding', monospace; }
 
-        /* GFAT 성향 분석 페이지의 타입별 기본 색상 정의 (기존 CSS 변수 유지) */
+        /* [Page 1] 타입별 색상 변수 (오리지널 복구) */
         :root {
-            --color-type-1: #e67e22; /* 감성형 💫 (Orange) */
-            --color-type-2: #2ecc71; /* 조정협조형 🤝 (Emerald) */
-            --color-type-3: #e74c3c; /* 지도자형 🎯 (Red) */
-            --color-type-4: #95a5a6; /* 현실주의형 🔍 (Blue-Gray) */
-            --color-type-5: #f1c40f; /* 창조사고형 💡 (Yellow/Amber) */
-            --color-type-6: #bdc3c7; /* 완벽주의형 ✨ (Silver/Gray) */
-            --color-type-7: #9b59b6; /* 예술이상형 🎨 (Purple) */
-            --color-type-8: #34495e; /* 독창형 🎭 (Dark Blue) */
-            --color-type-9: #7f8c8d; /* 규율원칙형 📏 (Gray/Asbestos) */
-            --color-type-10: #e84393; /* 헌신박애형 💝 (Pink/Ruby) */
-            --color-type-11: #1abc9c; /* 독창이상형 🌈 (Teal) */
+            --color-type-1: #e67e22; /* 감성형 💫 */
+            --color-type-2: #2ecc71; /* 조정협조형 🤝 */
+            --color-type-3: #e74c3c; /* 지도자형 🎯 */
+            --color-type-4: #95a5a6; /* 현실주의형 🔍 */
+            --color-type-5: #f1c40f; /* 창조사고형 💡 */
+            --color-type-6: #bdc3c7; /* 완벽주의형 ✨ */
+            --color-type-7: #9b59b6; /* 예술이상형 🎨 */
+            --color-type-8: #34495e; /* 독창형 🎭 */
+            --color-type-9: #7f8c8d; /* 규율원칙형 📏 */
+            --color-type-10: #e84393; /* 헌신박애형 💝 */
+            --color-type-11: #1abc9c; /* 독창이상형 🌈 */
         }
 
-        /* ---------------------------------------------------- */
-        /* [Page 1: GFAT 11가지 성향] - 타입별 테마 및 가독성 개선 */
-        /* ---------------------------------------------------- */
+        /* [Page 1] GFAT 성향 분류 페이지 스타일 (오리지널 복구) */
         .type-card {
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
             border-top: 6px solid;
@@ -46,19 +42,19 @@
 
         .summary {
             border-left: 5px solid;
-            line-height: 1.5; /* 가독성 향상 */
+            line-height: 1.5; 
         }
         
         .detail-item h3 {
-             font-size: 1.125rem; /* text-lg */
+             font-size: 1.125rem;
              font-weight: 700;
         }
         .detail-item ul {
-            font-size: 0.95rem; /* 텍스트 크기 미세 조정 */
+            font-size: 0.95rem;
             line-height: 1.5;
         }
 
-        /* 커스텀 불릿 (•) - 색상 적용 */
+        /* 커스텀 불릿 (•) */
         .detail-item li::before {
             content: '•';
             position: absolute;
@@ -68,7 +64,7 @@
             font-size: 1.2rem;
         }
 
-        /* --- 타입별 색상 적용 (기존 CSS 변수 활용) --- */
+        /* 타입별 CSS 적용 (오리지널 복구) */
         #type-1 { border-top-color: var(--color-type-1); }
         #type-1 h2, #type-1 .summary, #type-1 .summary strong { color: var(--color-type-1); border-left-color: var(--color-type-1); }
         #type-1 .detail-item li::before { color: var(--color-type-1); }
@@ -114,35 +110,62 @@
         #type-11 .detail-item li::before { color: var(--color-type-11); }
 
 
-        /* ---------------------------------------------------- */
-        /* [Page 2: 칭찬 카드 만들기] - 캔버스 및 버튼 스타일 */
-        /* ---------------------------------------------------- */
-        
-        /* 캔버스 스타일 (기존 스타일 유지, display:none 추가) */
+        /* [Page 2] 칭찬 카드 만들기 페이지 스타일 (새로운 디자인 유지) */
         #page2 canvas { 
             border-radius: 15px; 
             margin-top: 15px; 
-            display: none; /* 초기에는 숨김 */
+            margin-bottom: 15px;
             margin-left: auto; 
             margin-right: auto; 
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); 
             max-width: 100%; 
             height: auto; 
         }
-
-        /* 다운로드 버튼 스타일 */
-        .download-btn {
-            display: none; /* 초기에는 숨김 */
-            margin-top: 10px;
-            /* Tailwind classes: bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-all w-full */
-        }
+        
         .btn-shadow-orange {
             box-shadow: 0 4px #e0941d;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         .btn-shadow-orange:active {
             box-shadow: 0 2px #c9851a; 
             transform: translateY(2px);
+        }
+        
+        /* 스크롤 컨테이너 스타일 */
+        .canvas-container {
+            display: none; /* 초기 숨김 */
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .save-guide {
+            background-color: #fffbeb;
+            border-left: 5px solid #f59e0b;
+            padding: 1rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            display: none; /* 초기 숨김 */
+        }
+
+        .section-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 2rem 0;
+            color: #6b7280;
+        }
+        .section-divider::before, .section-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .section-divider span {
+            padding: 0 1rem;
+            font-weight: bold;
+            font-size: 0.9rem;
         }
 
     </style>
@@ -151,9 +174,9 @@
 
     <nav class="sticky top-0 z-50 bg-gray-900 shadow-xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-center py-3">
-            <button class="tab-button active bg-white text-gray-900 hover:bg-gray-100 px-6 py-2 rounded-lg font-bold transition-all duration-300 mx-2 my-1" onclick="switchPage('page1')">📚 GFAT 성향 분석</button>
+            <button class="tab-button active bg-white text-gray-900 hover:bg-gray-100 px-6 py-2 rounded-lg font-bold transition-all duration-300 mx-2 my-1" onclick="switchPage('page1')">📚 GFAT 성향 분류</button>
             <button class="tab-button bg-transparent text-white hover:bg-gray-700 px-6 py-2 rounded-lg font-bold transition-all duration-300 mx-2 my-1" onclick="switchPage('page2')">✨ 칭찬 카드 만들기</button>
-            <a href="https://breezefeel.github.io/healingtree.github.io/" target="_blank" class="tab-button bg-blue-500 text-white hover:bg-blue-600 px-6 py-2 rounded-lg font-bold transition-all duration-300 mx-2 my-1">🏠 홈페이지</a>
+            <a href="https://brand.site/ifas" target="_blank" class="tab-button bg-blue-500 text-white hover:bg-blue-600 px-6 py-2 rounded-lg font-bold transition-all duration-300 mx-2 my-1">🏠 더 알아보기</a>
         </div>
     </nav>
 
@@ -883,11 +906,13 @@
             <h1 class="handwritten text-4xl md:text-5xl text-blue-500 font-extrabold mb-4 leading-tight">
                 ✨ 나만의 ✨<br>칭찬 카드 만들기 
             </h1>
-            <p class="hint mt-2 text-gray-500 text-sm md:text-base monospace-style"> 성향에 꼭 맞는 칭찬은, 더 마음 깊이 와닿고 더 진심처럼 느껴집니다</p>
+            <p class="hint mt-2 text-gray-500 text-sm md:text-base monospace-style">
+                성향에 꼭 맞는 칭찬으로 마음을 전해보세요!
+            </p>
 
             <div class="input-group mt-8 mb-6 text-left" data-aos="fade-right">
                 <label for="userName" class="monospace-style text-lg font-bold mb-2 text-gray-700 block">이름을 입력하세요:</label>
-                <input type="text" id="userName" placeholder="예: 홍길동" maxlength="15" class="monospace-style w-full p-3 border-2 border-blue-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-lg">
+                <input type="text" id="userName" placeholder="예: 홍길동" maxlength="8" class="monospace-style w-full p-3 border-2 border-blue-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-lg">
             </div>
 
             <div class="input-group mb-8 text-left" data-aos="fade-left">
@@ -908,527 +933,340 @@
             </div>
 
             <button onclick="generateBothCards()" class="monospace-style bg-orange-500 text-white px-8 py-4 rounded-xl font-extrabold text-xl hover:bg-orange-600 transition btn-shadow-orange w-full" data-aos="zoom-out">
-                칭찬 카드 만들기
+                카드 생성하기
             </button>
-            
-            <div class="preview-area mt-10">
-                
-                <canvas id="frontCanvas" width="500" height="700"></canvas>
-                <button id="frontDownloadBtn" class="download-btn bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-all w-full font-bold">⬇️ 앞면 다운로드</button>
 
-                <canvas id="backCanvas" width="500" height="700"></canvas>
-                <button id="backDownloadBtn" class="download-btn bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-all w-full font-bold">⬇️ 뒷면 다운로드</button>
-
-                <canvas id="allComplimentsCanvas1" width="500" height="950"></canvas>
-                <button id="allComplimentsDownloadBtn1" class="download-btn bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-all w-full font-bold">⬇️ 멘트 모음 1부 다운로드</button>
-
-                <canvas id="allComplimentsCanvas2" width="500" height="950"></canvas>
-                <button id="allComplimentsDownloadBtn2" class="download-btn bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-all w-full font-bold">⬇️ 멘트 모음 2부 다운로드</button>
-
-                <canvas id="allComplimentsCanvas3" width="500" height="950"></canvas>
-                <button id="allComplimentsDownloadBtn3" class="download-btn bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-all w-full font-bold">⬇️ 멘트 모음 3부 다운로드</button>
-
-                <canvas id="allComplimentsCanvas4" width="500" height="700"></canvas>
-                <button id="allComplimentsDownloadBtn4" class="download-btn bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-all w-full font-bold">⬇️ 멘트 모음 4부 다운로드</button>
+            <div id="saveGuide" class="save-guide">
+                <p class="text-lg font-bold text-amber-800 mb-1">📢 저장 방법</p>
+                <p class="text-sm text-amber-700">
+                    이미지를 <strong>길게 누르거나(모바일)</strong>, <strong>마우스 우클릭(PC)</strong>하여<br>
+                    '이미지 저장'을 선택하거나 <strong>스크린샷</strong>을 찍어 사용하세요!
+                </p>
             </div>
+
+            <div id="canvasArea" class="canvas-container mt-10">
+                </div>
         </div>
     </div>
 
     <footer class="bg-gray-800 text-white text-center p-6 mt-12">
-        <p class="text-sm">GFAT 성향 분석 & 칭찬 카드 메이커 | All rights reserved.</p>
+        <p class="text-sm">GFAT 성향 분류 & 칭찬 카드 메이커 | All rights reserved.</p>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({
-            duration: 1000,
-            once: true,
-        });
+        AOS.init({ duration: 1000, once: true });
         
-        // --- 탭 전환 기능 ---
+        // --- 탭 전환 ---
         function switchPage(pageId) {
             const pages = document.querySelectorAll('.content-page');
-            pages.forEach(page => {
-                page.style.display = 'none';
-            });
+            pages.forEach(page => page.style.display = 'none');
             document.getElementById(pageId).style.display = 'block';
 
             const buttons = document.querySelectorAll('.tab-button');
             buttons.forEach(button => {
-                button.classList.remove('active', 'bg-white', 'text-gray-900', 'hover:bg-gray-100');
-                button.classList.add('bg-transparent', 'text-white', 'hover:bg-gray-700');
-                
-                if (button.getAttribute('href') && button.getAttribute('href').includes('healingtree')) {
-                    button.classList.remove('bg-transparent', 'text-white', 'hover:bg-gray-700');
-                    button.classList.add('bg-blue-500', 'text-white', 'hover:bg-blue-600');
-                }
-
-                if (button.getAttribute('onclick').includes(pageId)) {
-                    button.classList.add('active', 'bg-white', 'text-gray-900');
-                    button.classList.remove('bg-transparent', 'text-white', 'hover:bg-gray-700');
+                if (!button.getAttribute('href')) {
+                    button.classList.remove('active', 'bg-white', 'text-gray-900');
+                    button.classList.add('bg-transparent', 'text-white');
+                    if (button.getAttribute('onclick').includes(pageId)) {
+                        button.classList.add('active', 'bg-white', 'text-gray-900');
+                        button.classList.remove('bg-transparent', 'text-white');
+                    }
                 }
             });
-            window.scrollTo(0, 0); // 페이지 전환 시 상단으로 이동
+            window.scrollTo(0, 0);
         }
 
-        // --- 1. 이미지 및 데이터 정의 (기존 데이터 유지) ---
+        // --- 데이터 정의 ---
         const CARD_STYLES = [
-            { front_bg: ['#f8bbd0', '#ffecb3'], front_text: '#d81b60', border: '#f06292', back_bg: ['#fffde7', '#fce4ec'], back_text: '#880e4f', back_accent: '#ff80ab', comp_bg: '#ffcdd2', comp_text: '#d81b60' }, 
-            { front_bg: ['#e0f7fa', '#c5e1a5'], front_text: '#00838f', border: '#4db6ac', back_bg: ['#e8f5e9', '#e3f2fd'], back_text: '#2e7d32', back_accent: '#a5d6a7', comp_bg: '#e0f7fa', comp_text: '#00838f' }, 
-            { front_bg: ['#ffcdd2', '#f44336'], front_text: '#b71c1c', border: '#e57373', back_bg: ['#ffe0b2', '#ffccbc'], back_text: '#d84315', back_accent: '#ff9800', comp_bg: '#ffcdd2', comp_text: '#b71c1c' }, 
-            { front_bg: ['#cfd8dc', '#b0bec5'], front_text: '#263238', border: '#546e7a', back_bg: ['#eceff1', '#cfd8dc'], back_text: '#37474f', back_accent: '#78909c', comp_bg: '#cfd8dc', comp_text: '#263238' }, 
-            { front_bg: ['#fff9c4', '#ffeb3b'], front_text: '#f9a825', border: '#ffc107', back_bg: ['#fff8e1', '#fff3e0'], back_text: '#ef6c00', back_accent: '#ffca28', comp_bg: '#fff9c4', comp_text: '#f9a825' }, 
-            { front_bg: ['#e3f2fd', '#bbdefb'], front_text: '#1976d2', border: '#64b5f6', back_bg: ['#f5f5f5', '#e3f2fd'], back_text: '#0d47a1', back_accent: '#90caf9', comp_bg: '#e3f2fd', comp_text: '#1976d2' }, 
-            { front_bg: ['#ede7f6', '#d1c4e9'], front_text: '#4527a0', border: '#7e57c2', back_bg: ['#f3e5f5', '#e1bee7'], back_text: '#6a1b9a', back_accent: '#ba68c8', comp_bg: '#ede7f6', comp_text: '#4527a0' }, 
-            { front_bg: ['#e1f5fe', '#81d4fa'], front_text: '#01579b', border: '#29b6f6', back_bg: ['#f0f8ff', '#e0f7fa'], back_text: '#006064', back_accent: '#4fc3f7', comp_bg: '#e1f5fe', comp_text: '#01579b' }, 
-            { front_bg: ['#e8f5e9', '#c8e6c9'], front_text: '#388e3c', border: '#81c784', back_bg: ['#f1f8e9', '#e8f5e9'], back_text: '#1b5e20', back_accent: '#a5d6a7', comp_bg: '#e8f5e9', comp_text: '#388e3c' }, 
-            { front_bg: ['#fce4ec', '#f8bbd0'], front_text: '#c2185b', border: '#e91e63', back_bg: ['#fff8e1', '#fce4ec'], back_text: '#ad1457', back_accent: '#f48fb1', comp_bg: '#fce4ec', comp_text: '#c2185b' }, 
-            { front_bg: ['#fbe9e7', '#ffccbc'], front_text: '#e64a19', border: '#ff8a65', back_bg: ['#efebe9', '#fbe9e7'], back_text: '#bf360c', back_accent: '#ffab91', comp_bg: '#fbe9e7', comp_text: '#e64a19' }, 
+            { front_bg: ['#f8bbd0', '#ffecb3'], front_text: '#d81b60', border: '#f06292', back_bg: ['#fffde7', '#fce4ec'], back_text: '#880e4f', back_accent: '#ff80ab', comp_bg: '#ffebee', comp_text: '#c2185b' }, 
+            { front_bg: ['#e0f7fa', '#c5e1a5'], front_text: '#006064', border: '#4db6ac', back_bg: ['#e8f5e9', '#e3f2fd'], back_text: '#1b5e20', back_accent: '#66bb6a', comp_bg: '#e0f2f1', comp_text: '#00695c' }, 
+            { front_bg: ['#ffcdd2', '#ef9a9a'], front_text: '#b71c1c', border: '#e57373', back_bg: ['#ffebee', '#ffcdd2'], back_text: '#b71c1c', back_accent: '#ff5252', comp_bg: '#ffebee', comp_text: '#c62828' }, 
+            { front_bg: ['#cfd8dc', '#b0bec5'], front_text: '#263238', border: '#78909c', back_bg: ['#eceff1', '#cfd8dc'], back_text: '#37474f', back_accent: '#607d8b', comp_bg: '#eceff1', comp_text: '#455a64' }, 
+            { front_bg: ['#fff9c4', '#fff176'], front_text: '#f57f17', border: '#fbc02d', back_bg: ['#fffde7', '#fff9c4'], back_text: '#e65100', back_accent: '#ffd600', comp_bg: '#fffde7', comp_text: '#f9a825' }, 
+            { front_bg: ['#e3f2fd', '#90caf9'], front_text: '#0d47a1', border: '#42a5f5', back_bg: ['#f5f5f5', '#e3f2fd'], back_text: '#1565c0', back_accent: '#2196f3', comp_bg: '#e3f2fd', comp_text: '#1976d2' }, 
+            { front_bg: ['#ede7f6', '#b39ddb'], front_text: '#4527a0', border: '#7e57c2', back_bg: ['#f3e5f5', '#ede7f6'], back_text: '#4a148c', back_accent: '#9c27b0', comp_bg: '#f3e5f5', comp_text: '#6a1b9a' }, 
+            { front_bg: ['#e1f5fe', '#81d4fa'], front_text: '#01579b', border: '#29b6f6', back_bg: ['#f0f8ff', '#e1f5fe'], back_text: '#006064', back_accent: '#039be5', comp_bg: '#e0f7fa', comp_text: '#0277bd' }, 
+            { front_bg: ['#e8f5e9', '#a5d6a7'], front_text: '#1b5e20', border: '#66bb6a', back_bg: ['#f1f8e9', '#e8f5e9'], back_text: '#2e7d32', back_accent: '#4caf50', comp_bg: '#e8f5e9', comp_text: '#2e7d32' }, 
+            { front_bg: ['#fce4ec', '#f48fb1'], front_text: '#880e4f', border: '#ec407a', back_bg: ['#fff3e0', '#fce4ec'], back_text: '#ad1457', back_accent: '#ff4081', comp_bg: '#fce4ec', comp_text: '#c2185b' }, 
+            { front_bg: ['#fbe9e7', '#ffab91'], front_text: '#bf360c', border: '#ff7043', back_bg: ['#efebe9', '#fbe9e7'], back_text: '#d84315', back_accent: '#ff5722', comp_bg: '#fbe9e7', comp_text: '#e64a19' }, 
         ];
 
         const CARD_DATA = [
-            { type: '💫 감성형', emoji: '🌟✨💕', quote1: "당신의 따뜻함이", quote2: "세상을 밝혀요", tags: "#공감왕 #분위기메이커", powers: ['공감력', '친화력', '순발력'], shine: ['친구가 힘들 때 위로해줄 때', '분위기를 밝게 만들 때', '사람들과 금방 친해질 때'], growth: '가끔은 객관적으로도 생각해봐요',
-              compliments: [{ tag: '💕 공감왕', phrase1: '너랑 얘기하면', phrase2: '위로돼' }, { tag: '💫 분위기메이커', phrase1: '네가 있으면', phrase2: '다들 웃어' }, { tag: '✨ 감성왕', phrase1: '너 말 들어주니까', phrase2: '진짜 좋아' }] },
-            { type: '🤝 조정협조형', emoji: '🌈🕊️💫', quote1: "당신의 배려가", quote2: "팀을 하나로 만들어요", tags: "#중재자 #배려왕", powers: ['중재력', '포용력', '균형감'], shine: ['친구들 싸울 때 중재할 때', '모두의 의견을 들어줄 때', '양쪽 입장을 이해할 때'], growth: '때론 빠른 결정도 괜찮아요',
-              compliments: [{ tag: '🤝 중재왕', phrase1: '너 덕분에', phrase2: '화해했어' }, { tag: '🌈 배려왕', phrase1: '네가 다 챙겨줘서', phrase2: '고마워' }, { tag: '💞 조율왕', phrase1: '모두의 의견', phrase2: '들어줘서 좋아' }] },
-            { type: '🎯 지도자형', emoji: '🚀👑💪', quote1: "당신의 리더십이", quote2: "길을 만들어요", tags: "#리더 #추진왕", powers: ['추진력', '결단력', '책임감'], shine: ['목표를 향해 나아갈 때', '빠르게 결정해야 할 때', '팀을 이끌어갈 때'], growth: '다른 의견도 들어보는 여유를!',
-              compliments: [{ tag: '🎯 결정왕', phrase1: '네가 정해줘서', phrase2: '편해!' }, { tag: '👑 리더왕', phrase1: '너 따라가면', phrase2: '일이 술술 돼' }, { tag: '🚀 추진왕', phrase1: '네 추진력 덕분에', phrase2: '해냈어' }] },
-            { type: '🔍 현실주의형', emoji: '🎯🧠💡', quote1: "당신의 통찰력이", quote2: "문제를 풀어요", tags: "#전략가 #분석왕", powers: ['분석력', '전략적 사고', '객관성'], shine: ['복잡한 상황을 정리할 때', '효율적인 방법을 찾을 때', '장단점을 비교할 때'], growth: '완벽하지 않아도 실행해봐요',
-              compliments: [{ tag: '🔍 분석왕', phrase1: '네가 정리해주니까', phrase2: '이해 쉬워' }, { tag: '🎯 전략왕', phrase1: '너 계획 짜는 거', phrase2: '진짜 탄탄해' }, { tag: '🧠 효율왕', phrase1: '네 방법이', phrase2: '제일 빠르더라' }] },
-            { type: '💡 창조사고형', emoji: '✨🎨🌟', quote1: "당신의 아이디어가", quote2: "세상을 바꿔요", tags: "#아이디어뱅크 #창의왕", powers: ['창의력', '도전정신', '적극성'], shine: ['새로운 아이디어를 낼 때', '남다른 방법을 시도할 때', '호기심을 발휘할 때'], growth: '끝까지 해내는 끈기도 길러봐요',
-              compliments: [{ tag: '💡 아이디어왕', phrase1: '너 생각이', phrase2: '제일 참신해' }, { tag: '✨ 창의왕', phrase1: '네 발상은', phrase2: '진짜 독특해' }, { tag: '🌟 도전왕', phrase1: '네가 먼저 시도해줘서', phrase2: '좋아' }] },
-            { type: '✨ 완벽주의형', emoji: '👑💎⚡', quote1: "당신의 꼼꼼함이", quote2: "완성도를 높여요", tags: "#완벽왕 #디테일왕", powers: ['정확성', '책임감', '인내심'], shine: ['꼼꼼하게 준비할 때', '완성도를 높일 때', '실수를 방지할 때'], growth: '완벽보다 완료가 중요할 때도!',
-              compliments: [{ tag: '✨ 완벽왕', phrase1: '너는 항상 꼼꼼해서', phrase2: '믿음직해' }, { tag: '💎 디테일왕', phrase1: '네가 확인해주면', phrase2: '안심이야' }, { tag: '👑 정확왕', phrase1: '너 덕분에', phrase2: '실수가 없어' }] },
-            { type: '🎨 예술이상형', emoji: '🎭🌸🎵', quote1: "당신의 감성이", quote2: "아름다움을 만들어요", tags: "#예술가 #감성왕", powers: ['예술성', '표현력', '몰입력'], shine: ['아름다운 것을 표현할 때', '무대 위에 있을 때', '작품에 몰입할 때'], growth: '현실적 계획도 조금씩!',
-              compliments: [{ tag: '🎨 예술왕', phrase1: '너 표현하는 거', phrase2: '진짜 멋있어' }, { tag: '🎭 감성왕', phrase1: '네 작품은', phrase2: '감동적이야' }, { tag: '🌸 표현왕', phrase1: '너만의 스타일이', phrase2: '아름다워' }] },
-            { type: '🎭 독창형', emoji: '🌟🦄✨', quote1: "당신의 독특함이", quote2: "새로운 길을 열어요", tags: "#독특왕 #역발상천재", powers: ['창의성', '독립성', '통찰력'], shine: ['남다른 관점을 제시할 때', '독특한 해결책을 찾을 때', '나만의 길을 갈 때'], growth: '가끔은 기본도 소중해요',
-              compliments: [{ tag: '🎭 개성왕', phrase1: '너만의 스타일이', phrase2: '멋져' }, { tag: '🦄 독특왕', phrase1: '네 관점은', phrase2: '정말 새로워' }, { tag: '⭐ 역발상왕', phrase1: '그 생각은', phrase2: '생각도 못했어!' }] },
-            { type: '📏 규율원칙형', emoji: '⚖️📋✅', quote1: "당신의 원칙이", quote2: "질서를 만들어요", tags: "#원칙왕 #모범생", powers: ['성실함', '신뢰성', '정직'], shine: ['규칙을 지킬 때', '약속을 지킬 때', '올바른 길을 갈 때'], growth: '융통성도 배워봐요',
-              compliments: [{ tag: '📏 원칙왕', phrase1: '네가 있어서 규칙이', phrase2: '잘 지켜져' }, { tag: '✅ 성실왕', phrase1: '너는 약속을 꼭', phrase2: '지켜줘서 좋아' }, { tag: '⚖️ 정직왕', phrase1: '네가', phrase2: '제일 믿을 만해' }] },
-            { type: '💝 헌신박애형', emoji: '🤗💕🌻', quote1: "당신의 사랑이", quote2: "세상을 따뜻하게 해요", tags: "#봉사왕 #천사", powers: ['봉사정신', '희생', '이타심'], shine: ['남을 도울 때', '희생할 수 있을 때', '사랑을 나눌 때'], growth: '나 자신도 사랑해줘요',
-              compliments: [{ tag: '💝 봉사왕', phrase1: '너 덕분에', phrase2: '많은 도움 받았어' }, { tag: '🤗 천사왕', phrase1: '네 마음이', phrase2: '정말 따뜻해' }, { tag: '🌻 희생왕', phrase1: '넌 항상 남을', phrase2: '먼저 생각해줘' }] },
-            { type: '🌈 독창이상형', emoji: '🚀💫🎯', quote1: "당신의 비전이", quote2: "미래를 만들어요", tags: "#비전왕 #혁신가", powers: ['혁신성', '실행력', '리더십'], shine: ['새로운 비전을 제시할 때', '혁신을 실행할 때', '미래를 그릴 때'], growth: '작은 것부터 차근차근!',
-              compliments: [{ tag: '🌈 비전왕', phrase1: '너는 생각의', phrase2: '스케일이 달라' }, { tag: '🚀 혁신왕', phrase1: '네 아이디어가', phrase2: '미래를 바꿔' }, { tag: '💫 실행왕', phrase1: '생각만 아니라', phrase2: '행동도 해!' }] },            
+            { type: '💫 감성형', emoji: '🌟✨💕', quote1: "따뜻한 마음이", quote2: "세상을 밝혀요", tags: "#공감왕 #분위기메이커", powers: ['공감 능력', '엄청난 친화력', '빠른 상황대처'], shine: ['친구가 힘들 때 위로해줄 때', '분위기를 밝게 띄울 때', '사람들과 금방 친해질 때'], growth: '가끔은 객관적으로 생각해보는 연습도 필요해요!',
+              compliments: [{ tag: '💕 공감왕', phrase1: '네가 들어줘서', phrase2: '마음이 풀렸어' }, { tag: '💫 분위기메이커', phrase1: '너만 있으면', phrase2: '다들 웃게 돼' }, { tag: '✨ 감성천재', phrase1: '너의 따뜻한 말 한마디가', phrase2: '정말 큰 힘이 돼' }] },
+            { type: '🤝 조정협조형', emoji: '🕊️🌈🤝', quote1: "당신의 배려가", quote2: "우리를 하나로 만들어요", tags: "#평화주의자 #배려왕", powers: ['탁월한 중재력', '깊은 포용력', '의견 조율 능력'], shine: ['친구들 사이를 중재할 때', '소외된 친구를 챙길 때', '양쪽 입장을 다 들어줄 때'], growth: '때로는 내 의견을 확실하게 말해도 괜찮아요!',
+              compliments: [{ tag: '🤝 중재왕', phrase1: '너 덕분에', phrase2: '다시 사이가 좋아졌어' }, { tag: '🌈 배려왕', phrase1: '세심하게 챙겨줘서', phrase2: '정말 고마워' }, { tag: '💞 소통왕', phrase1: '모두의 의견을', phrase2: '잘 들어줘서 좋아' }] },
+            { type: '🎯 지도자형', emoji: '👑🦁🚀', quote1: "당신의 리더십이", quote2: "길을 만들어요", tags: "#리더 #추진력끝판왕", powers: ['강한 추진력', '확실한 결단력', '책임감'], shine: ['목표를 향해 이끌어갈 때', '빠르게 결정해야 할 때', '팀의 중심을 잡을 때'], growth: '다른 친구의 속도에 맞춰주는 여유를 가져봐요!',
+              compliments: [{ tag: '🎯 결단력짱', phrase1: '네가 정해주니까', phrase2: '속이 다 시원해!' }, { tag: '👑 참된리더', phrase1: '너만 믿고 따라가면', phrase2: '성공할 것 같아' }, { tag: '🚀 추진왕', phrase1: '망설임 없이 해내는 모습', phrase2: '진짜 멋있어' }] },
+            { type: '🔍 현실주의형', emoji: '🦉📊💡', quote1: "당신의 통찰력이", quote2: "정답을 찾아요", tags: "#전략가 #분석천재", powers: ['냉철한 분석력', '현실적 판단', '효율성 추구'], shine: ['복잡한 문제를 정리할 때', '가장 효율적인 길을 찾을 때', '팩트를 체크할 때'], growth: '완벽하지 않아도 일단 시작해보는 건 어떨까요?',
+              compliments: [{ tag: '🔍 분석왕', phrase1: '네가 정리해주니까', phrase2: '머리에 쏙 들어와' }, { tag: '📊 전략가', phrase1: '계획이 완벽해서', phrase2: '빈틈이 없네' }, { tag: '💡 해결사', phrase1: '네 방법이', phrase2: '제일 확실해!' }] },
+            { type: '💡 창조사고형', emoji: '🎨✨🚀', quote1: "당신의 상상이", quote2: "현실이 돼요", tags: "#아이디어뱅크 #호기심", powers: ['무한한 창의력', '새로운 도전', '적극적인 태도'], shine: ['기발한 아이디어를 낼 때', '남들이 안 하는 걸 시도할 때', '호기심을 가질 때'], growth: '시작한 일을 끝까지 마무리하는 끈기를 길러봐요!',
+              compliments: [{ tag: '💡 아이디어', phrase1: '와, 어떻게 그런', phrase2: '생각을 했어?' }, { tag: '✨ 창의력대장', phrase1: '네 생각은 항상', phrase2: '새롭고 재밌어' }, { tag: '🚀 도전왕', phrase1: '먼저 용기 내줘서', phrase2: '멋지다!' }] },
+            { type: '✨ 완벽주의형', emoji: '💎🦢📏', quote1: "당신의 꼼꼼함이", quote2: "최고를 만들어요", tags: "#완벽주의 #디테일", powers: ['정확성', '투철한 책임감', '끈기'], shine: ['실수 없이 일을 처리할 때', '완성도를 높일 때', '약속을 철저히 지킬 때'], growth: '가끔은 "이 정도면 충분해"라고 생각해도 돼요.',
+              compliments: [{ tag: '✨ 완벽그잡채', phrase1: '너한테 맡기면', phrase2: '걱정이 없어' }, { tag: '💎 디테일장인', phrase1: '놓친 부분까지 찾아내다니', phrase2: '대단해' }, { tag: '📏 꼼꼼왕', phrase1: '빈틈없이 준비해줘서', phrase2: '든든해' }] },
+            { type: '🎨 예술이상형', emoji: '🎭🌹🌙', quote1: "당신의 감성이", quote2: "아름다움을 창조해요", tags: "#예술가 #로맨티스트", powers: ['풍부한 예술성', '뛰어난 표현력', '깊은 몰입'], shine: ['감정을 표현할 때', '예술적 재능을 보일 때', '무언가에 푹 빠질 때'], growth: '현실적인 계획도 조금씩 세워보면 더 좋을 거예요!',
+              compliments: [{ tag: '🎨 금손', phrase1: '너의 손길이 닿으면', phrase2: '작품이 돼' }, { tag: '🎭 감성장인', phrase1: '너의 표현력은', phrase2: '정말 감동적이야' }, { tag: '🌹 매력부자', phrase1: '너만의 분위기가', phrase2: '너무 멋져' }] },
+            { type: '🎭 독창형', emoji: '🦄👽⚡', quote1: "당신의 독특함이", quote2: "새로운 세상을 열어요", tags: "#마이웨이 #개성파", powers: ['남다른 시각', '독립심', '통찰력'], shine: ['누구도 생각 못한 걸 말할 때', '나만의 길을 갈 때', '본질을 꿰뚫을 때'], growth: '주변 사람들과 소통하는 시간도 늘려보세요!',
+              compliments: [{ tag: '🦄 유니크', phrase1: '너 같은 친구는', phrase2: '세상에 하나뿐이야' }, { tag: '⚡ 천재만재', phrase1: '그건 진짜', phrase2: '상상도 못했어!' }, { tag: '👽 개성왕', phrase1: '너만의 색깔이', phrase2: '뚜렷해서 좋아' }] },
+            { type: '📏 규율원칙형', emoji: '⚖️🌲✅', quote1: "당신의 올곧음이", quote2: "신뢰를 만들어요", tags: "#바른생활 #모범생", powers: ['성실함', '정직함', '신뢰성'], shine: ['규칙을 잘 지킬 때', '꾸준히 노력할 때', '거짓 없이 행동할 때'], growth: '예상치 못한 변화도 즐기는 마음을 가져봐요.',
+              compliments: [{ tag: '📏 바른생활', phrase1: '네가 있으면', phrase2: '질서가 잡혀' }, { tag: '✅ 성실왕', phrase1: '한결같은 모습이', phrase2: '정말 존경스러워' }, { tag: '⚖️ 믿음직', phrase1: '너는 무슨 일이 있어도', phrase2: '믿을 수 있어' }] },
+            { type: '💝 헌신박애형', emoji: '🌻🎁🥰', quote1: "당신의 사랑이", quote2: "세상을 따뜻하게 해요", tags: "#기부천사 #봉사왕", powers: ['봉사 정신', '희생 정신', '이타심'], shine: ['남을 먼저 도울 때', '양보할 때', '사랑을 나눌 때'], growth: '남을 챙기는 만큼 나 자신도 아껴주세요!',
+              compliments: [{ tag: '💝 천사강림', phrase1: '너 덕분에', phrase2: '세상이 아직 따뜻해' }, { tag: '🥰 힐러', phrase1: '너랑 있으면', phrase2: '마음이 치유돼' }, { tag: '🌻 배려왕', phrase1: '항상 남을 먼저', phrase2: '생각해줘서 고마워' }] },
+            { type: '🌈 독창이상형', emoji: '🔭🚀🌏', quote1: "당신의 비전이", quote2: "미래를 바꿔요", tags: "#혁신가 #비전메이커", powers: ['미래 지향적', '혁신성', '큰 그림'], shine: ['새로운 비전을 제시할 때', '변화를 주도할 때', '꿈을 이야기할 때'], growth: '큰 꿈을 이루기 위해 작은 실천부터 시작해봐요!',
+              compliments: [{ tag: '🌈 비전왕', phrase1: '너의 생각 스케일은', phrase2: '정말 남달라' }, { tag: '🚀 혁신가', phrase1: '네 아이디어가', phrase2: '미래를 바꿀 거야' }, { tag: '🌏 리더', phrase1: '너는 분명', phrase2: '큰 사람이 될 거야' }] },            
         ]; 
 
-        // --- 2. 텍스트 줄바꿈 헬퍼 함수 (유지) ---
+        // --- 줄바꿈 함수 ---
         function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
             const words = text.split('');
             let line = '';
-            let lineCount = 0;
             for(let n = 0; n < words.length; n++) {
                 let testLine = line + words[n];
                 let metrics = ctx.measureText(testLine);
                 let testWidth = metrics.width;
                 if (testWidth > maxWidth && n > 0) {
-                    ctx.fillText(line, x, y + lineCount * lineHeight);
+                    ctx.fillText(line, x, y);
                     line = words[n];
-                    lineCount++;
-                    
-                    if (lineCount * lineHeight > 200) break; 
+                    y += lineHeight;
                 } else {
                     line = testLine;
                 }
             }
-            if (line) {
-                ctx.fillText(line, x, y + lineCount * lineHeight);
-            }
-            return y + (lineCount + 1) * lineHeight; 
+            ctx.fillText(line, x, y);
+            return y + lineHeight;
         }
 
-        // --- 3. 개인 카드 앞/뒷면 그리기 함수 (유지) ---
+        // --- 1. 앞면 카드 그리기 (디자인 개선) ---
         function drawFrontCard(canvas, cardInfo, cardStyle, userName) {
-            // ... (기존 drawFrontCard 함수 내용 유지) ...
             const ctx = canvas.getContext('2d');
             const W = canvas.width;
             const H = canvas.height;
             
-            ctx.clearRect(0, 0, W, H);
+            // 배경
             const gradient = ctx.createLinearGradient(0, 0, 0, H);
             gradient.addColorStop(0, cardStyle.front_bg[0]); 
             gradient.addColorStop(1, cardStyle.front_bg[1]); 
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, W, H);
             
+            // 테두리 (심플하게)
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 8;
+            ctx.strokeRect(15, 15, W - 30, H - 30);
+
+            // 내부 얇은 테두리
             ctx.strokeStyle = cardStyle.border;
-            ctx.lineWidth = 10;
-            ctx.strokeRect(5, 5, W - 10, H - 10);
+            ctx.lineWidth = 3;
+            ctx.strokeRect(22, 22, W - 44, H - 44);
  
-            ctx.fillStyle = cardStyle.border; 
-            ctx.font = 'bold 45px "Nanum Pen Script", cursive'; /* 폰트 크기 유지 */
-            ctx.textAlign = 'center';
-            ctx.fillText(cardInfo.type, W / 2, 80);
-
-            ctx.font = '70px sans-serif'; 
-            ctx.fillText(cardInfo.emoji, W / 2, 200);
-
-            ctx.fillStyle = '#333';
-            ctx.font = '28px "Nanum Pen Script", cursive'; 
-            ctx.fillText("이름:", W / 2 - 100, 300);
-            
+            // 타입 이름
             ctx.fillStyle = cardStyle.front_text; 
-            ctx.font = 'bold 40px "Nanum Pen Script", cursive'; 
-            ctx.fillText(userName, W / 2 + 30, 300);
+            ctx.font = 'bold 55px "Nanum Pen Script", cursive';
+            ctx.textAlign = 'center';
+            ctx.fillText(cardInfo.type, W / 2, 90);
+
+            // 이모지 (크게)
+            ctx.font = '110px sans-serif'; 
+            ctx.fillText(cardInfo.emoji, W / 2, 230);
+
+            // 이름 영역
+            ctx.fillStyle = '#444';
+            ctx.font = '35px "Nanum Pen Script", cursive'; 
+            ctx.fillText(`To. ${userName}`, W / 2, 320);
             
+            // 명언 (중앙 강조)
             ctx.fillStyle = cardStyle.front_text;
-            ctx.font = 'bold 35px "Nanum Pen Script", cursive'; 
+            ctx.font = 'bold 48px "Nanum Pen Script", cursive'; 
             ctx.fillText(cardInfo.quote1, W / 2, 450);
             ctx.fillText(cardInfo.quote2, W / 2, 510);
             
-            ctx.fillStyle = '#666';
+            // 태그
+            ctx.fillStyle = 'rgba(0,0,0,0.5)';
             ctx.font = '30px "Nanum Pen Script", cursive'; 
-            ctx.fillText(cardInfo.tags, W / 2, 650);
+            ctx.fillText(cardInfo.tags, W / 2, 640);
         }
 
+        // --- 2. 뒷면 카드 그리기 (디자인 개선) ---
         function drawBackCard(canvas, cardInfo, cardStyle) {
-            // ... (기존 drawBackCard 함수 내용 유지) ...
             const ctx = canvas.getContext('2d');
             const W = canvas.width;
             const H = canvas.height;
-            const MAX_TEXT_WIDTH = W - 120; 
-            const START_X = 60;
+            const START_X = 50;
             let y = 80;
 
-            ctx.clearRect(0, 0, W, H);
+            // 배경
             const gradient = ctx.createLinearGradient(0, 0, 0, H);
             gradient.addColorStop(0, cardStyle.back_bg[0]); 
             gradient.addColorStop(1, cardStyle.back_bg[1]); 
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, W, H);
             
+            // 테두리
             ctx.strokeStyle = cardStyle.back_accent; 
-            ctx.lineWidth = 10;
-            ctx.strokeRect(5, 5, W - 10, H - 10);
+            ctx.lineWidth = 8;
+            ctx.strokeRect(15, 15, W - 30, H - 30);
 
             ctx.textAlign = 'left'; 
             
-            // 폰트 스타일: Nanum Gothic Coding
+            // 1. 슈퍼파워 섹션
             ctx.fillStyle = cardStyle.back_text;
-            ctx.font = 'bold 30px "Nanum Gothic Coding", monospace'; 
+            ctx.font = 'bold 32px "Nanum Gothic Coding", monospace'; 
             ctx.fillText("💪 나의 슈퍼파워", START_X - 10, y);
-            y += 40;
+            y += 45;
             
-            ctx.fillStyle = '#333';
-            ctx.font = '25px "Nanum Gothic Coding", monospace'; 
-            cardInfo.powers.forEach(power => {
-                ctx.fillText(`⭐ ${power}`, START_X, y);
-                y += 35; 
-            });
-
-            y += 30; 
-
-            ctx.fillStyle = cardStyle.back_accent; 
-            ctx.font = 'bold 30px "Nanum Gothic Coding", monospace'; 
-            ctx.fillText("💝 나는 이럴 때 빛나요:", START_X - 10, y);
-            y += 40;
-
             ctx.fillStyle = '#333';
             ctx.font = '24px "Nanum Gothic Coding", monospace'; 
-            cardInfo.shine.forEach(item => {
-                ctx.fillText(`• ${item}`, START_X, y);
-                y += 30; 
+            cardInfo.powers.forEach(power => {
+                ctx.fillText(`⚡ ${power}`, START_X, y);
+                y += 32; 
             });
 
-            y += 30; 
+            y += 25; 
 
-            ctx.fillStyle = cardStyle.back_text; 
-            ctx.font = 'bold 30px "Nanum Gothic Coding", monospace'; 
-            ctx.fillText("💡 성장 포인트:", START_X - 10, y);
-            y += 40;
+            // 2. 빛나는 순간 섹션
+            ctx.fillStyle = cardStyle.back_accent; 
+            ctx.font = 'bold 32px "Nanum Gothic Coding", monospace'; 
+            ctx.fillText("✨ 나는 이럴 때 빛나요", START_X - 10, y);
+            y += 45;
 
             ctx.fillStyle = '#333';
-            ctx.font = '26px "Nanum Gothic Coding", monospace'; 
-            
-            y = wrapText(ctx, cardInfo.growth, START_X, y, MAX_TEXT_WIDTH, 30); 
+            ctx.font = '22px "Nanum Gothic Coding", monospace'; 
+            cardInfo.shine.forEach(item => {
+                ctx.fillText(`• ${item}`, START_X, y);
+                y += 32; 
+            });
+
+            y += 25; 
+
+            // 3. 성장 포인트 섹션
+            ctx.fillStyle = cardStyle.back_text; 
+            ctx.font = 'bold 32px "Nanum Gothic Coding", monospace'; 
+            ctx.fillText("🌱 성장 포인트", START_X - 10, y);
+            y += 45;
+
+            ctx.fillStyle = '#444';
+            ctx.font = '22px "Nanum Gothic Coding", monospace'; 
+            wrapText(ctx, cardInfo.growth, START_X, y, W - 80, 30); 
         }
 
-        // --- 4. 모든 칭찬 멘트 카드 그리기 함수 (유지) ---
-        function drawAllComplimentsCard(canvas, allData, startIndex, endIndex, title) {
-            // ... (기존 drawAllComplimentsCard 함수 내용 유지) ...
+        // --- 3. 개별 칭찬 카드 그리기 (NEW: 1장당 1성향) ---
+        function drawSingleComplimentCard(canvas, cardInfo, style) {
             const ctx = canvas.getContext('2d');
             const W = canvas.width;
             const H = canvas.height;
-            const CARD_WIDTH = W / 2 - 20; // 2열 배치, 여백 10씩 확보
-            const CARD_HEIGHT = 90; // 높이 조정 (조금 더 줄임)
-            const PADDING = 10;
-            const COL_GAP = 20;
-            const START_X = 10;
-            let currentY = 50;
+            const PADDING = 25;
             
-            // 배경/테두리
-            ctx.fillStyle = '#f7f7f7'; 
+            // 배경 (흰색)
+            ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, W, H);
-            ctx.strokeStyle = '#4a90e2'; 
-            ctx.lineWidth = 10;
-            ctx.strokeRect(5, 5, W - 10, H - 10);
 
-            // 타이틀
-            ctx.fillStyle = '#4a90e2';
-            ctx.font = 'bold 36px "Nanum Gothic Coding", monospace'; /* 폰트 크기 조정 */
+            // 상단 헤더 (색상바)
+            ctx.fillStyle = style.comp_bg; 
+            ctx.fillRect(0, 0, W, 100);
+            
+            // 헤더 텍스트
+            ctx.fillStyle = style.comp_text;
+            ctx.font = 'bold 36px "Nanum Gothic Coding", monospace';
             ctx.textAlign = 'center';
-            ctx.fillText(title, W / 2, 60);
+            ctx.fillText(`${cardInfo.type}을 위한 칭찬`, W / 2, 65);
 
-            currentY = 110; 
+            let currentY = 130;
 
-            for (let dataIndex = startIndex; dataIndex < endIndex && dataIndex < allData.length; dataIndex++) {
-                const cardInfo = allData[dataIndex];
-                const style = CARD_STYLES[dataIndex];
-                const baseColor = style.comp_text; 
+            // 칭찬 박스 3개 그리기
+            cardInfo.compliments.forEach((comp) => {
+                // 박스 배경
+                ctx.fillStyle = '#fcfcfc';
+                ctx.fillRect(PADDING, currentY, W - PADDING * 2, 130);
                 
-                // 성향 헤더
-                ctx.fillStyle = baseColor;
-                ctx.font = 'bold 24px "Nanum Gothic Coding", monospace'; /* 폰트 크기 조정 */
+                // 박스 테두리
+                ctx.strokeStyle = style.comp_bg;
+                ctx.lineWidth = 4;
+                ctx.strokeRect(PADDING, currentY, W - PADDING * 2, 130);
+                
+                // 태그 (강조)
+                ctx.fillStyle = style.comp_text;
+                ctx.font = 'bold 24px "Nanum Gothic Coding", monospace';
                 ctx.textAlign = 'left';
-                ctx.fillText(cardInfo.type, START_X + PADDING, currentY);
-                currentY += 10; 
-
-                // 칭찬 멘트 3개 (2열 배치)
-                cardInfo.compliments.forEach((comp, compIndex) => {
-                    const col = compIndex % 2;
-                    const row = (compIndex < 2) ? 0 : 1; 
-
-                    const blockY = currentY + row * (CARD_HEIGHT + PADDING); 
-                    const xOffset = START_X + col * (CARD_WIDTH + COL_GAP);
-                    
-                    // 멘트 박스
-                    ctx.fillStyle = style.comp_bg; 
-                    ctx.fillRect(xOffset, blockY, CARD_WIDTH, CARD_HEIGHT);
-                    ctx.strokeStyle = baseColor;
-                    ctx.lineWidth = 2;
-                    ctx.strokeRect(xOffset, blockY, CARD_WIDTH, CARD_HEIGHT);
-
-                    // 태그 (Nanum Gothic Coding)
-                    ctx.fillStyle = baseColor;
-                    ctx.font = 'bold 18px "Nanum Gothic Coding", monospace'; /* 폰트 크기 조정 */
-                    ctx.textAlign = 'center';
-                    ctx.fillText(`[${comp.tag}]`, xOffset + CARD_WIDTH / 2, blockY + 25);
-
-                    // 멘트 폰트 통일
-                    ctx.fillStyle = '#333';
-                    ctx.font = 'bold 16px "Nanum Gothic Coding", monospace'; /* 폰트 크기 조정 */
-                    
-                    const textWidth = CARD_WIDTH - 20; 
-                    
-                    // 멘트 1 (줄바꿈 처리)
-                    let phrase1Lines = [];
-                    const words1 = comp.phrase1.split(/\s+/).join('').split(''); 
-                    let line1 = '';
-                    
-                    for(let n = 0; n < words1.length; n++) {
-                        let testLine = line1 + words1[n];
-                        let metrics = ctx.measureText(testLine);
-                        if (metrics.width > textWidth) {
-                            phrase1Lines.push(line1);
-                            line1 = words1[n];
-                        } else {
-                            line1 = testLine;
-                        }
-                    }
-                    if (line1) phrase1Lines.push(line1);
-
-                    // 멘트 2 (줄바꿈 처리)
-                    let phrase2Lines = [];
-                    if (comp.phrase2) {
-                        const words2 = comp.phrase2.split(/\s+/).join('').split('');
-                        let line2 = '';
-                        for(let n = 0; n < words2.length; n++) {
-                            let testLine = line2 + words2[n];
-                            let metrics = ctx.measureText(testLine);
-                            if (metrics.width > textWidth) {
-                                phrase2Lines.push(line2);
-                                line2 = words2[n];
-                            } else {
-                                line2 = testLine;
-                            }
-                        }
-                        if (line2) phrase2Lines.push(line2);
-                    }
-
-                    ctx.textAlign = 'center';
-                    const line1Y = blockY + 48;
-                    const line2Y = blockY + 68;
-                    
-                    // 멘트 1 그리기
-                    if (phrase1Lines.length === 1) {
-                         ctx.fillText(phrase1Lines[0], xOffset + CARD_WIDTH / 2, line1Y);
-                    } else if (phrase1Lines.length > 1) {
-                        ctx.fillText(phrase1Lines[0], xOffset + CARD_WIDTH / 2, blockY + 40); 
-                        ctx.fillText(phrase1Lines[1], xOffset + CARD_WIDTH / 2, blockY + 60);
-                    }
-                    
-                    // 멘트 2 그리기
-                    if (comp.phrase2 && phrase1Lines.length === 1) {
-                         if (phrase2Lines.length === 1) {
-                            ctx.fillText(phrase2Lines[0], xOffset + CARD_WIDTH / 2, line2Y);
-                         } else if (phrase2Lines.length > 1) {
-                            ctx.fillText(phrase2Lines[0], xOffset + CARD_WIDTH / 2, line2Y);
-                         }
-                    }
-
-                    if (compIndex === 2) {
-                        currentY += (CARD_HEIGHT + PADDING) * 2 + 30; 
-                    }
-                });
+                ctx.fillText(`[ ${comp.tag} ]`, PADDING + 20, currentY + 40);
                 
-                if (dataIndex === endIndex - 1) { 
-                    currentY -= (CARD_HEIGHT + PADDING) * 2 + 30; 
-                    currentY += (CARD_HEIGHT + PADDING) * 2 + 40; 
-                }
-            }
+                // 멘트
+                ctx.fillStyle = '#333';
+                ctx.font = '22px "Nanum Gothic Coding", monospace';
+                ctx.fillText(comp.phrase1, PADDING + 25, currentY + 80);
+                ctx.fillText(comp.phrase2, PADDING + 25, currentY + 110);
+
+                currentY += 150;
+            });
+            
+            // 하단 푸터
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText("GFAT 칭찬 카드 메이커", W / 2, H - 15);
         }
 
-
-        // --- 5. 카드 생성 함수 (다운로드 버튼 표시 추가) ---
+        // --- 메인 생성 함수 ---
         function generateBothCards() {
             const userName = document.getElementById('userName').value.trim();
-            const typeIndex = document.getElementById('personalityType').value;
-            const cardInfo = CARD_DATA[typeIndex];
-            const cardStyle = CARD_STYLES[typeIndex];
-
+            const typeIndex = parseInt(document.getElementById('personalityType').value);
+            
             if (!userName) {
                 alert("이름을 입력해주세요!");
                 return;
             }
 
-            const canvases = [
-                { id: 'frontCanvas', btnId: 'frontDownloadBtn' },
-                { id: 'backCanvas', btnId: 'backDownloadBtn' },
-                { id: 'allComplimentsCanvas1', btnId: 'allComplimentsDownloadBtn1' },
-                { id: 'allComplimentsCanvas2', btnId: 'allComplimentsDownloadBtn2' },
-                { id: 'allComplimentsCanvas3', btnId: 'allComplimentsDownloadBtn3' },
-                { id: 'allComplimentsCanvas4', btnId: 'allComplimentsDownloadBtn4' }
-            ];
+            const container = document.getElementById('canvasArea');
+            container.style.display = 'flex';
+            container.innerHTML = ''; // 기존 캔버스 초기화
             
-            // 모든 캔버스와 버튼 표시
-            canvases.forEach(item => {
-                const canvas = document.getElementById(item.id);
-                const button = document.getElementById(item.btnId);
-                if(canvas) canvas.style.display = 'block';
-                if(button) button.style.display = 'block';
-            });
-            
-            // 폰트 로딩 대기 후 그리기 실행
-            Promise.all([
-                document.fonts.load('30px "Nanum Pen Script"'),
-                document.fonts.load('30px "Nanum Gothic Coding"')
-            ]).then(function () {
-                const frontCanvas = document.getElementById('frontCanvas');
-                const backCanvas = document.getElementById('backCanvas');
-                const allComplimentsCanvas1 = document.getElementById('allComplimentsCanvas1');
-                const allComplimentsCanvas2 = document.getElementById('allComplimentsCanvas2');
-                const allComplimentsCanvas3 = document.getElementById('allComplimentsCanvas3');
-                const allComplimentsCanvas4 = document.getElementById('allComplimentsCanvas4');
-                
-                // 1. 개인 카드 그리기
-                drawFrontCard(frontCanvas, cardInfo, cardStyle, userName);
-                drawBackCard(backCanvas, cardInfo, cardStyle);
-                
-                // 2. 멘트 모음 카드 그리기 (4장 분할)
-                drawAllComplimentsCard(allComplimentsCanvas1, CARD_DATA, 0, 3, "✨ 성향별 맞춤 칭찬"); 
-                drawAllComplimentsCard(allComplimentsCanvas2, CARD_DATA, 3, 6, "✨ 성향별 맞춤 칭찬"); 
-                drawAllComplimentsCard(allComplimentsCanvas3, CARD_DATA, 6, 9, "✨ 성향별 맞춤 칭찬"); 
-                drawAllComplimentsCard(allComplimentsCanvas4, CARD_DATA, 9, 11, "✨ 성향별 맞춤 칭찬");
+            document.getElementById('saveGuide').style.display = 'block';
 
-                // 3. 파일 이름 데이터 설정 (다운로드 버튼이 사용)
-                const baseFileName = `${userName}_${cardInfo.type.replace(/\s/g, '_').replace(/[^a-zA-Z0-9_\uAC00-\uD7A3]/g, '')}`;
-                if (frontCanvas) frontCanvas.dataset.fileName = `칭찬카드_앞면_${baseFileName}.png`;
-                if (backCanvas) backCanvas.dataset.fileName = `칭찬카드_뒷면_${baseFileName}.png`; 
-                if (allComplimentsCanvas1) allComplimentsCanvas1.dataset.fileName = `칭찬멘트_모음_1부.png`; 
-                if (allComplimentsCanvas2) allComplimentsCanvas2.dataset.fileName = `칭찬멘트_모음_2부.png`; 
-                if (allComplimentsCanvas3) allComplimentsCanvas3.dataset.fileName = `칭찬멘트_모음_3부.png`; 
-                if (allComplimentsCanvas4) allComplimentsCanvas4.dataset.fileName = `칭찬멘트_모음_4부.png`; 
-                
-                alert(`"${userName}"님의 칭찬 카드(2장)와 칭찬 멘트 모음 카드(4장)가 생성되었습니다. 이미지 아래의 버튼을 클릭하여 다운로드하세요.`);
-            }).catch(error => {
-                // 폰트 로딩 오류 처리
-                console.error("폰트 로딩 오류. 기본 폰트로 카드를 다시 생성합니다:", error);
-                
-                // 폰트 로딩 실패 시에도 카드 생성 시도 (기본 폰트로 대체)
-                const frontCanvas = document.getElementById('frontCanvas');
-                const backCanvas = document.getElementById('backCanvas');
-                const allComplimentsCanvas1 = document.getElementById('allComplimentsCanvas1');
-                const allComplimentsCanvas2 = document.getElementById('allComplimentsCanvas2');
-                const allComplimentsCanvas3 = document.getElementById('allComplimentsCanvas3');
-                const allComplimentsCanvas4 = document.getElementById('allComplimentsCanvas4');
+            // 폰트 로드 확인 후 실행
+            document.fonts.ready.then(() => {
+                const selectedInfo = CARD_DATA[typeIndex];
+                const selectedStyle = CARD_STYLES[typeIndex];
 
-                // 폰트 로딩이 실패하면 draw 함수 내의 폰트 지정은 작동하지 않지만, 코드는 실행됨
-                drawFrontCard(frontCanvas, cardInfo, cardStyle, userName);
-                drawBackCard(backCanvas, cardInfo, cardStyle);
-                drawAllComplimentsCard(allComplimentsCanvas1, CARD_DATA, 0, 3, "✨ 성향별 맞춤 칭찬"); 
-                drawAllComplimentsCard(allComplimentsCanvas2, CARD_DATA, 3, 6, "✨ 성향별 맞춤 칭찬"); 
-                drawAllComplimentsCard(allComplimentsCanvas3, CARD_DATA, 6, 9, "✨ 성향별 맞춤 칭찬"); 
-                drawAllComplimentsCard(allComplimentsCanvas4, CARD_DATA, 9, 11, "✨ 성향별 맞춤 칭찬");
+                // 1. 개인 결과 카드 (앞면)
+                const frontCanvas = document.createElement('canvas');
+                frontCanvas.width = 500; frontCanvas.height = 700;
+                container.appendChild(createSectionTitle("🎴 나만의 결과 카드"));
+                container.appendChild(frontCanvas);
+                drawFrontCard(frontCanvas, selectedInfo, selectedStyle, userName);
 
-                // 파일 이름 재설정
-                const baseFileName = `${userName}_${cardInfo.type.replace(/\s/g, '_').replace(/[^a-zA-Z0-9_\uAC00-\uD7A3]/g, '')}`;
-                if (frontCanvas) frontCanvas.dataset.fileName = `칭찬카드_앞면_${baseFileName}.png`;
-                if (backCanvas) backCanvas.dataset.fileName = `칭찬카드_뒷면_${baseFileName}.png`; 
-                if (allComplimentsCanvas1) allComplimentsCanvas1.dataset.fileName = `칭찬멘트_모음_1부.png`; 
-                if (allComplimentsCanvas2) allComplimentsCanvas2.dataset.fileName = `칭찬멘트_모음_2부.png`; 
-                if (allComplimentsCanvas3) allComplimentsCanvas3.dataset.fileName = `칭찬멘트_모음_3부.png`; 
-                if (allComplimentsCanvas4) allComplimentsCanvas4.dataset.fileName = `칭찬멘트_모음_4부.png`;
+                // 2. 개인 결과 카드 (뒷면)
+                const backCanvas = document.createElement('canvas');
+                backCanvas.width = 500; backCanvas.height = 700;
+                container.appendChild(backCanvas);
+                drawBackCard(backCanvas, selectedInfo, selectedStyle);
+
+                // 3. 전체 성향 칭찬 카드 (11장 모두 생성)
+                container.appendChild(createSectionTitle("📚 전체 성향별 칭찬 카드 (11장)"));
                 
-                alert("카드가 생성되었으나 폰트 로딩에 실패했습니다. 다운로드 후 확인해주세요.");
+                CARD_DATA.forEach((info, idx) => {
+                    const compCanvas = document.createElement('canvas');
+                    compCanvas.width = 500; 
+                    compCanvas.height = 600; // 높이 최적화
+                    container.appendChild(compCanvas);
+                    drawSingleComplimentCard(compCanvas, info, CARD_STYLES[idx]);
+                });
+
+                alert("카드가 모두 생성되었습니다! 아래로 스크롤하여 확인하세요.");
             });
         }
-        
-        // --- 6. 다운로드 함수 및 이벤트 리스너 (DOM Content Loaded로 변경) ---
-        function downloadCanvasImage(canvas, fileName) {
-            try {
-                const imageURL = canvas.toDataURL('image/png'); 
-                const link = document.createElement('a');
-                
-                link.href = imageURL;
-                link.download = fileName;
-                
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            } catch (error) {
-                console.error("다운로드 오류:", error);
-                alert("다운로드 중 오류가 발생했습니다. 잠시 후 다시 시도하거나, 이미지를 길게 눌러(모바일) 저장해 보세요.");
-            }
+
+        // 섹션 구분 타이틀 생성 헬퍼
+        function createSectionTitle(text) {
+            const div = document.createElement('div');
+            div.className = 'section-divider w-full';
+            div.innerHTML = `<span>${text}</span>`;
+            return div;
         }
 
-        // ************************************************
-        // ** 핵심 수정 부분: DOMContentLoaded 사용 **
-        // ************************************************
+        // 초기화
         document.addEventListener('DOMContentLoaded', function() {
-            // 1. 초기 페이지 로드 시 탭 표시
             switchPage('page1');
-
-            const canvasesAndButtons = [
-                { canvasId: 'frontCanvas', btnId: 'frontDownloadBtn' },
-                { canvasId: 'backCanvas', btnId: 'backDownloadBtn' },
-                { canvasId: 'allComplimentsCanvas1', btnId: 'allComplimentsDownloadBtn1' },
-                { canvasId: 'allComplimentsCanvas2', btnId: 'allComplimentsDownloadBtn2' },
-                { canvasId: 'allComplimentsCanvas3', btnId: 'allComplimentsDownloadBtn3' },
-                { canvasId: 'allComplimentsCanvas4', btnId: 'allComplimentsDownloadBtn4' }
-            ];
-
-            // 2. 다운로드 버튼에 이벤트 리스너 연결
-            canvasesAndButtons.forEach(({ canvasId, btnId }) => {
-                const button = document.getElementById(btnId);
-                const canvas = document.getElementById(canvasId);
-
-                if (button && canvas) {
-                    // 중요: 캔버스와 버튼을 초기에는 숨김 처리
-                    canvas.style.display = 'none';
-                    button.style.display = 'none';
-
-                    button.addEventListener('click', function() {
-                        const fileName = canvas.dataset.fileName; 
-                        
-                        if (fileName && canvas.toDataURL('image/png').length > 5000) { 
-                            downloadCanvasImage(canvas, fileName);
-                        } else {
-                            alert("카드가 아직 생성되지 않았습니다. '칭찬 카드 만들기' 버튼을 먼저 눌러주세요.");
-                        }
-                    });
-                }
-            });
         });
-        
     </script>
 </body>
 </html>
