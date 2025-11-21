@@ -97,7 +97,9 @@
     <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-md border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-between items-center py-3">
             <div class="flex items-center mb-2 sm:mb-0 cursor-pointer" onclick="switchPage('page1')">
-                <span class="text-2xl font-black italic bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600">I-FAS</span>
+                <a href="#" class="text-2xl font-bold text-[#4A6C46] flex items-center gap-2">
+                    <img src="https://breezefeel.github.io/happycard/logo.svg" alt="Logo" class="h-6">    
+                </a>
             </div>
             <div class="flex flex-wrap justify-center gap-2">
                 <button class="tab-button active text-gray-600 hover:text-purple-600 hover:bg-purple-50 px-3 md:px-4 py-2 rounded-lg font-bold transition-all" onclick="switchPage('page1')">🏠 홈</button>
@@ -105,7 +107,9 @@
                 <button class="tab-button text-gray-600 hover:text-purple-600 hover:bg-purple-50 px-3 md:px-4 py-2 rounded-lg font-bold transition-all" onclick="switchPage('page3')">✨ 칭찬 카드</button>
                 <button class="tab-button text-gray-600 hover:text-purple-600 hover:bg-purple-50 px-3 md:px-4 py-2 rounded-lg font-bold transition-all" onclick="switchPage('page-test')">📝 무료 검사</button>
             </div>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSewq1YP15yR6IzIXnY2OQMD0WxhCm-8mgjr9ifEywKogj7SPw/viewform?usp=sf_link" class="hidden md:inline-block bg-[#7c5cfc] text-white px-6 py-2 rounded-full hover:bg-[#5b21b6] transition shadow-lg">상담 신청</a>
+            <button class="tab-button text-white bg-indigo-600 hover:bg-indigo-700 px-3 md:px-4 py-2 rounded-lg font-bold transition-all shadow-md flex items-center gap-1" onclick="goToContactForm()">
+                상담 신청
+            </button>
         </div>
     </nav>
 
@@ -134,8 +138,8 @@
         </header>
 
         <div class="max-w-6xl mx-auto px-4 -mt-10 relative z-20 mb-16" data-aos="fade-up">
-            <img src="https://breezefeel.github.io/happycard/11.png" alt="Self Discovery" class="w-full h-64 object-cover rounded-2xl shadow-2xl brightness-75 hover:brightness-100 transition-all duration-500">
-            <div class="absolute bottom-6 left-8 text-white">
+            <img src="https://breezefeel.github.io/happycard/22.png" alt="Self Discovery" class="w-full h-64 object-cover rounded-2xl shadow-2xl brightness-75 hover:brightness-100 transition-all duration-500">
+            <div class="absolute top-6 right-8 text-white">
                 <p class="text-sm font-bold opacity-80">SELF DISCOVERY</p>
                 <h3 class="text-2xl font-bold">나를 찾아가는 여정</h3>
             </div>
@@ -279,13 +283,13 @@
                     <div class="border border-gray-200 rounded-lg p-5 hover:border-purple-300 transition-colors cursor-pointer" onclick="this.querySelector('.ans').classList.toggle('hidden')">
                         <h3 class="font-bold flex justify-between items-center">Q. 검사 결과가 다른 검사와 다르게 나오는 이유가 무엇인가요? <span class="text-purple-500">▼</span></h3>
                         <p class="ans hidden text-gray-600 mt-3 text-sm bg-gray-50 p-3 rounded">
-                            일반적인 설문 기반 검사는 후천적인 경험과 심리 상태의 영향을 크게 받습니다. 반면, 저희 <strong>IFAS/GFAT 검사는 선천적 지문 패턴 데이터를 기반</strong>으로 하여 타고난 기질에 초점을 맞춥니다.<br><br>따라서 측정하는 기준이 다르기 때문에 다른 검사와 결과가 다를 수 있으며, 이는 자연스러운 현상입니다.
+                            일반적인 설문 기반 검사는 후천적인 경험과 심리 상태의 영향을 크게 받습니다. 반면, <strong>IFAS/GFAT 검사는 지문 패턴 데이터를 기반</strong>으로 하여 순수하게 타고난 선천적 기질에 초점을 맞춥니다.
                         </p>
                     </div>                    
                     <div class="border border-gray-200 rounded-lg p-5 hover:border-purple-300 transition-colors cursor-pointer" onclick="this.querySelector('.ans').classList.toggle('hidden')">
                         <h3 class="font-bold flex justify-between items-center">Q. 온라인 검사도 정확한가요? <span class="text-purple-500">▼</span></h3>
                         <p class="ans hidden text-gray-600 mt-3 text-sm bg-gray-50 p-3 rounded">
-                            지문 검사는 정밀 스캐너를 이용한 <strong>대면 검사</strong>가 가장 정확합니다. 온라인 간이 테스트는 경향성만 파악할 수 있으며, 정확한 분석 리포트를 위해서는 전문가와의 상담을 권장합니다.
+                            지문 검사는 정밀 스캐너를 이용한 <strong>대면 검사</strong>가 가장 정확합니다. 온라인 무료 테스트는 경향성만 파악할 수 있으며, 정확한 분석 리포트를 위해서는 전문가와의 상담을 권장합니다.
                         </p>
                     </div>
                 </div>
@@ -304,69 +308,130 @@
                     인생은, <span class="text-white font-bold underline decoration-yellow-500 decoration-2">나와 자녀를 아는 것</span>부터가 시작입니다.
                 </p>
                 <div class="mt-8">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSewq1YP15yR6IzIXnY2OQMD0WxhCm-8mgjr9ifEywKogj7SPw/viewform?usp=sf_link" target="_blank" class="inline-block bg-yellow-500 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-400 transition-colors">
-                        상담 신청하기 →
-                    </a>
+                    <button onclick="goToContactForm()" class="inline-block bg-yellow-500 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-400 transition-colors shadow-lg transform hover:scale-105">
+                        상담 신청하기 ↓
+                    </button>
                 </div>
             </div>
         </section>
+
+        <section class="max-w-xl mx-auto px-4 py-8 bg-white rounded-2xl shadow-2xl border border-indigo-100 mt-12" data-aos="fade-up">
+                        
+            <form id="contactForm" 
+                action="https://docs.google.com/forms/d/e/1FAIpQLSdrqhLo67A_cW8B1pGWl-d75MN8fr9Fd-scXze3aW6uhNfg3w/formResponse" 
+                method="POST" 
+                target="hidden_iframe">
+                
+                <div class="mb-4">
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">성함</label>
+                    <input type="text" id="name" name="entry.443965486" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150"
+                        placeholder="홍길동">
+                </div>
+
+                <div class="mb-6">
+                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">연락처</label>
+                    <input type="tel" id="phone" name="entry.1436352083" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150"
+                        placeholder="010-1234-5678" pattern="[0-9]{3}[- ]?[0-9]{4}[- ]?[0-9]{4}">
+                </div>
+
+                <button type="submit" 
+                        class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-lg shadow-md hover:bg-indigo-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    문의 내용 제출하기
+                </button>
+            </form>
+            
+            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" 
+                    onload="if(submitted) {alert('문의가 성공적으로 접수되었습니다. 곧 연락드리겠습니다!');}"></iframe>
+
+        </section>
+        <script>
+            // 폼 제출 시 알림을 띄우기 위한 스크립트
+            var submitted = false;
+            document.getElementById('contactForm').addEventListener('submit', function() {
+                submitted = true;
+            });
+        </script>
     </div>
 
     <div id="page-test" class="content-page max-w-6xl mx-auto px-4 py-12" style="display: none;">
         <h1 class="text-3xl md:text-4xl font-extrabold text-center mb-4 text-gray-900">
-            📝 간이 성향 탐색
+            📝 무료 성향 검사
         </h1>
         <p class="text-center text-gray-500 mb-8">
-            평소 나의 모습과 가장 가까운 것을 선택해주세요.
+            가장 나답다고 생각되는 것을 선택해주세요. (총 6문항)
         </p>
 
-        <div class="quiz-container">
+        <div class="quiz-container max-w-lg mx-auto">
+            
             <div id="q1" class="question-box active">
-                <h3 class="text-xl font-bold mb-4 text-purple-700">Q1. 새로운 사람들을 만나는 자리에서 나는?</h3>
-                <button class="quiz-btn" onclick="nextQuestion(1, 'E')">A. 먼저 말을 걸고 분위기를 주도하는 편이다.</button>
-                <button class="quiz-btn" onclick="nextQuestion(1, 'I')">B. 조용히 지켜보다가 마음이 맞는 사람과 대화한다.</button>
+                <h3 class="text-xl font-bold mb-4 text-purple-700">Q1. 결정을 내릴 때 더 중요하게 생각하는 것은?</h3>
+                <button class="quiz-btn" onclick="nextQuestion(1, 'F')">A. 사람의 감정, 관계, 상황의 분위기 (감성)</button>
+                <button class="quiz-btn" onclick="nextQuestion(1, 'T')">B. 객관적인 사실, 논리, 업무의 효율 (이성)</button>
             </div>
+            
             <div id="q2" class="question-box">
-                <h3 class="text-xl font-bold mb-4 text-purple-700">Q2. 친구가 고민을 털어놓을 때 나는?</h3>
-                <button class="quiz-btn" onclick="nextQuestion(2, 'F')">A. "정말 힘들었겠다.."라며 감정에 공감해준다.</button>
-                <button class="quiz-btn" onclick="nextQuestion(2, 'T')">B. "그래서 어떻게 해결할래?"라며 해결책을 제시한다.</button>
+                <h3 class="text-xl font-bold mb-4 text-purple-700">Q2. 일을 처리하는 나의 스타일은?</h3>
+                <button class="quiz-btn" onclick="nextQuestion(2, 'Multi')">A. 여러 가지 일을 동시에 신경 쓰며 처리할 수 있다. (멀티태스킹)</button>
+                <button class="quiz-btn" onclick="nextQuestion(2, 'Single')">B. 한 번에 하나씩 집중해서 끝내는 것이 편하다. (싱글태스킹)</button>
             </div>
+            
             <div id="q3" class="question-box">
-                <h3 class="text-xl font-bold mb-4 text-purple-700">Q3. 여행 계획을 짤 때 나는?</h3>
-                <button class="quiz-btn" onclick="nextQuestion(3, 'J')">A. 시간 단위로 꼼꼼하게 계획을 세워야 마음이 편하다.</button>
-                <button class="quiz-btn" onclick="nextQuestion(3, 'P')">B. 대략적인 장소만 정하고 그날 기분에 따라 움직인다.</button>
+                <h3 class="text-xl font-bold mb-4 text-purple-700">Q3. 문제를 해결하거나 아이디어를 낼 때 나는?</h3>
+                <button class="quiz-btn" onclick="nextQuestion(3, 'Reverse')">A. 남들과 다른 기발하고 엉뚱한 뒤집어 보기를 좋아한다. (역발상)</button>
+                <button class="quiz-btn" onclick="nextQuestion(3, 'General')">B. 기존의 경험과 순서에 맞춰 차근차근 해결한다. (일반사고)</button>
             </div>
+            
             <div id="q4" class="question-box">
-                <h3 class="text-xl font-bold mb-4 text-purple-700">Q4. 일을 처리하는 방식은?</h3>
-                <button class="quiz-btn" onclick="nextQuestion(4, 'S')">A. 현실적인 데이터와 기존의 경험을 중시한다.</button>
-                <button class="quiz-btn" onclick="nextQuestion(4, 'N')">B. 새로운 아이디어와 미래의 가능성을 상상한다.</button>
+                <h3 class="text-xl font-bold mb-4 text-purple-700">Q4. 다른 사람들이 보는 나의 첫인상은?</h3>
+                <button class="quiz-btn" onclick="nextQuestion(4, 'Warm')">A. 따뜻하고 친근하며 에너지가 넘쳐 보인다.</button>
+                <button class="quiz-btn" onclick="nextQuestion(4, 'Cool')">B. 차분하고 냉철하며 빈틈없어 보인다.</button>
             </div>
+
+            <div id="q5" class="question-box">
+                <h3 class="text-xl font-bold mb-4 text-purple-700">Q5. 행동으로 옮기는 속도는?</h3>
+                <button class="quiz-btn" onclick="nextQuestion(5, 'Fast')">A. 생각이 나면 즉시 행동으로 옮긴다. (빠름/민첩)</button>
+                <button class="quiz-btn" onclick="nextQuestion(5, 'Slow')">B. 충분히 생각하고 신중하게 움직인다. (느림/보통)</button>
+            </div>
+            
+            <div id="q6" class="question-box">
+                <h3 class="text-xl font-bold mb-4 text-purple-700">Q6. 내가 가장 중요하게 생각하는 가치는?</h3>
+                <div class="grid grid-cols-1 gap-2">
+                    <button class="quiz-btn" onclick="nextQuestion(6, 'Vibe')">A. 즐거움과 분위기</button>
+                    <button class="quiz-btn" onclick="nextQuestion(6, 'Idea')">B. 호기심과 새로운 아이디어</button>
+                    <button class="quiz-btn" onclick="nextQuestion(6, 'Rule')">C. 규칙 준수와 안정</button>
+                    <button class="quiz-btn" onclick="nextQuestion(6, 'Goal')">D. 목표 달성과 성과</button>
+                    <button class="quiz-btn" onclick="nextQuestion(6, 'Perfect')">E. 완벽함과 디테일</button>
+                    <button class="quiz-btn" onclick="nextQuestion(6, 'Service')">F. 헌신과 배려</button>
+                    <button class="quiz-btn" onclick="nextQuestion(6, 'Art')">G. 예술적 표현과 인정</button>
+                </div>
+            </div>
+
             <div id="q-loading" class="question-box text-center py-10">
                 <div class="text-4xl animate-spin mb-4">⏳</div>
                 <h3 class="text-xl font-bold">당신의 성향을 분석 중입니다...</h3>
             </div>
+            
             <div id="q-result" class="question-box text-center">
                 <div class="bg-purple-50 p-6 rounded-xl border border-purple-200 mb-6">
                     <p class="text-gray-600 mb-2">당신의 예상 성향은...</p>
-                    <h2 id="result-type-name" class="text-3xl font-black text-purple-700 mb-4">💫 감성형</h2>
-                    <p id="result-desc" class="text-gray-700">
-                        따뜻한 마음과 공감 능력이 뛰어난 당신!<br>
-                        주변 사람들에게 에너지를 주는 분위기 메이커입니다.
-                    </p>
+                    <h2 id="result-type-name" class="text-3xl font-black text-purple-700 mb-4"></h2>
+                    <p id="result-desc" class="text-gray-700"></p>
                 </div>
 
                 <div class="bg-red-50 p-6 rounded-xl border-l-4 border-red-500 text-left mb-6">
                     <h4 class="font-bold text-red-600 text-lg mb-2">⚠️ 잠깐! 정확한 결과가 아닙니다.</h4>
                     <p class="text-sm text-gray-700 leading-relaxed">
                         방금 하신 설문은 <strong>기분과 환경에 따라 답변이 매번 달라질 수 있습니다.</strong><br>
-                        나의 진짜 <strong class="text-red-600">선천적 성향과 재능</strong>은 변하지 않는 <strong>'지문'</strong> 속에 숨어 있습니다.<br>
+                        나의 진짜 <strong class="text-red-600">선천적 성향과 재능</strong>은 변하지 않는 <strong>'지문'</strong> 속에 숨어 있습니다.<br><br>
                         지금 바로 문의하여 평생 변치 않는 내비게이션을 얻으세요.
                     </p>
                 </div>
 
-                <a href="https://brand.site/ifas" target="_blank" class="block w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 text-center">
-                    🚀 정밀 선천적 재능 검사 문의하기
-                </a>
+                <button onclick="goToContactForm()" class="block w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 text-center">
+                    🚀 정밀 선천적 성향/재능 검사 문의하기
+                </button>
                 <button onclick="location.reload()" class="mt-4 text-gray-400 text-sm underline">처음으로 돌아가기</button>
             </div>
         </div>
@@ -1106,7 +1171,7 @@
             <div class="bg-gray-50 p-4 rounded-xl mt-4 mb-6 border border-gray-200">
                 <p class="text-sm text-gray-600 mb-2">아직 내 성향을 모르시나요?</p>
                 <button onclick="switchPage('page-test')" class="text-blue-600 font-bold underline hover:text-blue-800">
-                    👉 무료 간이 검사 해보기
+                    👉 무료 검사 해보기
                 </button>
             </div>
 
@@ -1158,7 +1223,9 @@
     <script>
         AOS.init({ duration: 1000, once: true });
         
-        // --- 탭 전환 함수 ---
+        // ******************************************************
+        // ** 1. 네비게이션 및 페이지 전환 **
+        // ******************************************************
         function switchPage(pageId) {
             const pages = document.querySelectorAll('.content-page');
             pages.forEach(page => page.style.display = 'none');
@@ -1175,59 +1242,124 @@
                 }
             });
             window.scrollTo(0, 0);
+            
+            // 페이지 로드 시 칭찬 카드 옵션 생성
+            if (pageId === 'page3') {
+                populateTypeSelect();
+            }
         }
 
-        // --- 간이 검사 로직 (데모용) ---
-        function nextQuestion(current, type) {
-            document.getElementById(`q${current}`).classList.remove('active');
+        // [업그레이드] 문의 폼으로 이동 및 입력창 활성화 함수
+        function goToContactForm() {
+            // 1. 홈 페이지(Page 1)가 보이도록 설정
+            switchPage('page1'); 
             
-            if (current < 4) {
-                // 다음 질문 보여주기
-                document.getElementById(`q${current + 1}`).classList.add('active');
+            setTimeout(() => {
+                const formSection = document.getElementById('contactForm');
+                const nameInput = document.getElementById('name'); // 성함 입력창 ID
+
+                if (formSection) {
+                    // 2. 폼 위치로 부드럽게 스크롤 이동
+                    formSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // 3. [핵심] 성함 입력창 활성화 (커서 깜빡임)
+                    if (nameInput) {
+                        // 스크롤이 이동하는 시간을 고려하여 약간의 딜레이 후 포커스
+                        setTimeout(() => {
+                            nameInput.focus(); 
+                            // 시각적 효과: 입력창 테두리 깜빡임 (선택 사항)
+                            nameInput.classList.add('ring-4', 'ring-yellow-300');
+                            setTimeout(() => nameInput.classList.remove('ring-4', 'ring-yellow-300'), 1000);
+                        }, 500);
+                    }
+                }
+            }, 100);
+        }
+
+        // ******************************************************
+        // ** 2. 무료 성향 검사 로직 (11가지 유형 도출) **
+        // ******************************************************
+        
+        let quizAnswers = new Array(6).fill(null); 
+
+        // 다음 질문으로 이동
+        function nextQuestion(qNum, answer) {
+            quizAnswers[qNum - 1] = answer; 
+
+            const currentQ = document.getElementById(`q${qNum}`);
+            if (currentQ) currentQ.style.display = 'none';
+
+            const nextQNum = qNum + 1;
+            if (nextQNum <= 6) {
+                const nextQ = document.getElementById(`q${nextQNum}`);
+                if (nextQ) nextQ.style.display = 'block';
             } else {
-                // 로딩 및 결과 보여주기
                 document.getElementById('q-loading').style.display = 'block';
+                // 스타일 초기화
+                document.querySelectorAll('.question-box').forEach(box => box.classList.remove('active'));
+                
                 setTimeout(() => {
-                    document.getElementById('q-loading').style.display = 'none';
-                    showResult(type); // 마지막 선택지 기반으로 데모 결과 출력
+                    analyzeResult();
                 }, 1500);
             }
         }
 
-        function showResult(lastChoice) {
-            // 데모용 결과 매핑 (실제로는 누적 점수로 계산해야 함)
-            const resultBox = document.getElementById('q-result');
-            const typeName = document.getElementById('result-type-name');
-            const desc = document.getElementById('result-desc');
-            
-            // 예시 로직: 마지막 선택에 따라 랜덤하게 보여줌 (데모)
-            let types = [
-                { name: "💫 감성형", desc: "공감 능력이 뛰어나고 분위기를 주도하는 당신!" },
-                { name: "🎯 지도자형", desc: "목표를 향해 거침없이 나아가는 리더십의 소유자!" },
-                { name: "🔍 현실주의형", desc: "논리적이고 객관적인 판단을 내리는 전략가!" },
-                { name: "💡 창조사고형", desc: "남들은 생각지 못한 아이디어를 내는 아이디어 뱅크!" }
-            ];
-            
-            // 간단히 랜덤 선택 (실제 로직 구현 가능)
-            let randomType = types[Math.floor(Math.random() * types.length)];
-            
-            typeName.textContent = randomType.name;
-            desc.innerHTML = randomType.desc;
-            
-            resultBox.style.display = 'block';
-            resultBox.classList.add('active');
+        // 최종 결과 분석 (이미지 매핑 기반)
+        function analyzeResult() {
+            document.getElementById('q-loading').style.display = 'none';
+
+            const [judge, multi, thinkDir, vibe, actionSpeed, value] = quizAnswers;
+            let typeIndex = 0; 
+
+            // --- 로직 시작 ---
+            if (multi === 'Multi') {
+                // 생각주머니 2개 (멀티)
+                if (judge === 'F') typeIndex = 1; // [2. 조정협조형]
+                else typeIndex = 3; // [4. 현실주의형]
+            } else if (thinkDir === 'Reverse') {
+                // 역발상 사고
+                if (judge === 'F') typeIndex = 7; // [8. 독창형]
+                else typeIndex = 10; // [11. 독창이상형]
+            } else {
+                // 일반 사고 + 싱글
+                if (judge === 'F') {
+                    // 감성 베이스
+                    if (vibe === 'Cool' || value === 'Rule') typeIndex = 8; // [9. 규율원칙형]
+                    else if (value === 'Idea') typeIndex = 4; // [5. 창조사고형]
+                    else typeIndex = 0; // [1. 감성형] (기본)
+                } else {
+                    // 이성 베이스
+                    if (vibe === 'Warm' || value === 'Art') typeIndex = 6; // [7. 예술이상형]
+                    else if (value === 'Service') typeIndex = 9; // [10. 헌신박애형]
+                    else if (actionSpeed === 'Slow' || value === 'Perfect') typeIndex = 5; // [6. 완벽주의형]
+                    else typeIndex = 2; // [3. 지도자형] (기본)
+                }
+            }
+
+            // --- 결과 출력 ---
+            if (CARD_DATA && CARD_DATA[typeIndex]) {
+                const result = CARD_DATA[typeIndex];
+                
+                document.getElementById('result-type-name').textContent = result.type;
+                document.getElementById('result-desc').innerHTML = 
+                    `<span class="text-lg font-bold text-gray-800">${result.quote1} ${result.quote2}</span><br><br>` +
+                    `<span class="text-sm text-gray-600">#${result.tags}</span>`;
+                    
+                const resultBox = document.getElementById('q-result');
+                resultBox.style.display = 'block';
+                resultBox.classList.add('active');
+
+                // (선택) 상세 분석 페이지에 내용 연동
+                if (typeof displayResult === 'function') {
+                    const cleanType = result.type.replace(/[^\w\sㄱ-힣]/g, '').trim().split(' ').pop();
+                    displayResult(cleanType); 
+                }
+            }
         }
 
-        // --- 데이터 정의 및 카드 생성 함수들 (기존 유지) ---
-        // ... (이전 코드의 CARD_STYLES, CARD_DATA, drawFrontCard 등 모든 JS 함수를 그대로 여기에 포함하세요) ...
-        // 코드 길이 제한으로 인해 JS 부분은 생략되었습니다. 이전 답변의 스크립트 부분을 그대로 복사해서 사용하시면 됩니다.
-        
-        // 초기화
-        document.addEventListener('DOMContentLoaded', function() {
-            switchPage('page1');
-        });
-        
-        /* --- (필수) 아래에 이전 답변의 JS 코드들을 꼭 붙여넣어 주세요 --- */
+        // ******************************************************
+        // ** 3. 데이터 정의 (성향 정보 & 스타일) **
+        // ******************************************************
         const CARD_STYLES = [
             { front_bg: ['#f8bbd0', '#ffecb3'], front_text: '#d81b60', border: '#f06292', back_bg: ['#fffde7', '#fce4ec'], back_text: '#880e4f', back_accent: '#ff80ab', comp_bg: '#ffebee', comp_text: '#c2185b' }, 
             { front_bg: ['#e0f7fa', '#c5e1a5'], front_text: '#006064', border: '#4db6ac', back_bg: ['#e8f5e9', '#e3f2fd'], back_text: '#1b5e20', back_accent: '#66bb6a', comp_bg: '#e0f2f1', comp_text: '#00695c' }, 
@@ -1243,30 +1375,23 @@
         ];
 
         const CARD_DATA = [
-            { type: '💫 감성형', emoji: '🌟✨💕', quote1: "따뜻한 마음이", quote2: "세상을 밝혀요", tags: "#공감왕 #분위기메이커", powers: ['공감 능력', '엄청난 친화력', '빠른 상황대처'], shine: ['친구가 힘들 때 위로해줄 때', '분위기를 밝게 띄울 때', '사람들과 금방 친해질 때'], growth: '가끔은 객관적으로 생각해보는 연습도 필요해요!',
-              compliments: [{ tag: '💕 공감왕', phrase1: '네가 들어줘서', phrase2: '마음이 풀렸어' }, { tag: '💫 분위기메이커', phrase1: '너만 있으면', phrase2: '다들 웃게 돼' }, { tag: '✨ 감성천재', phrase1: '너의 따뜻한 말 한마디가', phrase2: '정말 큰 힘이 돼' }] },
-            { type: '🤝 조정협조형', emoji: '🕊️🌈🤝', quote1: "당신의 배려가", quote2: "우리를 하나로 만들어요", tags: "#평화주의자 #배려왕", powers: ['탁월한 중재력', '깊은 포용력', '의견 조율 능력'], shine: ['친구들 사이를 중재할 때', '소외된 친구를 챙길 때', '양쪽 입장을 다 들어줄 때'], growth: '때로는 내 의견을 확실하게 말해도 괜찮아요!',
-              compliments: [{ tag: '🤝 중재왕', phrase1: '너 덕분에', phrase2: '다시 사이가 좋아졌어' }, { tag: '🌈 배려왕', phrase1: '세심하게 챙겨줘서', phrase2: '정말 고마워' }, { tag: '💞 소통왕', phrase1: '모두의 의견을', phrase2: '잘 들어줘서 좋아' }] },
-            { type: '🎯 지도자형', emoji: '👑🦁🚀', quote1: "당신의 리더십이", quote2: "길을 만들어요", tags: "#리더 #추진력끝판왕", powers: ['강한 추진력', '확실한 결단력', '책임감'], shine: ['목표를 향해 이끌어갈 때', '빠르게 결정해야 할 때', '팀의 중심을 잡을 때'], growth: '다른 친구의 속도에 맞춰주는 여유를 가져봐요!',
-              compliments: [{ tag: '🎯 결단력짱', phrase1: '네가 정해주니까', phrase2: '속이 다 시원해!' }, { tag: '👑 참된리더', phrase1: '너만 믿고 따라가면', phrase2: '성공할 것 같아' }, { tag: '🚀 추진왕', phrase1: '망설임 없이 해내는 모습', phrase2: '진짜 멋있어' }] },
-            { type: '🔍 현실주의형', emoji: '🦉📊💡', quote1: "당신의 통찰력이", quote2: "정답을 찾아요", tags: "#전략가 #분석천재", powers: ['냉철한 분석력', '현실적 판단', '효율성 추구'], shine: ['복잡한 문제를 정리할 때', '가장 효율적인 길을 찾을 때', '팩트를 체크할 때'], growth: '완벽하지 않아도 일단 시작해보는 건 어떨까요?',
-              compliments: [{ tag: '🔍 분석왕', phrase1: '네가 정리해주니까', phrase2: '머리에 쏙 들어와' }, { tag: '📊 전략가', phrase1: '계획이 완벽해서', phrase2: '빈틈이 없네' }, { tag: '💡 해결사', phrase1: '네 방법이', phrase2: '제일 확실해!' }] },
-            { type: '💡 창조사고형', emoji: '🎨✨🚀', quote1: "당신의 상상이", quote2: "현실이 돼요", tags: "#아이디어뱅크 #호기심", powers: ['무한한 창의력', '새로운 도전', '적극적인 태도'], shine: ['기발한 아이디어를 낼 때', '남들이 안 하는 걸 시도할 때', '호기심을 가질 때'], growth: '시작한 일을 끝까지 마무리하는 끈기를 길러봐요!',
-              compliments: [{ tag: '💡 아이디어', phrase1: '와, 어떻게 그런', phrase2: '생각을 했어?' }, { tag: '✨ 창의력대장', phrase1: '네 생각은 항상', phrase2: '새롭고 재밌어' }, { tag: '🚀 도전왕', phrase1: '먼저 용기 내줘서', phrase2: '멋지다!' }] },
-            { type: '✨ 완벽주의형', emoji: '💎🦢📏', quote1: "당신의 꼼꼼함이", quote2: "최고를 만들어요", tags: "#완벽주의 #디테일", powers: ['정확성', '투철한 책임감', '끈기'], shine: ['실수 없이 일을 처리할 때', '완성도를 높일 때', '약속을 철저히 지킬 때'], growth: '가끔은 "이 정도면 충분해"라고 생각해도 돼요.',
-              compliments: [{ tag: '✨ 완벽그잡채', phrase1: '너한테 맡기면', phrase2: '걱정이 없어' }, { tag: '💎 디테일장인', phrase1: '놓친 부분까지 찾아내다니', phrase2: '대단해' }, { tag: '📏 꼼꼼왕', phrase1: '빈틈없이 준비해줘서', phrase2: '든든해' }] },
-            { type: '🎨 예술이상형', emoji: '🎭🌹🌙', quote1: "당신의 감성이", quote2: "아름다움을 창조해요", tags: "#예술가 #로맨티스트", powers: ['풍부한 예술성', '뛰어난 표현력', '깊은 몰입'], shine: ['감정을 표현할 때', '예술적 재능을 보일 때', '무언가에 푹 빠질 때'], growth: '현실적인 계획도 조금씩 세워보면 더 좋을 거예요!',
-              compliments: [{ tag: '🎨 금손', phrase1: '너의 손길이 닿으면', phrase2: '작품이 돼' }, { tag: '🎭 감성장인', phrase1: '너의 표현력은', phrase2: '정말 감동적이야' }, { tag: '🌹 매력부자', phrase1: '너만의 분위기가', phrase2: '너무 멋져' }] },
-            { type: '🎭 독창형', emoji: '🦄👽⚡', quote1: "당신의 독특함이", quote2: "새로운 세상을 열어요", tags: "#마이웨이 #개성파", powers: ['남다른 시각', '독립심', '통찰력'], shine: ['누구도 생각 못한 걸 말할 때', '나만의 길을 갈 때', '본질을 꿰뚫을 때'], growth: '주변 사람들과 소통하는 시간도 늘려보세요!',
-              compliments: [{ tag: '🦄 유니크', phrase1: '너 같은 친구는', phrase2: '세상에 하나뿐이야' }, { tag: '⚡ 천재만재', phrase1: '그건 진짜', phrase2: '상상도 못했어!' }, { tag: '👽 개성왕', phrase1: '너만의 색깔이', phrase2: '뚜렷해서 좋아' }] },
-            { type: '📏 규율원칙형', emoji: '⚖️🌲✅', quote1: "당신의 올곧음이", quote2: "신뢰를 만들어요", tags: "#바른생활 #모범생", powers: ['성실함', '정직함', '신뢰성'], shine: ['규칙을 잘 지킬 때', '꾸준히 노력할 때', '거짓 없이 행동할 때'], growth: '예상치 못한 변화도 즐기는 마음을 가져봐요.',
-              compliments: [{ tag: '📏 바른생활', phrase1: '네가 있으면', phrase2: '질서가 잡혀' }, { tag: '✅ 성실왕', phrase1: '한결같은 모습이', phrase2: '정말 존경스러워' }, { tag: '⚖️ 믿음직', phrase1: '너는 무슨 일이 있어도', phrase2: '믿을 수 있어' }] },
-            { type: '💝 헌신박애형', emoji: '🌻🎁🥰', quote1: "당신의 사랑이", quote2: "세상을 따뜻하게 해요", tags: "#기부천사 #봉사왕", powers: ['봉사 정신', '희생 정신', '이타심'], shine: ['남을 먼저 도울 때', '양보할 때', '사랑을 나눌 때'], growth: '남을 챙기는 만큼 나 자신도 아껴주세요!',
-              compliments: [{ tag: '💝 천사강림', phrase1: '너 덕분에', phrase2: '세상이 아직 따뜻해' }, { tag: '🥰 힐러', phrase1: '너랑 있으면', phrase2: '마음이 치유돼' }, { tag: '🌻 배려왕', phrase1: '항상 남을 먼저', phrase2: '생각해줘서 고마워' }] },
-            { type: '🌈 독창이상형', emoji: '🔭🚀🌏', quote1: "당신의 비전이", quote2: "미래를 바꿔요", tags: "#혁신가 #비전메이커", powers: ['미래 지향적', '혁신성', '큰 그림'], shine: ['새로운 비전을 제시할 때', '변화를 주도할 때', '꿈을 이야기할 때'], growth: '큰 꿈을 이루기 위해 작은 실천부터 시작해봐요!',
-              compliments: [{ tag: '🌈 비전왕', phrase1: '너의 생각 스케일은', phrase2: '정말 남달라' }, { tag: '🚀 혁신가', phrase1: '네 아이디어가', phrase2: '미래를 바꿀 거야' }, { tag: '🌏 리더', phrase1: '너는 분명', phrase2: '큰 사람이 될 거야' }] },            
-        ]; 
+            { type: '💫 감성형', emoji: '🌟✨💕', quote1: "따뜻한 마음이", quote2: "세상을 밝혀요", tags: "#공감왕 #분위기메이커", powers: ['순발력/즉흥력 뛰어남', '친화력', '열정'], shine: ['분위기를 밝게 띄울 때', '관심 있는 일에 집중할 때', '타인을 모방할 때'], growth: '감정 기복 조절과 복잡한 상황 대처력을 길러요.', habit: '공동학습형: 그룹스터디, 독서실 활용 (독방X)', career: '교사, 연예인, 방송인, 서비스직', compliments: [{ tag: '💕 공감왕', phrase1: '네가 들어줘서', phrase2: '마음이 풀렸어' }, { tag: '💫 분위기메이커', phrase1: '너만 있으면', phrase2: '다들 웃게 돼' }, { tag: '✨ 감성천재', phrase1: '너의 따뜻한 말 한마디가', phrase2: '정말 큰 힘이 돼' }] },
+            { type: '🤝 조정협조형', emoji: '🕊️🌈🤝', quote1: "당신의 배려가", quote2: "우리를 하나로 만들어요", tags: "#중재자 #멀티태스킹", powers: ['중간 조정자 역할(협상)', '객관성 뛰어남', '비교분석 잘함'], shine: ['친구 사이를 중재할 때', '폭넓은 관심사를 보일 때', '동시에 여러 일을 할 때'], growth: '거절하는 법과 빠른 결정을 연습해보세요.', habit: '공동학습형: 그룹스터디 + 스스로 학습 병행', career: '고객상담, 중개인(무역), 작가, 외교관', compliments: [{ tag: '🤝 중재왕', phrase1: '너 덕분에', phrase2: '다시 사이가 좋아졌어' }, { tag: '🌈 배려왕', phrase1: '세심하게 챙겨줘서', phrase2: '정말 고마워' }, { tag: '💞 소통왕', phrase1: '모두의 의견을', phrase2: '잘 들어줘서 좋아' }] },
+            { type: '🎯 지도자형', emoji: '👑🦁🚀', quote1: "당신의 리더십이", quote2: "길을 만들어요", tags: "#리더 #목표지향", powers: ['강한 추진력', '주관이 강함', '책임감'], shine: ['목표를 향해 이끌어갈 때', '신뢰를 지킬 때', '명확한 결과를 낼 때'], growth: '다른 사람의 말을 경청하고 인성을 함양하세요.', habit: '개인학습형: 독방, 자기주도학습', career: '기획/관리부, 독립창업, 군장성, 정치인', compliments: [{ tag: '🎯 결단력짱', phrase1: '네가 정해주니까', phrase2: '속이 다 시원해!' }, { tag: '👑 참된리더', phrase1: '너만 믿고 따라가면', phrase2: '성공할 것 같아' }, { tag: '🚀 추진왕', phrase1: '망설임 없이 해내는 모습', phrase2: '진짜 멋있어' }] },
+            { type: '🔍 현실주의형', emoji: '🦉📊💡', quote1: "당신의 통찰력이", quote2: "정답을 찾아요", tags: "#전략가 #분석력", powers: ['관찰/분석력 뛰어남', '현실적 판단', '적응력/친화력'], shine: ['복잡한 문제를 정리할 때', '효율적인 길을 찾을 때', '협상할 때'], growth: '성급한 포기를 줄이고 끝맺음을 확실히 하세요.', habit: '개인학습형: 자기주도학습, 예습/복습 철저', career: '기자, 외교관, 전문직, 독립창업', compliments: [{ tag: '🔍 분석왕', phrase1: '네가 정리해주니까', phrase2: '머리에 쏙 들어와' }, { tag: '📊 전략가', phrase1: '계획이 완벽해서', phrase2: '빈틈이 없네' }, { tag: '💡 해결사', phrase1: '네 방법이', phrase2: '제일 확실해!' }] },
+            { type: '💡 창조사고형', emoji: '🎨✨🚀', quote1: "당신의 상상이", quote2: "현실이 돼요", tags: "#아이디어뱅크 #호기심", powers: ['창의력 뛰어남', '강한 친화력', '미래지향적'], shine: ['새로운 아이디어를 낼 때', '무대 체질을 발휘할 때', '도전할 때'], growth: '인내심을 기르고 현실도피를 주의하세요.', habit: '공동학습형: 창의적 학습, 다양한 체험 필요', career: '기획/컨설팅, 조종사, 연구/개발, 교사', compliments: [{ tag: '💡 아이디어', phrase1: '와, 어떻게 그런', phrase2: '생각을 했어?' }, { tag: '✨ 창의력대장', phrase1: '네 생각은 항상', phrase2: '새롭고 재밌어' }, { tag: '🚀 도전왕', phrase1: '먼저 용기 내줘서', phrase2: '멋지다!' }] },
+            { type: '✨ 완벽주의형', emoji: '💎🦢📏', quote1: "당신의 꼼꼼함이", quote2: "최고를 만들어요", tags: "#완벽추구 #책임감", powers: ['정확성', '근검절약', '신뢰와 신용'], shine: ['실수 없이 일을 처리할 때', '최고가 되려 할 때', '약속을 지킬 때'], growth: '비판적 사고를 줄이고 유연성을 기르세요.', habit: '개인학습형: 자기주도학습, 예습/복습 철저', career: '법조인(판사/검사), CFO(재무), 마케팅', compliments: [{ tag: '✨ 완벽그잡채', phrase1: '너한테 맡기면', phrase2: '걱정이 없어' }, { tag: '💎 디테일장인', phrase1: '놓친 부분까지 찾아내다니', phrase2: '대단해' }, { tag: '📏 꼼꼼왕', phrase1: '빈틈없이 준비해줘서', phrase2: '든든해' }] },
+            { type: '🎨 예술이상형', emoji: '🎭🌹🌙', quote1: "당신의 감성이", quote2: "아름다움을 창조해요", tags: "#예술가 #무대체질", powers: ['예술 감각', '긍정적', '실천력/지도력'], shine: ['한 가지를 파고들 때', '무대 위에 있을 때', '리더십을 발휘할 때'], growth: '자아도취를 경계하고 목표를 점검하세요.', habit: '개인학습형: 다중형 (스스로 학습법을 찾음)', career: '예체능, 국회의원, 연설가, 연극인', compliments: [{ tag: '🎨 금손', phrase1: '너의 손길이 닿으면', phrase2: '작품이 돼' }, { tag: '🎭 감성장인', phrase1: '너의 표현력은', phrase2: '정말 감동적이야' }, { tag: '🌹 매력부자', phrase1: '너만의 분위기가', phrase2: '너무 멋져' }] },
+            { type: '🎭 독창형', emoji: '🦄👽⚡', quote1: "당신의 독특함이", quote2: "새로운 세상을 열어요", tags: "#역발상 #아이디어", powers: ['독특한 시각', '역발상', '분석력'], shine: ['남다른 아이디어를 낼 때', '자기 방식대로 할 때', '엉뚱한 매력'], growth: '주변 정리를 잘하고 생각을 정리해서 말하세요.', habit: '공동학습형: 독창적 사고형, 그룹스터디', career: '유튜버, 작가, 예술가, 연구분야', compliments: [{ tag: '🦄 유니크', phrase1: '너 같은 친구는', phrase2: '세상에 하나뿐이야' }, { tag: '⚡ 천재만재', phrase1: '그건 진짜', phrase2: '상상도 못했어!' }, { tag: '👽 개성왕', phrase1: '너만의 색깔이', phrase2: '뚜렷해서 좋아' }] },
+            { type: '📏 규율원칙형', emoji: '⚖️🌲✅', quote1: "당신의 올곧음이", quote2: "신뢰를 만들어요", tags: "#스폰지형 #꾸준함", powers: ['성실함', '틀을 벗어나지 않음', '최선을 다함'], shine: ['규칙을 잘 지킬 때', '꾸준히 노력할 때', '안정감을 줄 때'], growth: '융통성을 기르고 단체 활동을 경험하세요.', habit: '공동학습형: 주입식 교육 적합, 그룹스터디', career: '공무원, 회계사, 정확성 요구 업무', compliments: [{ tag: '📏 바른생활', phrase1: '네가 있으면', phrase2: '질서가 잡혀' }, { tag: '✅ 성실왕', phrase1: '한결같은 모습이', phrase2: '정말 존경스러워' }, { tag: '⚖️ 믿음직', phrase1: '너는 무슨 일이 있어도', phrase2: '믿을 수 있어' }] },
+            { type: '💝 헌신박애형', emoji: '🌻🎁🥰', quote1: "당신의 사랑이", quote2: "세상을 따뜻하게 해요", tags: "#봉사 #배려", powers: ['헌신', '배려', '폭넓은 이해심'], shine: ['남을 도울 때', '양보할 때', '사랑을 나눌 때'], growth: '현실감을 키우고 자신을 먼저 챙기세요.', habit: '개인학습형: 조절형', career: '사회복지사, 종교단체, 비서, 장애인단체', compliments: [{ tag: '💝 천사강림', phrase1: '너 덕분에', phrase2: '세상이 아직 따뜻해' }, { tag: '🥰 힐러', phrase1: '너랑 있으면', phrase2: '마음이 치유돼' }, { tag: '🌻 배려왕', phrase1: '항상 남을 먼저', phrase2: '생각해줘서 고마워' }] },
+            { type: '🌈 독창이상형', emoji: '🔭🚀🌏', quote1: "당신의 비전이", quote2: "미래를 바꿔요", tags: "#혁신가 #실천력", powers: ['실천력 뛰어남', '지도력/자신감', '무대체질'], shine: ['대중의 인기를 얻을 때', '창조적 능력을 발휘할 때', '성취할 때'], growth: '비현실적인 생각을 줄이고 감정을 조절하세요.', habit: '개인학습형: 자기주도학습, 독창적 사고', career: '개그맨, 연극/영화, 예술가, 대중스타', compliments: [{ tag: '🌈 비전왕', phrase1: '너의 생각 스케일은', phrase2: '정말 남달라' }, { tag: '🚀 혁신가', phrase1: '네 아이디어가', phrase2: '미래를 바꿀 거야' }, { tag: '🌏 리더', phrase1: '너는 분명', phrase2: '큰 사람이 될 거야' }] }
+        ];
 
+        // ******************************************************
+        // ** 4. 캔버스 그리기 및 유틸리티 함수 **
+        // ******************************************************
+        
         function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
             const words = text.split('');
             let line = '';
@@ -1427,7 +1552,7 @@
             ctx.fillStyle = '#ccc';
             ctx.font = '14px sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText("IFAS 칭찬 카드 메이커", W / 2, H - 15);
+            ctx.fillText("I-FAS 칭찬 카드 메이커", W / 2, H - 15);
         }
 
         function generateBothCards() {
@@ -1480,6 +1605,23 @@
             div.innerHTML = `<span>${text}</span>`;
             return div;
         }
+
+        function populateTypeSelect() {
+            const select = document.getElementById('personalityType');
+            select.innerHTML = CARD_DATA.map((data, idx) => `<option value="${idx}">${data.type}</option>`).join('');
+        }
+        
+        // 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            switchPage('page1');
+            const questions = document.querySelectorAll('.question-box');
+            questions.forEach(q => q.style.display = 'none');
+            const q1 = document.getElementById('q1');
+            if(q1) {
+                q1.style.display = 'block';
+                q1.classList.add('active');
+            }
+        });
     </script>
 </body>
 </html>
