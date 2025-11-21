@@ -3,34 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GFAT 성향 분류 및 칭찬 카드 만들기</title>
+    <title>I-FAS 성향 분석 | 나를 찾는 가장 정확한 기준</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Nanum+Pen+Script&family=Nanum+Gothic+Coding:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Nanum+Pen+Script&family=Nanum+Gothic+Coding:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
         /* 폰트 정의 */
-        body { font-family: 'Noto Sans KR', sans-serif; }
+        body { font-family: 'Noto Sans KR', sans-serif; word-break: keep-all; }
         .handwritten { font-family: 'Nanum Pen Script', cursive; }
         .monospace-style { font-family: 'Nanum Gothic Coding', monospace; }
 
-        /* [Page 1] 타입별 색상 변수 (오리지널 복구) */
-        :root {
-            --color-type-1: #e67e22; /* 감성형 💫 */
-            --color-type-2: #2ecc71; /* 조정협조형 🤝 */
-            --color-type-3: #e74c3c; /* 지도자형 🎯 */
-            --color-type-4: #95a5a6; /* 현실주의형 🔍 */
-            --color-type-5: #f1c40f; /* 창조사고형 💡 */
-            --color-type-6: #bdc3c7; /* 완벽주의형 ✨ */
-            --color-type-7: #9b59b6; /* 예술이상형 🎨 */
-            --color-type-8: #34495e; /* 독창형 🎭 */
-            --color-type-9: #7f8c8d; /* 규율원칙형 📏 */
-            --color-type-10: #e84393; /* 헌신박애형 💝 */
-            --color-type-11: #1abc9c; /* 독창이상형 🌈 */
+        /* [Page 1] 히어로 섹션 (요청하신 이미지 스타일) */
+        .hero-section {
+            /* 보라빛 그라데이션 복구 */
+            background: linear-gradient(135deg, #7c5cfc 0%, #5d45db 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 텍스트 하이라이트 (노란색) */
+        .highlight-text {
+            color: #ffeb3b; /* 선명한 노란색 */
         }
 
-        /* [Page 1] GFAT 성향 분류 페이지 스타일 (오리지널 복구) */
+        /* I-FAS 차별점 카드 */
+        .feature-card {
+            transition: transform 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* GFAT/IFAS 타입별 색상 */
+        :root {
+            --color-type-1: #e67e22; --color-type-2: #2ecc71; --color-type-3: #e74c3c;
+            --color-type-4: #95a5a6; --color-type-5: #f1c40f; --color-type-6: #bdc3c7;
+            --color-type-7: #9b59b6; --color-type-8: #34495e; --color-type-9: #7f8c8d;
+            --color-type-10: #e84393; --color-type-11: #1abc9c;
+        }
+
+        /* 카드 스타일 (Page 2) */
         .type-card {
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
             border-top: 6px solid;
@@ -39,151 +53,330 @@
             transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
+        .summary { border-left: 5px solid; line-height: 1.6; }
+        .detail-item h3 { font-size: 1.125rem; font-weight: 700; }
+        .detail-item ul { font-size: 0.95rem; line-height: 1.6; }
+        .detail-item li::before { content: '•'; position: absolute; left: 0; top: 0; font-weight: 700; font-size: 1.2rem; }
 
-        .summary {
-            border-left: 5px solid;
-            line-height: 1.5; 
-        }
+        /* 타입별 컬러 매핑 */
+        #type-1 { border-top-color: var(--color-type-1); } #type-1 h2, #type-1 .summary { color: var(--color-type-1); border-left-color: var(--color-type-1); } #type-1 .detail-item li::before { color: var(--color-type-1); }
+        #type-2 { border-top-color: var(--color-type-2); } #type-2 h2, #type-2 .summary { color: var(--color-type-2); border-left-color: var(--color-type-2); } #type-2 .detail-item li::before { color: var(--color-type-2); }
+        #type-3 { border-top-color: var(--color-type-3); } #type-3 h2, #type-3 .summary { color: var(--color-type-3); border-left-color: var(--color-type-3); } #type-3 .detail-item li::before { color: var(--color-type-3); }
+        #type-4 { border-top-color: var(--color-type-4); } #type-4 h2, #type-4 .summary { color: var(--color-type-4); border-left-color: var(--color-type-4); } #type-4 .detail-item li::before { color: var(--color-type-4); }
+        #type-5 { border-top-color: var(--color-type-5); } #type-5 h2, #type-5 .summary { color: var(--color-type-5); border-left-color: var(--color-type-5); } #type-5 .detail-item li::before { color: var(--color-type-5); }
+        #type-6 { border-top-color: var(--color-type-6); } #type-6 h2, #type-6 .summary { color: var(--color-type-6); border-left-color: var(--color-type-6); } #type-6 .detail-item li::before { color: var(--color-type-6); }
+        #type-7 { border-top-color: var(--color-type-7); } #type-7 h2, #type-7 .summary { color: var(--color-type-7); border-left-color: var(--color-type-7); } #type-7 .detail-item li::before { color: var(--color-type-7); }
+        #type-8 { border-top-color: var(--color-type-8); } #type-8 h2, #type-8 .summary { color: var(--color-type-8); border-left-color: var(--color-type-8); } #type-8 .detail-item li::before { color: var(--color-type-8); }
+        #type-9 { border-top-color: var(--color-type-9); } #type-9 h2, #type-9 .summary { color: var(--color-type-9); border-left-color: var(--color-type-9); } #type-9 .detail-item li::before { color: var(--color-type-9); }
+        #type-10 { border-top-color: var(--color-type-10); } #type-10 h2, #type-10 .summary { color: var(--color-type-10); border-left-color: var(--color-type-10); } #type-10 .detail-item li::before { color: var(--color-type-10); }
+        #type-11 { border-top-color: var(--color-type-11); } #type-11 h2, #type-11 .summary { color: var(--color-type-11); border-left-color: var(--color-type-11); } #type-11 .detail-item li::before { color: var(--color-type-11); }
+
+        /* Canvas 및 칭찬 카드 페이지 (Page 3) */
+        #page3 canvas { border-radius: 15px; margin: 15px auto; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); max-width: 100%; height: auto; }
+        .btn-shadow-orange { box-shadow: 0 4px #e0941d; transition: transform 0.2s, box-shadow 0.2s; }
+        .btn-shadow-orange:active { box-shadow: 0 2px #c9851a; transform: translateY(2px); }
+        .canvas-container { display: none; flex-direction: column; align-items: center; gap: 20px; }
         
-        .detail-item h3 {
-             font-size: 1.125rem;
-             font-weight: 700;
-        }
-        .detail-item ul {
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
+        .save-guide { background-color: #fffbeb; border-left: 5px solid #f59e0b; padding: 1rem; margin-top: 2rem; margin-bottom: 1rem; border-radius: 0.5rem; text-align: center; display: none; }
+        .section-divider { display: flex; align-items: center; text-align: center; margin: 2rem 0; color: #6b7280; }
+        .section-divider::before, .section-divider::after { content: ''; flex: 1; border-bottom: 1px solid #e5e7eb; }
+        .section-divider span { padding: 0 1rem; font-weight: bold; font-size: 0.9rem; }
 
-        /* 커스텀 불릿 (•) */
-        .detail-item li::before {
-            content: '•';
-            position: absolute;
-            left: 0;
-            top: 0;
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-
-        /* 타입별 CSS 적용 (오리지널 복구) */
-        #type-1 { border-top-color: var(--color-type-1); }
-        #type-1 h2, #type-1 .summary, #type-1 .summary strong { color: var(--color-type-1); border-left-color: var(--color-type-1); }
-        #type-1 .detail-item li::before { color: var(--color-type-1); }
-
-        #type-2 { border-top-color: var(--color-type-2); }
-        #type-2 h2, #type-2 .summary, #type-2 .summary strong { color: var(--color-type-2); border-left-color: var(--color-type-2); }
-        #type-2 .detail-item li::before { color: var(--color-type-2); }
-
-        #type-3 { border-top-color: var(--color-type-3); }
-        #type-3 h2, #type-3 .summary, #type-3 .summary strong { color: var(--color-type-3); border-left-color: var(--color-type-3); }
-        #type-3 .detail-item li::before { color: var(--color-type-3); }
-
-        #type-4 { border-top-color: var(--color-type-4); }
-        #type-4 h2, #type-4 .summary, #type-4 .summary strong { color: var(--color-type-4); border-left-color: var(--color-type-4); }
-        #type-4 .detail-item li::before { color: var(--color-type-4); }
-
-        #type-5 { border-top-color: var(--color-type-5); }
-        #type-5 h2, #type-5 .summary, #type-5 .summary strong { color: var(--color-type-5); border-left-color: var(--color-type-5); }
-        #type-5 .detail-item li::before { color: var(--color-type-5); }
-
-        #type-6 { border-top-color: var(--color-type-6); }
-        #type-6 h2, #type-6 .summary, #type-6 .summary strong { color: var(--color-type-6); border-left-color: var(--color-type-6); }
-        #type-6 .detail-item li::before { color: var(--color-type-6); }
-
-        #type-7 { border-top-color: var(--color-type-7); }
-        #type-7 h2, #type-7 .summary, #type-7 .summary strong { color: var(--color-type-7); border-left-color: var(--color-type-7); }
-        #type-7 .detail-item li::before { color: var(--color-type-7); }
-
-        #type-8 { border-top-color: var(--color-type-8); }
-        #type-8 h2, #type-8 .summary, #type-8 .summary strong { color: var(--color-type-8); border-left-color: var(--color-type-8); }
-        #type-8 .detail-item li::before { color: var(--color-type-8); }
-
-        #type-9 { border-top-color: var(--color-type-9); }
-        #type-9 h2, #type-9 .summary, #type-9 .summary strong { color: var(--color-type-9); border-left-color: var(--color-type-9); }
-        #type-9 .detail-item li::before { color: var(--color-type-9); }
-
-        #type-10 { border-top-color: var(--color-type-10); }
-        #type-10 h2, #type-10 .summary, #type-10 .summary strong { color: var(--color-type-10); border-left-color: var(--color-type-10); }
-        #type-10 .detail-item li::before { color: var(--color-type-10); }
-
-        #type-11 { border-top-color: var(--color-type-11); }
-        #type-11 h2, #type-11 .summary, #type-11 .summary strong { color: var(--color-type-11); border-left-color: var(--color-type-11); }
-        #type-11 .detail-item li::before { color: var(--color-type-11); }
-
-
-        /* [Page 2] 칭찬 카드 만들기 페이지 스타일 (새로운 디자인 유지) */
-        #page2 canvas { 
-            border-radius: 15px; 
-            margin-top: 15px; 
-            margin-bottom: 15px;
-            margin-left: auto; 
-            margin-right: auto; 
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); 
-            max-width: 100%; 
-            height: auto; 
-        }
+        /* 질문지 스타일 */
+        .quiz-container { background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 600px; margin: 2rem auto; }
+        .question-box { display: none; }
+        .question-box.active { display: block; animation: fadeIn 0.5s; }
+        .quiz-btn { display: block; width: 100%; padding: 1rem; margin: 0.5rem 0; border: 2px solid #e5e7eb; border-radius: 0.5rem; text-align: left; transition: all 0.2s; }
+        .quiz-btn:hover { border-color: #7c5cfc; background: #f5f3ff; color: #5b21b6; }
         
-        .btn-shadow-orange {
-            box-shadow: 0 4px #e0941d;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .btn-shadow-orange:active {
-            box-shadow: 0 2px #c9851a; 
-            transform: translateY(2px);
-        }
-        
-        /* 스크롤 컨테이너 스타일 */
-        .canvas-container {
-            display: none; /* 초기 숨김 */
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .save-guide {
-            background-color: #fffbeb;
-            border-left: 5px solid #f59e0b;
-            padding: 1rem;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            border-radius: 0.5rem;
-            text-align: center;
-            display: none; /* 초기 숨김 */
-        }
-
-        .section-divider {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            margin: 2rem 0;
-            color: #6b7280;
-        }
-        .section-divider::before, .section-divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        .section-divider span {
-            padding: 0 1rem;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-50 text-gray-800 font-sans">
 
-    <nav class="sticky top-0 z-50 bg-gray-900 shadow-xl">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-center py-3">
-            <button class="tab-button active bg-white text-gray-900 hover:bg-gray-100 px-6 py-2 rounded-lg font-bold transition-all duration-300 mx-2 my-1" onclick="switchPage('page1')">📚 GFAT 성향 분류</button>
-            <button class="tab-button bg-transparent text-white hover:bg-gray-700 px-6 py-2 rounded-lg font-bold transition-all duration-300 mx-2 my-1" onclick="switchPage('page2')">✨ 칭찬 카드 만들기</button>
-            <a href="https://brand.site/ifas" target="_blank" class="tab-button bg-blue-500 text-white hover:bg-blue-600 px-6 py-2 rounded-lg font-bold transition-all duration-300 mx-2 my-1">🏠 더 알아보기</a>
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-md border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-between items-center py-3">
+            <div class="flex items-center mb-2 sm:mb-0 cursor-pointer" onclick="switchPage('page1')">
+                <span class="text-2xl font-black italic bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600">I-FAS</span>
+            </div>
+            <div class="flex flex-wrap justify-center gap-2">
+                <button class="tab-button active text-gray-600 hover:text-purple-600 hover:bg-purple-50 px-3 md:px-4 py-2 rounded-lg font-bold transition-all" onclick="switchPage('page1')">🏠 홈</button>
+                <button class="tab-button text-gray-600 hover:text-purple-600 hover:bg-purple-50 px-3 md:px-4 py-2 rounded-lg font-bold transition-all" onclick="switchPage('page2')">📊 성향 분석</button>
+                <button class="tab-button text-gray-600 hover:text-purple-600 hover:bg-purple-50 px-3 md:px-4 py-2 rounded-lg font-bold transition-all" onclick="switchPage('page3')">✨ 칭찬 카드</button>
+                <button class="tab-button text-gray-600 hover:text-purple-600 hover:bg-purple-50 px-3 md:px-4 py-2 rounded-lg font-bold transition-all" onclick="switchPage('page-test')">📝 무료 검사</button>
+            </div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSewq1YP15yR6IzIXnY2OQMD0WxhCm-8mgjr9ifEywKogj7SPw/viewform?usp=sf_link" class="hidden md:inline-block bg-[#7c5cfc] text-white px-6 py-2 rounded-full hover:bg-[#5b21b6] transition shadow-lg">상담 신청</a>
         </div>
     </nav>
 
-    <div id="page1" class="content-page max-w-6xl mx-auto px-4 py-12">
-        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 text-center mb-12 border-b-4 border-blue-500 pb-3" data-aos="fade-down">
-            📚 11가지 성향 완전판
+    <div id="page1" class="content-page">
+        <header class="hero-section text-white pt-24 pb-32 px-4 text-center relative">
+            <div class="max-w-4xl mx-auto relative z-10" data-aos="fade-up">
+                <div class="inline-block bg-white/20 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1 mb-6 text-sm font-semibold">
+                    ✨ 100만 데이터 기반 성향 분석
+                </div>
+                <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight tracking-tight">
+                    나는 어떤 <span class="highlight-text">잠재력</span>을<br>가지고 있을까?
+                </h1>
+                <p class="text-lg md:text-xl mb-10 text-gray-100 max-w-2xl mx-auto font-light">
+                    선천적인 11가지 유형 중 나는 어디에 속할까요?<br>
+                    나를 정확히 알면 진로, 관계, 학업이 더 쉬워집니다.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 items-center">
+                    <button onclick="switchPage('page-test')" class="bg-white text-purple-700 font-bold text-xl py-4 px-12 rounded-full shadow-lg hover:bg-gray-50 transition-all transform hover:scale-105">
+                        👉 무료 검사 해보기
+                    </button>
+                    <button onclick="switchPage('page2')" class="bg-transparent border-2 border-white text-white font-bold text-xl py-4 px-12 rounded-full hover:bg-white/10 transition-all">
+                        성향 유형 미리보기
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="max-w-6xl mx-auto px-4 -mt-10 relative z-20 mb-16" data-aos="fade-up">
+            <img src="https://breezefeel.github.io/happycard/11.png" alt="Self Discovery" class="w-full h-64 object-cover rounded-2xl shadow-2xl brightness-75 hover:brightness-100 transition-all duration-500">
+            <div class="absolute bottom-6 left-8 text-white">
+                <p class="text-sm font-bold opacity-80">SELF DISCOVERY</p>
+                <h3 class="text-2xl font-bold">나를 찾아가는 여정</h3>
+            </div>
+        </div>
+
+        <section class="py-16 px-4 bg-white">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <span class="text-purple-600 font-bold tracking-wider text-sm">SCIENCE & DATA</span>
+                    <h2 class="text-3xl font-bold text-gray-900 mt-2">단순한 심리테스트가 아닙니다.<br><span class="text-purple-600">지문은 '밖으로 드러난 뇌'</span>입니다.</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="bg-purple-50 p-8 rounded-2xl" data-aos="fade-right">
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                            <span class="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm">1</span>
+                            피문학(Dermatoglyphics)
+                        </h3>
+                        <p class="text-gray-600 leading-relaxed mb-6">
+                            지문은 태아 <strong>13주~19주</strong> 사이, 엄마 뱃속에서 <strong>뇌세포가 가장 활발하게 발달할 때</strong> 함께 형성됩니다.<br><br>
+                            이 시기 형성된 지문의 패턴은 뇌의 발달 특성과 밀접하게 연결되어 있다는 것이 수많은 논문으로 입증되었습니다.
+                        </p>
+                        <div class="text-sm text-gray-500 border-t border-purple-200 pt-4">
+                            * I-FAS는 대만/홍콩 데이터가 아닌, <strong class="text-purple-700">한국인 100만 임상 데이터</strong>를 기반으로 분석합니다.
+                        </div>
+                    </div>
+                    <div class="space-y-4" data-aos="fade-left">
+                        <div class="flex items-center gap-4 p-4 border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-all">
+                            <div class="text-3xl">🧠</div>
+                            <div>
+                                <strong class="block text-gray-800">뇌 발달과의 연결고리</strong>
+                                <span class="text-sm text-gray-500">손가락 끝 신경은 뇌의 각 영역과 1:1로 연결</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-all">
+                            <div class="text-3xl">🧬</div>
+                            <div>
+                                <strong class="block text-gray-800">유전적 고유성</strong>
+                                <span class="text-sm text-gray-500">일란성 쌍둥이도 다른, 나만의 고유 식별 코드</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-all">
+                            <div class="text-3xl">🔒</div>
+                            <div>
+                                <strong class="block text-gray-800">불변성 (Permanence)</strong>
+                                <span class="text-sm text-gray-500">평생 변하지 않기에, 검사는 일생에 단 한 번만!</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 px-4 bg-gray-900 text-white">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-10" data-aos="fade-up">"어제랑 MBTI가 다르게 나왔어요" 🤷</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-0 relative" data-aos="zoom-in">
+                    <div class="bg-gray-800 p-8 rounded-2xl md:rounded-r-none md:rounded-l-2xl border border-gray-700 opacity-60 hover:opacity-100 transition-opacity">
+                        <div class="text-4xl mb-4">📝</div>
+                        <h3 class="text-xl font-bold mb-2">일반 설문 검사 (MBTI 등)</h3>
+                        <ul class="text-gray-400 text-sm space-y-2 text-left list-disc pl-5">
+                            <li><strong>현재의 심리 상태</strong>를 반영</li>
+                            <li>기분과 환경에 따라 결과가 바뀜</li>
+                            <li>내가 되고 싶은 모습으로 <strong>답변 왜곡 가능</strong></li>
+                            <li>후천적/환경적 요인 분석에 탁월</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-yellow-500 rounded-full items-center justify-center font-black text-black z-10 shadow-lg">VS</div>
+
+                    <div class="bg-gradient-to-br from-purple-900 to-blue-900 p-8 rounded-2xl md:rounded-l-none md:rounded-r-2xl border-2 border-purple-500 relative transform scale-105 shadow-2xl z-0">
+                        <div class="absolute top-0 right-0 bg-yellow-500 text-black text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">추천</div>
+                        <div class="text-4xl mb-4">👆</div>
+                        <h3 class="text-xl font-bold mb-2 text-yellow-400">I-FAS 선천적 재능 검사</h3>
+                        <ul class="text-gray-200 text-sm space-y-2 text-left list-disc pl-5">
+                            <li><strong>타고난 기질과 재능</strong>을 분석</li>
+                            <li>0세부터 노인까지 <strong>결과가 변하지 않음</strong></li>
+                            <li>생체 데이터로 <strong>거짓 응답 불가능</strong></li>
+                            <li>나의 '본질'을 파악하는 데 탁월</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="mt-8 text-gray-400 text-sm">※ 두 검사는 상호 보완적입니다. 선천적 기질(I-FAS) 위에 현재 상태(후천 검사)를 더하면 완벽합니다.</p>
+            </div>
+        </section>
+
+       <section class="max-w-4xl mx-auto px-4 py-16 text-center">
+            <h3 class="text-2xl font-bold mb-2 text-gray-900">👀 눈으로 확인하는 선천적 재능</h3>
+            <p class="text-gray-500 mb-8">※ 재능에 따른 아이의 행동</p> 
+            
+            <a href="https://www.youtube.com/watch?v=e_Ab4NRwpdc" target="_blank" 
+            class="block relative w-full overflow-hidden rounded-xl shadow-xl transform transition duration-300 hover:scale-[1.01] hover:shadow-2xl" 
+            style="padding-bottom: 56.25%;">
+                
+                <img class="absolute top-0 left-0 w-full h-full object-cover" 
+                    src="https://img.youtube.com/vi/e_Ab4NRwpdc/maxresdefault.jpg" 
+                    alt="유튜브 영상 썸네일: 재능에 따른 아이의 행동" 
+                    loading="lazy">
+                
+                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 transition-opacity opacity-100">
+                    <svg class="h-20 w-20 text-white opacity-90" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v14zm11-9l-6 5V5l6 5z"/>
+                    </svg>
+                </div>
+            </a>
+            
+            <div class="mt-6 bg-purple-50 p-6 rounded-xl shadow-sm border border-purple-100 text-left flex items-start gap-4" data-aos="fade-up">
+                <span class="text-3xl">🏃</span>
+                <div>
+                    <h4 class="font-bold text-lg text-gray-800">분석 결과</h4>
+                    <p class="text-gray-600 mt-1">
+                        이 아이는 검사 결과에서 <strong class="text-purple-600">운동 중추 탁월</strong>, <strong class="text-purple-600">체육 점수 높음</strong>, <strong class="text-purple-600">내면 에너지 아주 강함</strong>으로 나왔습니다.<br>
+                        타고난 에너지를 발산할 때 가장 행복해하는 모습, 보이시나요? 아이의 행동에는 이유가 있습니다.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 px-4 bg-white">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-2xl font-bold text-center mb-10">자주 묻는 질문 (FAQ)</h2>
+                <div class="space-y-4">
+                    <div class="border border-gray-200 rounded-lg p-5 hover:border-purple-300 transition-colors cursor-pointer" onclick="this.querySelector('.ans').classList.toggle('hidden')">
+                        <h3 class="font-bold flex justify-between items-center">Q. 성향 분석 결과는 영구적인가요? <span class="text-purple-500">▼</span></h3>
+                        <p class="ans hidden text-gray-600 mt-3 text-sm bg-gray-50 p-3 rounded">
+                            네, 본 검사를 통해 도출되는 **선천적 성향 및 재능은 시간이 지나도 변하지 않습니다.** 하지만 환경과 교육에 의해 발현되는 정도나 방식은 달라질 수 있습니다. 결과는 아이의 타고난 기질을 이해하고 양육 방향을 설정하는 데 도움을 줍니다.
+                        </p>
+                    </div>                    
+                    <div class="border border-gray-200 rounded-lg p-5 hover:border-purple-300 transition-colors cursor-pointer" onclick="this.querySelector('.ans').classList.toggle('hidden')">
+                        <h3 class="font-bold flex justify-between items-center">Q. 몇 살부터 검사가 가능한가요? <span class="text-purple-500">▼</span></h3>
+                        <p class="ans hidden text-gray-600 mt-3 text-sm bg-gray-50 p-3 rounded">
+                            지문은 태아 때 형성되어 변하지 않으므로, 지문 채취가 가능한 <strong>생후 12개월 이후</strong>라면 누구나 검사가 가능합니다. 유아기, 청소년기, 성인기 모두에게 추천합니다.
+                        </p>
+                    </div>
+                    <div class="border border-gray-200 rounded-lg p-5 hover:border-purple-300 transition-colors cursor-pointer" onclick="this.querySelector('.ans').classList.toggle('hidden')">
+                        <h3 class="font-bold flex justify-between items-center">Q. 관상이나 손금이랑 비슷한 건가요? <span class="text-purple-500">▼</span></h3>
+                        <p class="ans hidden text-gray-600 mt-3 text-sm bg-gray-50 p-3 rounded">
+                            아닙니다. I-FAS는 <strong>유전학, 태생학, 피문학(Dermatoglyphics)</strong>에 근거한 통계 과학입니다. 점술이 아닌 수많은 임상 데이터로 검증된 적성 검사 도구입니다.
+                        </p>
+                    </div>
+                    <div class="border border-gray-200 rounded-lg p-5 hover:border-purple-300 transition-colors cursor-pointer" onclick="this.querySelector('.ans').classList.toggle('hidden')">
+                        <h3 class="font-bold flex justify-between items-center">Q. 검사 결과가 다른 검사와 다르게 나오는 이유가 무엇인가요? <span class="text-purple-500">▼</span></h3>
+                        <p class="ans hidden text-gray-600 mt-3 text-sm bg-gray-50 p-3 rounded">
+                            일반적인 설문 기반 검사는 후천적인 경험과 심리 상태의 영향을 크게 받습니다. 반면, 저희 **I-FAS/GFAT 검사는 선천적 지문 패턴 데이터를 기반**으로 하여 타고난 기질에 초점을 맞춥니다. 따라서 측정하는 기준이 다르기 때문에 다른 검사와 결과가 다를 수 있으며, 이는 자연스러운 현상입니다.
+                        </p>
+                    </div>                    
+                    <div class="border border-gray-200 rounded-lg p-5 hover:border-purple-300 transition-colors cursor-pointer" onclick="this.querySelector('.ans').classList.toggle('hidden')">
+                        <h3 class="font-bold flex justify-between items-center">Q. 온라인 검사도 정확한가요? <span class="text-purple-500">▼</span></h3>
+                        <p class="ans hidden text-gray-600 mt-3 text-sm bg-gray-50 p-3 rounded">
+                            지문 검사는 정밀 스캐너를 이용한 <strong>대면 검사</strong>가 가장 정확합니다. 온라인 간이 테스트는 경향성만 파악할 수 있으며, 정확한 분석 리포트를 위해서는 전문가와의 상담을 권장합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-gray-900 text-white py-16 px-4 text-center">
+            <div class="max-w-3xl mx-auto" data-aos="zoom-in">
+                <span class="text-4xl block mb-4">📜</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 tracking-wider leading-relaxed">
+                    "지피지기 백전불태"<br>
+                    <span class="text-lg md:text-xl font-normal text-gray-400 mt-2 block">知彼知己 百戰不殆</span>
+                </h2>
+                <div class="w-20 h-1 bg-yellow-500 mx-auto mb-6"></div>
+                <p class="text-xl text-gray-300">
+                    인생은, <span class="text-white font-bold underline decoration-yellow-500 decoration-2">나와 자녀를 아는 것</span>부터가 시작입니다.
+                </p>
+                <div class="mt-8">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSewq1YP15yR6IzIXnY2OQMD0WxhCm-8mgjr9ifEywKogj7SPw/viewform?usp=sf_link" target="_blank" class="inline-block bg-yellow-500 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-400 transition-colors">
+                        상담 신청하기 →
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="page-test" class="content-page max-w-6xl mx-auto px-4 py-12" style="display: none;">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-center mb-4 text-gray-900">
+            📝 간이 성향 탐색
         </h1>
+        <p class="text-center text-gray-500 mb-8">
+            평소 나의 모습과 가장 가까운 것을 선택해주세요.
+        </p>
+
+        <div class="quiz-container">
+            <div id="q1" class="question-box active">
+                <h3 class="text-xl font-bold mb-4 text-purple-700">Q1. 새로운 사람들을 만나는 자리에서 나는?</h3>
+                <button class="quiz-btn" onclick="nextQuestion(1, 'E')">A. 먼저 말을 걸고 분위기를 주도하는 편이다.</button>
+                <button class="quiz-btn" onclick="nextQuestion(1, 'I')">B. 조용히 지켜보다가 마음이 맞는 사람과 대화한다.</button>
+            </div>
+            <div id="q2" class="question-box">
+                <h3 class="text-xl font-bold mb-4 text-purple-700">Q2. 친구가 고민을 털어놓을 때 나는?</h3>
+                <button class="quiz-btn" onclick="nextQuestion(2, 'F')">A. "정말 힘들었겠다.."라며 감정에 공감해준다.</button>
+                <button class="quiz-btn" onclick="nextQuestion(2, 'T')">B. "그래서 어떻게 해결할래?"라며 해결책을 제시한다.</button>
+            </div>
+            <div id="q3" class="question-box">
+                <h3 class="text-xl font-bold mb-4 text-purple-700">Q3. 여행 계획을 짤 때 나는?</h3>
+                <button class="quiz-btn" onclick="nextQuestion(3, 'J')">A. 시간 단위로 꼼꼼하게 계획을 세워야 마음이 편하다.</button>
+                <button class="quiz-btn" onclick="nextQuestion(3, 'P')">B. 대략적인 장소만 정하고 그날 기분에 따라 움직인다.</button>
+            </div>
+            <div id="q4" class="question-box">
+                <h3 class="text-xl font-bold mb-4 text-purple-700">Q4. 일을 처리하는 방식은?</h3>
+                <button class="quiz-btn" onclick="nextQuestion(4, 'S')">A. 현실적인 데이터와 기존의 경험을 중시한다.</button>
+                <button class="quiz-btn" onclick="nextQuestion(4, 'N')">B. 새로운 아이디어와 미래의 가능성을 상상한다.</button>
+            </div>
+            <div id="q-loading" class="question-box text-center py-10">
+                <div class="text-4xl animate-spin mb-4">⏳</div>
+                <h3 class="text-xl font-bold">당신의 성향을 분석 중입니다...</h3>
+            </div>
+            <div id="q-result" class="question-box text-center">
+                <div class="bg-purple-50 p-6 rounded-xl border border-purple-200 mb-6">
+                    <p class="text-gray-600 mb-2">당신의 예상 성향은...</p>
+                    <h2 id="result-type-name" class="text-3xl font-black text-purple-700 mb-4">💫 감성형</h2>
+                    <p id="result-desc" class="text-gray-700">
+                        따뜻한 마음과 공감 능력이 뛰어난 당신!<br>
+                        주변 사람들에게 에너지를 주는 분위기 메이커입니다.
+                    </p>
+                </div>
+
+                <div class="bg-red-50 p-6 rounded-xl border-l-4 border-red-500 text-left mb-6">
+                    <h4 class="font-bold text-red-600 text-lg mb-2">⚠️ 잠깐! 정확한 결과가 아닙니다.</h4>
+                    <p class="text-sm text-gray-700 leading-relaxed">
+                        방금 하신 설문은 <strong>기분과 환경에 따라 답변이 매번 달라질 수 있습니다.</strong><br>
+                        나의 진짜 <strong class="text-red-600">선천적 성향과 재능</strong>은 변하지 않는 <strong>'지문'</strong> 속에 숨어 있습니다.<br>
+                        지금 바로 문의하여 평생 변치 않는 내비게이션을 얻으세요.
+                    </p>
+                </div>
+
+                <a href="https://brand.site/ifas" target="_blank" class="block w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 text-center">
+                    🚀 정밀 선천적 재능 검사 문의하기
+                </a>
+                <button onclick="location.reload()" class="mt-4 text-gray-400 text-sm underline">처음으로 돌아가기</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="page2" class="content-page max-w-6xl mx-auto px-4 py-12" style="display: none;">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 text-center mb-12 border-b-4 border-purple-500 pb-3" data-aos="fade-down">
+            📚 11가지 성향 완전 분석
+        </h1>
+        <p class="text-center text-gray-500 mb-10 -mt-8">검사 결과 나온 당신의 유형을 찾아보세요.</p>
 
         <section class="type-card bg-white rounded-2xl mb-12 shadow-xl overflow-hidden" id="type-1" data-aos="fade-up">
             <div class="card-header p-5 md:p-6 border-b-2 border-gray-100">
@@ -901,7 +1094,7 @@
         </section>
     </div>
 
-    <div id="page2" class="content-page max-w-6xl mx-auto px-4 py-12" style="display: none;">
+    <div id="page3" class="content-page max-w-6xl mx-auto px-4 py-12" style="display: none;">
         <div class="card-maker-container max-w-xl mx-auto bg-white p-8 md:p-10 rounded-3xl shadow-2xl text-center border-4 border-blue-200" data-aos="zoom-in">
             <h1 class="handwritten text-4xl md:text-5xl text-blue-500 font-extrabold mb-4 leading-tight">
                 ✨ 나만의 ✨<br>칭찬 카드 만들기 
@@ -909,6 +1102,13 @@
             <p class="hint mt-2 text-gray-500 text-sm md:text-base monospace-style">
                 성향에 꼭 맞는 칭찬으로 마음을 전해보세요!
             </p>
+
+            <div class="bg-gray-50 p-4 rounded-xl mt-4 mb-6 border border-gray-200">
+                <p class="text-sm text-gray-600 mb-2">아직 내 성향을 모르시나요?</p>
+                <button onclick="switchPage('page-test')" class="text-blue-600 font-bold underline hover:text-blue-800">
+                    👉 무료 간이 검사 해보기
+                </button>
+            </div>
 
             <div class="input-group mt-8 mb-6 text-left" data-aos="fade-right">
                 <label for="userName" class="monospace-style text-lg font-bold mb-2 text-gray-700 block">이름을 입력하세요:</label>
@@ -944,40 +1144,90 @@
                 </p>
             </div>
 
-            <div id="canvasArea" class="canvas-container mt-10">
-                </div>
+            <div id="canvasArea" class="canvas-container mt-10"></div>
         </div>
     </div>
 
-    <footer class="bg-gray-800 text-white text-center p-6 mt-12">
-        <p class="text-sm">GFAT 성향 분류 & 칭찬 카드 메이커 | All rights reserved.</p>
+    <footer class="bg-gray-900 text-gray-400 text-center p-8 mt-12">
+        <p class="text-lg font-bold text-white mb-2">I-FAS 성향 분석 & 칭찬 카드 메이커</p>
+        <p class="text-sm">나를 이해하고 타인을 사랑하는 시작점</p>
+        <p class="text-xs mt-4 opacity-50">All rights reserved.</p>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 1000, once: true });
         
-        // --- 탭 전환 ---
+        // --- 탭 전환 함수 ---
         function switchPage(pageId) {
             const pages = document.querySelectorAll('.content-page');
             pages.forEach(page => page.style.display = 'none');
             document.getElementById(pageId).style.display = 'block';
-
+            
             const buttons = document.querySelectorAll('.tab-button');
             buttons.forEach(button => {
-                if (!button.getAttribute('href')) {
-                    button.classList.remove('active', 'bg-white', 'text-gray-900');
-                    button.classList.add('bg-transparent', 'text-white');
-                    if (button.getAttribute('onclick').includes(pageId)) {
-                        button.classList.add('active', 'bg-white', 'text-gray-900');
-                        button.classList.remove('bg-transparent', 'text-white');
-                    }
+                if (button.getAttribute('onclick').includes(pageId)) {
+                    button.classList.add('active', 'text-purple-600', 'bg-purple-50');
+                    button.classList.remove('text-gray-600');
+                } else {
+                    button.classList.remove('active', 'text-purple-600', 'bg-purple-50');
+                    button.classList.add('text-gray-600');
                 }
             });
             window.scrollTo(0, 0);
         }
 
-        // --- 데이터 정의 ---
+        // --- 간이 검사 로직 (데모용) ---
+        function nextQuestion(current, type) {
+            document.getElementById(`q${current}`).classList.remove('active');
+            
+            if (current < 4) {
+                // 다음 질문 보여주기
+                document.getElementById(`q${current + 1}`).classList.add('active');
+            } else {
+                // 로딩 및 결과 보여주기
+                document.getElementById('q-loading').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('q-loading').style.display = 'none';
+                    showResult(type); // 마지막 선택지 기반으로 데모 결과 출력
+                }, 1500);
+            }
+        }
+
+        function showResult(lastChoice) {
+            // 데모용 결과 매핑 (실제로는 누적 점수로 계산해야 함)
+            const resultBox = document.getElementById('q-result');
+            const typeName = document.getElementById('result-type-name');
+            const desc = document.getElementById('result-desc');
+            
+            // 예시 로직: 마지막 선택에 따라 랜덤하게 보여줌 (데모)
+            let types = [
+                { name: "💫 감성형", desc: "공감 능력이 뛰어나고 분위기를 주도하는 당신!" },
+                { name: "🎯 지도자형", desc: "목표를 향해 거침없이 나아가는 리더십의 소유자!" },
+                { name: "🔍 현실주의형", desc: "논리적이고 객관적인 판단을 내리는 전략가!" },
+                { name: "💡 창조사고형", desc: "남들은 생각지 못한 아이디어를 내는 아이디어 뱅크!" }
+            ];
+            
+            // 간단히 랜덤 선택 (실제 로직 구현 가능)
+            let randomType = types[Math.floor(Math.random() * types.length)];
+            
+            typeName.textContent = randomType.name;
+            desc.innerHTML = randomType.desc;
+            
+            resultBox.style.display = 'block';
+            resultBox.classList.add('active');
+        }
+
+        // --- 데이터 정의 및 카드 생성 함수들 (기존 유지) ---
+        // ... (이전 코드의 CARD_STYLES, CARD_DATA, drawFrontCard 등 모든 JS 함수를 그대로 여기에 포함하세요) ...
+        // 코드 길이 제한으로 인해 JS 부분은 생략되었습니다. 이전 답변의 스크립트 부분을 그대로 복사해서 사용하시면 됩니다.
+        
+        // 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            switchPage('page1');
+        });
+        
+        /* --- (필수) 아래에 이전 답변의 JS 코드들을 꼭 붙여넣어 주세요 --- */
         const CARD_STYLES = [
             { front_bg: ['#f8bbd0', '#ffecb3'], front_text: '#d81b60', border: '#f06292', back_bg: ['#fffde7', '#fce4ec'], back_text: '#880e4f', back_accent: '#ff80ab', comp_bg: '#ffebee', comp_text: '#c2185b' }, 
             { front_bg: ['#e0f7fa', '#c5e1a5'], front_text: '#006064', border: '#4db6ac', back_bg: ['#e8f5e9', '#e3f2fd'], back_text: '#1b5e20', back_accent: '#66bb6a', comp_bg: '#e0f2f1', comp_text: '#00695c' }, 
@@ -1017,7 +1267,6 @@
               compliments: [{ tag: '🌈 비전왕', phrase1: '너의 생각 스케일은', phrase2: '정말 남달라' }, { tag: '🚀 혁신가', phrase1: '네 아이디어가', phrase2: '미래를 바꿀 거야' }, { tag: '🌏 리더', phrase1: '너는 분명', phrase2: '큰 사람이 될 거야' }] },            
         ]; 
 
-        // --- 줄바꿈 함수 ---
         function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
             const words = text.split('');
             let line = '';
@@ -1037,57 +1286,47 @@
             return y + lineHeight;
         }
 
-        // --- 1. 앞면 카드 그리기 (디자인 개선) ---
         function drawFrontCard(canvas, cardInfo, cardStyle, userName) {
             const ctx = canvas.getContext('2d');
             const W = canvas.width;
             const H = canvas.height;
             
-            // 배경
             const gradient = ctx.createLinearGradient(0, 0, 0, H);
             gradient.addColorStop(0, cardStyle.front_bg[0]); 
             gradient.addColorStop(1, cardStyle.front_bg[1]); 
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, W, H);
             
-            // 테두리 (심플하게)
             ctx.strokeStyle = '#ffffff';
             ctx.lineWidth = 8;
             ctx.strokeRect(15, 15, W - 30, H - 30);
 
-            // 내부 얇은 테두리
             ctx.strokeStyle = cardStyle.border;
             ctx.lineWidth = 3;
             ctx.strokeRect(22, 22, W - 44, H - 44);
  
-            // 타입 이름
             ctx.fillStyle = cardStyle.front_text; 
             ctx.font = 'bold 55px "Nanum Pen Script", cursive';
             ctx.textAlign = 'center';
             ctx.fillText(cardInfo.type, W / 2, 90);
 
-            // 이모지 (크게)
             ctx.font = '110px sans-serif'; 
             ctx.fillText(cardInfo.emoji, W / 2, 230);
 
-            // 이름 영역
             ctx.fillStyle = '#444';
             ctx.font = '35px "Nanum Pen Script", cursive'; 
             ctx.fillText(`To. ${userName}`, W / 2, 320);
             
-            // 명언 (중앙 강조)
             ctx.fillStyle = cardStyle.front_text;
             ctx.font = 'bold 48px "Nanum Pen Script", cursive'; 
             ctx.fillText(cardInfo.quote1, W / 2, 450);
             ctx.fillText(cardInfo.quote2, W / 2, 510);
             
-            // 태그
             ctx.fillStyle = 'rgba(0,0,0,0.5)';
             ctx.font = '30px "Nanum Pen Script", cursive'; 
             ctx.fillText(cardInfo.tags, W / 2, 640);
         }
 
-        // --- 2. 뒷면 카드 그리기 (디자인 개선) ---
         function drawBackCard(canvas, cardInfo, cardStyle) {
             const ctx = canvas.getContext('2d');
             const W = canvas.width;
@@ -1095,21 +1334,18 @@
             const START_X = 50;
             let y = 80;
 
-            // 배경
             const gradient = ctx.createLinearGradient(0, 0, 0, H);
             gradient.addColorStop(0, cardStyle.back_bg[0]); 
             gradient.addColorStop(1, cardStyle.back_bg[1]); 
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, W, H);
             
-            // 테두리
             ctx.strokeStyle = cardStyle.back_accent; 
             ctx.lineWidth = 8;
             ctx.strokeRect(15, 15, W - 30, H - 30);
 
             ctx.textAlign = 'left'; 
             
-            // 1. 슈퍼파워 섹션
             ctx.fillStyle = cardStyle.back_text;
             ctx.font = 'bold 32px "Nanum Gothic Coding", monospace'; 
             ctx.fillText("💪 나의 슈퍼파워", START_X - 10, y);
@@ -1124,7 +1360,6 @@
 
             y += 25; 
 
-            // 2. 빛나는 순간 섹션
             ctx.fillStyle = cardStyle.back_accent; 
             ctx.font = 'bold 32px "Nanum Gothic Coding", monospace'; 
             ctx.fillText("✨ 나는 이럴 때 빛나요", START_X - 10, y);
@@ -1139,7 +1374,6 @@
 
             y += 25; 
 
-            // 3. 성장 포인트 섹션
             ctx.fillStyle = cardStyle.back_text; 
             ctx.font = 'bold 32px "Nanum Gothic Coding", monospace'; 
             ctx.fillText("🌱 성장 포인트", START_X - 10, y);
@@ -1150,22 +1384,18 @@
             wrapText(ctx, cardInfo.growth, START_X, y, W - 80, 30); 
         }
 
-        // --- 3. 개별 칭찬 카드 그리기 (NEW: 1장당 1성향) ---
         function drawSingleComplimentCard(canvas, cardInfo, style) {
             const ctx = canvas.getContext('2d');
             const W = canvas.width;
             const H = canvas.height;
             const PADDING = 25;
             
-            // 배경 (흰색)
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, W, H);
 
-            // 상단 헤더 (색상바)
             ctx.fillStyle = style.comp_bg; 
             ctx.fillRect(0, 0, W, 100);
             
-            // 헤더 텍스트
             ctx.fillStyle = style.comp_text;
             ctx.font = 'bold 36px "Nanum Gothic Coding", monospace';
             ctx.textAlign = 'center';
@@ -1173,40 +1403,33 @@
 
             let currentY = 130;
 
-            // 칭찬 박스 3개 그리기
             cardInfo.compliments.forEach((comp) => {
-                // 박스 배경
                 ctx.fillStyle = '#fcfcfc';
                 ctx.fillRect(PADDING, currentY, W - PADDING * 2, 130);
                 
-                // 박스 테두리
                 ctx.strokeStyle = style.comp_bg;
                 ctx.lineWidth = 4;
                 ctx.strokeRect(PADDING, currentY, W - PADDING * 2, 130);
                 
-                // 태그 (강조)
                 ctx.fillStyle = style.comp_text;
                 ctx.font = 'bold 24px "Nanum Gothic Coding", monospace';
                 ctx.textAlign = 'left';
                 ctx.fillText(`[ ${comp.tag} ]`, PADDING + 20, currentY + 40);
                 
-                // 멘트
                 ctx.fillStyle = '#333';
                 ctx.font = '22px "Nanum Gothic Coding", monospace';
-                ctx.fillText(comp.phrase1, PADDING + 25, currentY + 80);
-                ctx.fillText(comp.phrase2, PADDING + 25, currentY + 110);
+                const fullPhrase = `${comp.phrase1} ${comp.phrase2}`;
+                ctx.fillText(fullPhrase, PADDING + 25, currentY + 90);
 
                 currentY += 150;
             });
             
-            // 하단 푸터
             ctx.fillStyle = '#ccc';
             ctx.font = '14px sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText("GFAT 칭찬 카드 메이커", W / 2, H - 15);
+            ctx.fillText("IFAS 칭찬 카드 메이커", W / 2, H - 15);
         }
 
-        // --- 메인 생성 함수 ---
         function generateBothCards() {
             const userName = document.getElementById('userName').value.trim();
             const typeIndex = parseInt(document.getElementById('personalityType').value);
@@ -1218,35 +1441,31 @@
 
             const container = document.getElementById('canvasArea');
             container.style.display = 'flex';
-            container.innerHTML = ''; // 기존 캔버스 초기화
+            container.innerHTML = ''; 
             
             document.getElementById('saveGuide').style.display = 'block';
 
-            // 폰트 로드 확인 후 실행
             document.fonts.ready.then(() => {
                 const selectedInfo = CARD_DATA[typeIndex];
                 const selectedStyle = CARD_STYLES[typeIndex];
 
-                // 1. 개인 결과 카드 (앞면)
                 const frontCanvas = document.createElement('canvas');
                 frontCanvas.width = 500; frontCanvas.height = 700;
                 container.appendChild(createSectionTitle("🎴 나만의 결과 카드"));
                 container.appendChild(frontCanvas);
                 drawFrontCard(frontCanvas, selectedInfo, selectedStyle, userName);
 
-                // 2. 개인 결과 카드 (뒷면)
                 const backCanvas = document.createElement('canvas');
                 backCanvas.width = 500; backCanvas.height = 700;
                 container.appendChild(backCanvas);
                 drawBackCard(backCanvas, selectedInfo, selectedStyle);
 
-                // 3. 전체 성향 칭찬 카드 (11장 모두 생성)
                 container.appendChild(createSectionTitle("📚 전체 성향별 칭찬 카드 (11장)"));
                 
                 CARD_DATA.forEach((info, idx) => {
                     const compCanvas = document.createElement('canvas');
                     compCanvas.width = 500; 
-                    compCanvas.height = 600; // 높이 최적화
+                    compCanvas.height = 600; 
                     container.appendChild(compCanvas);
                     drawSingleComplimentCard(compCanvas, info, CARD_STYLES[idx]);
                 });
@@ -1255,18 +1474,12 @@
             });
         }
 
-        // 섹션 구분 타이틀 생성 헬퍼
         function createSectionTitle(text) {
             const div = document.createElement('div');
             div.className = 'section-divider w-full';
             div.innerHTML = `<span>${text}</span>`;
             return div;
         }
-
-        // 초기화
-        document.addEventListener('DOMContentLoaded', function() {
-            switchPage('page1');
-        });
     </script>
 </body>
 </html>
