@@ -1681,35 +1681,44 @@
             select.innerHTML = CARD_DATA.map((data, idx) => `<option value="${idx}">${data.type}</option>`).join('');
         }
         
-        // 초기화 및 URL 파라미터 체크 (수정된 최종 버전)
+       // 초기화 및 URL 파라미터 체크 (최종 수정 버전)
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
             const targetFocus = urlParams.get('focus');
             
-            // 1. URL 파라미터 체크
-            if (targetFocus === 'praise_name') {
-                // [조건부 실행] 외부 링크에서 칭찬 카드 요청이 온 경우
-                goToPraiseCardForm();
-                
-                // 칭찬 카드 페이지로 바로 가므로, 퀴즈 관련 초기화는 불필요
-                
-            } else {
-                // [기본 실행] 일반적인 페이지 로드 (퀴즈 홈으로 이동)
-                switchPage('page1');
-                
-                // 퀴즈 질문 초기화 및 Q1 표시
-                const questions = document.querySelectorAll('.question-box');
-                questions.forEach(q => q.style.display = 'none');
-                const q1 = document.getElementById('q1');
-                if(q1) {
-                    q1.style.display = 'block';
-                    q1.classList.add('active');
+            // 1. URL 파라미터에 유효한 페이지 ID가 있는지 체크
+            if (targetFocus) {
+                // [조건부 실행] focus 파라미터가 있을 경우
+                if (targetFocus === 'praise_name') {
+                    // 칭찬 카드 요청 (특수 기능)
+                    goToPraiseCardForm();
+                } else {
+                    // page-test 또는 다른 유효한 페이지 ID로 이동
+                    switchPage(targetFocus);
                 }
+            } else {
+                // [기본 실행] URL 파라미터가 없으면 퀴즈 홈으로 이동
+                switchPage('page1');
             }
+        
+            // 2. 페이지 전환과 관계없이 퀴즈 질문 초기화
+            // (페이지 이동 후에도 퀴즈 섹션의 초기 상태가 유지되도록 함)
+            const questions = document.querySelectorAll('.question-box');
+            questions.forEach(q => q.style.display = 'none');
+            const q1 = document.getElementById('q1');
+            if(q1) {
+                // q1.style.display = 'block'; // switchPage에서 이미 처리
+                q1.classList.add('active');
+            }
+            
+            // 퀴즈 결과 페이지 및 드롭다운 초기화 (기존 로직 유지)
+            initQuizResultPage();
+            populateTypeSelect();
         });
     </script>
 </body>
 </html>
+
 
 
 
