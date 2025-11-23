@@ -1681,7 +1681,7 @@
             select.innerHTML = CARD_DATA.map((data, idx) => `<option value="${idx}">${data.type}</option>`).join('');
         }
         
-       // 초기화 및 URL 파라미터 체크 (최종 수정 버전)
+      // 초기화 및 URL 파라미터 체크 (질문 표시 기능 복구)
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
             const targetFocus = urlParams.get('focus');
@@ -1702,13 +1702,18 @@
             }
         
             // 2. 페이지 전환과 관계없이 퀴즈 질문 초기화
-            // (페이지 이동 후에도 퀴즈 섹션의 초기 상태가 유지되도록 함)
-            const questions = document.querySelectorAll('.question-box');
-            questions.forEach(q => q.style.display = 'none');
-            const q1 = document.getElementById('q1');
-            if(q1) {
-                // q1.style.display = 'block'; // switchPage에서 이미 처리
-                q1.classList.add('active');
+            // (praise_name이 아닐 경우에만 퀴즈 질문을 초기화하고 첫 질문을 표시합니다.)
+            if (targetFocus !== 'praise_name') {
+                // 모든 질문 숨김
+                const questions = document.querySelectorAll('.question-box');
+                questions.forEach(q => q.style.display = 'none');
+                
+                // 첫 번째 질문 (q1)만 명시적으로 표시
+                const q1 = document.getElementById('q1');
+                if(q1) {
+                    q1.style.display = 'block'; // <-- 질문을 보이게 하는 핵심 코드 재추가!
+                    q1.classList.add('active');
+                }
             }
             
             // 퀴즈 결과 페이지 및 드롭다운 초기화 (기존 로직 유지)
@@ -1718,6 +1723,7 @@
     </script>
 </body>
 </html>
+
 
 
 
