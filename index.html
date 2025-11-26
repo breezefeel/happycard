@@ -37,7 +37,7 @@
             transform: translateY(-5px);
         }
 
-        /* GFAT/IFAS 타입별 색상 */
+        /* GFAT/I-FAS 타입별 색상 */
         :root {
             --color-type-1: #e67e22; --color-type-2: #2ecc71; --color-type-3: #e74c3c;
             --color-type-4: #95a5a6; --color-type-5: #f1c40f; --color-type-6: #bdc3c7;
@@ -295,7 +295,7 @@
                     <div class="border border-gray-200 rounded-lg p-5 hover:border-purple-300 transition-colors cursor-pointer" onclick="this.querySelector('.ans').classList.toggle('hidden')">
                         <h3 class="font-bold flex justify-between items-center">Q. 검사 결과가 다른 검사와 다르게 나오는 이유가 무엇인가요? <span class="text-purple-500">▼</span></h3>
                         <p class="ans hidden text-gray-600 mt-3 text-sm bg-gray-50 p-3 rounded">
-                            일반적인 설문 기반 검사는 후천적인 경험과 심리 상태의 영향을 크게 받습니다. 반면, <strong>IFAS/GFAT 검사는 지문 패턴 데이터를 기반</strong>으로 하여 순수하게 타고난 선천적 기질에 초점을 맞춥니다.
+                            일반적인 설문 기반 검사는 후천적인 경험과 심리 상태의 영향을 크게 받습니다. 반면, <strong>I-FAS GFAT 검사는 지문 패턴 데이터를 기반</strong>으로 하여 순수하게 타고난 선천적 기질에 초점을 맞춥니다.
                         </p>
                     </div>                    
                     <div class="border border-gray-200 rounded-lg p-5 hover:border-purple-300 transition-colors cursor-pointer" onclick="this.querySelector('.ans').classList.toggle('hidden')">
@@ -1598,7 +1598,7 @@
             ctx.fillStyle = style.comp_text;
             ctx.font = 'bold 36px "Nanum Gothic Coding", monospace';
             ctx.textAlign = 'center';
-            ctx.fillText(`${cardInfo.type}을 위한 칭찬`, W / 2, 65);
+            ctx.fillText(`${cardInfo.type} 칭찬하기`, W / 2, 65);
 
             let currentY = 130;
 
@@ -1727,6 +1727,7 @@
     </script>
 </body>
 </html>
+
 
 
 
