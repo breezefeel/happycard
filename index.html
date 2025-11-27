@@ -6,19 +6,38 @@
     <title>Re:Al 인사이드 성향 분석 | 나를 찾는 가장 정확한 기준</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        // 기본 sans 폰트를 Pretendard로 교체합니다.
+                        sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Nanum+Pen+Script&family=Nanum+Gothic+Coding:wght@400;700&display=swap" rel="stylesheet">
-
     <style>
-        /* 폰트 정의 */
-        body { font-family: 'Noto Sans KR', sans-serif; word-break: keep-all; }
-        .handwritten { font-family: 'Nanum Pen Script', cursive; }
-        .monospace-style { font-family: 'Nanum Gothic Coding', monospace; }
+        /* 기본 스타일 */
+        /* Tailwind Config가 적용되지만, 혹시 모를 충돌 방지를 위해 CSS로도 한 번 더 선언합니다. */
+        body { 
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+            word-break: keep-all; 
+        }
+        
+        /* 기존 스타일 유지 */
+        .handwritten { font-family: 'Nanum Pen Script', cursive; } /* 나눔펜이 필요하다면 링크 추가 필요 */
+        .monospace-style { font-family: 'Nanum Gothic Coding', monospace; } /* 나눔고딕코딩이 필요하다면 링크 추가 필요 */
 
         /* [Page 1] 히어로 섹션 (요청하신 이미지 스타일) */
         .hero-section {
-            /* 보라빛 그라데이션 복구 */
             background: linear-gradient(135deg, #4F46E5 0%, #5d45db 100%);
             position: relative;
             overflow: hidden;
@@ -93,17 +112,16 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
-
-    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-md border-b border-gray-100">
+<body class="bg-gray-50 text-gray-800 font-sans"> <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-md border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
             
             <div class="flex flex-col md:flex-row md:justify-between md:items-center">
                 
                 <div class="flex w-full md:w-auto items-center justify-between mb-2 md:mb-0">
                     
-                    <div onclick="switchPage('page1')" class="text-2xl font-bold text-[#2C3E50] flex items-center gap-2 cursor-pointer">
-                        <i class="fa-solid fa-tree text-purple-600"></i> 힐링트리                    
+                    <div onclick="switchPage('page1')" class="flex items-center gap-2 cursor-pointer group">                    
+                        <span class="text-2xl font-black text-[#5b21b6]">Re:Al</span>
+                        <span class="text-xs text-gray-500 tracking-widest border-l border-gray-300 pl-2 ml-2">진짜 나를 찾아가는 여정</span>
                     </div>
                     
                     <button class="tab-button text-white bg-purple-600 hover:bg-purple-700 px-3 py-2 rounded-lg font-bold transition-all shadow-md flex items-center gap-1 whitespace-nowrap md:hidden" onclick="goToContactForm()">
@@ -112,10 +130,10 @@
                 </div>
                 
                 <div class="flex flex-wrap justify-center gap-2 w-full md:w-auto md:mx-auto">
-                    <button class="tab-button active text-gray-600 hover:text-purple-600 hover:bg-purple-50 px-3 md:px-4 py-2 rounded-lg font-bold transition-all" onclick="switchPage('page1')">🏠 홈</button>
-                    <button class="tab-button text-gray-600 hover:text-purple-600 hover:bg-purple-50 px-3 md:px-4 py-2 rounded-lg font-bold transition-all" onclick="switchPage('page-test')">📝 무료 검사</button>
-                    <button class="tab-button text-gray-600 hover:text-purple-600 hover:bg-purple-50 px-3 md:px-4 py-2 rounded-lg font-bold transition-all" onclick="switchPage('page2')">📊 성향 분류</button>
-                    <button class="tab-button text-gray-600 hover:text-purple-600 hover:bg-purple-50 px-3 md:px-4 py-2 rounded-lg font-bold transition-all" onclick="switchPage('page3')">✨ 칭찬 카드</button>                
+                    <button class="tab-button active text-gray-600 hover:text-purple-600 hover:bg-purple-50 px-3 md:px-4 py-2 rounded-lg font-bold transition-all" onclick="switchPage('page1')">홈</button>
+                    <button class="tab-button text-gray-600 hover:text-purple-600 hover:bg-purple-50 px-3 md:px-4 py-2 rounded-lg font-bold transition-all" onclick="switchPage('page-test')">무료 검사</button>
+                    <button class="tab-button text-gray-600 hover:text-purple-600 hover:bg-purple-50 px-3 md:px-4 py-2 rounded-lg font-bold transition-all" onclick="switchPage('page2')">성향 분류</button>
+                    <button class="tab-button text-gray-600 hover:text-purple-600 hover:bg-purple-50 px-3 md:px-4 py-2 rounded-lg font-bold transition-all" onclick="switchPage('page3')">칭찬 카드</button>                
                 </div>
 
                 <div class="hidden md:flex items-center flex-shrink-0">
@@ -442,8 +460,8 @@
                     </p>
                 </div>
 
-                <button onclick="goToContactForm()" class="block w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 text-center">
-                    🚀 정밀 선천적 성향/재능 검사 문의하기
+                <button onclick="switchPage('page2')" class="block w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 text-center">
+                    내 성향 특징은?
                 </button>
                 <button onclick="location.reload()" class="mt-4 text-gray-400 text-sm underline">처음으로 돌아가기</button>
             </div>
@@ -1274,14 +1292,69 @@
             const pages = document.querySelectorAll('.content-page');
             pages.forEach(page => page.style.display = 'none');
             document.getElementById(pageId).style.display = 'block';
-            // ... (버튼 활성화/비활성화 로직) ...
-        
+            
+            // ⭐ [추가] 활성화된 메뉴에 밑줄 스타일을 적용하는 함수 호출
+            updateNavStyles(pageId); 
+            
             window.scrollTo(0, 0); // <-- 즉시 페이지 상단으로 스크롤
-        
+            
             // 페이지 로드 시 칭찬 카드 옵션 생성
             if (pageId === 'page3') {
                 populateTypeSelect();
             }
+        }
+
+        // 활성화된 메뉴에 밑줄 스타일을 적용하는 함수 (강화 버전)
+        function updateNavStyles(activePageId) {
+            // 모든 네비게이션 버튼 (tab-button)을 선택
+            const navButtons = document.querySelectorAll('.tab-button');
+            
+            // 메인 메뉴 버튼만 필터링 (switchPage를 호출하는 버튼만)
+            const mainNavButtons = Array.from(navButtons).filter(btn => 
+                btn.getAttribute('onclick') && btn.getAttribute('onclick').includes('switchPage')
+            );
+
+            // Tailwind 클래스 정의
+            const ACTIVE_CLASSES = [
+                'text-purple-600', 'border-b-2', 'border-purple-600', 'font-extrabold', 'active'
+            ];
+            const INACTIVE_CLASSES_TO_REMOVE = [
+                'text-gray-600', 'hover:text-purple-600', 'hover:bg-purple-50', 'font-bold', 'rounded-lg', 'border-transparent'
+            ];
+
+
+            mainNavButtons.forEach(button => {
+                // 'onclick' 속성에서 페이지 ID 추출
+                const match = button.getAttribute('onclick').match(/switchPage\('([^']+)'\)/);
+                const pageId = match ? match[1] : null;
+
+                const isActive = pageId === activePageId;
+
+                // 1. 모든 스타일 초기화 (Active/Inactive 모두 제거)
+                button.classList.remove(...ACTIVE_CLASSES, ...INACTIVE_CLASSES_TO_REMOVE);
+
+                if (isActive) {
+                    // 2. 활성화: 밑줄 강조, 브랜드 색상 텍스트 적용
+                    button.classList.add(...ACTIVE_CLASSES);
+                    
+                    // 활성화 시 비활성화 스타일 제거 (혹시 남아있을 수 있는 border-transparent 제거)
+                    button.classList.remove('border-transparent', 'text-gray-600');
+                    
+                } else {
+                    // 3. 비활성화: 기본 텍스트 색상, 투명한 밑줄, 호버 스타일 적용
+                    button.classList.add(
+                        'text-gray-600', 
+                        'hover:text-purple-600', 
+                        'hover:bg-purple-50', 
+                        'font-bold',
+                        'rounded-lg',
+                        'border-b-2',         // 밑줄의 두께는 유지
+                        'border-transparent'  // 색상만 투명으로 설정하여 공간 확보
+                    );
+                    // 활성화 스타일 제거
+                    button.classList.remove('border-purple-600');
+                }
+            });
         }
 
         // [업그레이드] 문의 폼으로 이동 및 입력창 활성화 함수
